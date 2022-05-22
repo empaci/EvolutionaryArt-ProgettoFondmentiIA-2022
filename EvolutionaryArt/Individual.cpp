@@ -1,8 +1,8 @@
 #include "Individual.h"
 
-
-Individual::Individual(int seed, int depth) {
-	genotype = GeneticOperation::randomlyGenerateGenotype(seed, depth);
+Individual::Individual(int depth, Genes genes) {
+	genotype = new Node();
+	GeneticOperation::randomlyGenerateGenotype(depth, genes, genotype);
 	fitness_value = -1; // -1 is not a valid number; the range is [1,10]
 }
 
@@ -15,6 +15,5 @@ Node* Individual::getGenotype() {
 }
 
 std::string Individual::toString() {
-	return genotype->toString();
+	return "==========================\n Fitness value: " + std::to_string(this->fitness_value) + "\n" + genotype->toString();
 }
-

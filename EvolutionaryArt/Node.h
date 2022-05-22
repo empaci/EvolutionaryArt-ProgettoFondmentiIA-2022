@@ -7,7 +7,7 @@
 
 class Node{ 
     private:
-        char operation[4];
+        std::string operation;
         bool var;
         int value;
         Node* left;
@@ -15,7 +15,7 @@ class Node{
 
     public:
         Node();
-        void setOperation(char* operation);
+        void setOperation(std::string operation);
         void setVar(bool var);
         void setValue(int value);
         bool isLeaf();

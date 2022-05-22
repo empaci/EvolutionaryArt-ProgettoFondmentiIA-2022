@@ -24,6 +24,12 @@
     <ClInclude Include="GeneticOperation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Genes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Black_and_white_basic_genes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Individual.cpp">
@@ -36,6 +42,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneticOperation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Genes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Black_and_white_basic_genes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

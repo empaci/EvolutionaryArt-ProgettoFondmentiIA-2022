@@ -3,11 +3,14 @@
 
 
 Node::Node() {
+    this->value = -1;
+    this->right = nullptr;
+    this->left = nullptr;
 }
 
-void Node::setOperation(char* operation) {
+void Node::setOperation(std::string operation) {
     if (!isLeaf()) {
-        std::copy(this->operation, this->operation + 4, operation);
+        this->operation = operation;
     }
 }
 
@@ -21,13 +24,10 @@ void Node::setValue(int value) {
     if (isLeaf()) {
         this->value = value;
     }
-    else {
-        this->value = 100;
-    }
 }
 
 bool Node::isLeaf() {
-    if (right == NULL && left == NULL) {
+    if (right && left) {
         return true;
     }
     else {
@@ -44,5 +44,19 @@ void Node::setRightChildren(Node* n) {
 }
 
 std::string Node::toString() {
-    return "Node value: " + std::to_string(value);
+    if (!isLeaf()) {
+        return "Op: " + this->operation + " " + toString();
+    }
+    else {
+        if (this->value != -1) {
+            return "Node value: " + std::to_string(value);
+        }
+        else {
+            if (this->var) {
+                return "x";
+            } else {
+                return "y";
+            }
+        }
+    }
 }
