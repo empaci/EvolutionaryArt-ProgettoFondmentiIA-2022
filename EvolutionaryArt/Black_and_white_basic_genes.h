@@ -6,7 +6,7 @@
 class Black_and_white_basic_genes : public Genes {
     public:
         Black_and_white_basic_genes();
-        char* convertGenotypeToPhenotype();
+        char* convertGenotypeToPhenotype(Individual);
 };
 
 #endif

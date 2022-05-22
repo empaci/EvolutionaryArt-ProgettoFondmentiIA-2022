@@ -9,9 +9,11 @@ Node::Node() {
 }
 
 void Node::setOperation(std::string operation) {
-    if (!isLeaf()) {
-        this->operation = operation;
-    }
+    //this->operation = operation; NOT WORKING
+    this->operation = operation;
+    //this->operation = std::string(operation.length(), '\0');
+    //std::copy(operation.rbegin(), operation.rend(), this->operation.rbegin()); //NOT WORKING
+    //this->operation = std::string(operation);
 }
 
 void Node::setVar(bool var) {
@@ -27,7 +29,7 @@ void Node::setValue(int value) {
 }
 
 bool Node::isLeaf() {
-    if (right && left) {
+    if (!left) {
         return true;
     }
     else {
@@ -36,26 +38,35 @@ bool Node::isLeaf() {
 }
 
 void Node::setLeftChildren(Node* n) {
-    left = n;
+    this->left = n;
 }
 
 void Node::setRightChildren(Node* n) {
-    right = n;
+    this->right = n;
 }
 
 std::string Node::toString() {
     if (!isLeaf()) {
-        return "Op: " + this->operation + " " + toString();
+        std::string op = this->operation + "(";
+        if (left) {
+            op.append(this->left->toString());
+            op.append(")");
+        }
+        if (right) {
+            op.append(this->right->toString());
+            op.append(")");
+        }
+        return op;
     }
     else {
         if (this->value != -1) {
-            return "Node value: " + std::to_string(value);
+            return std::to_string(value) + ",";
         }
         else {
             if (this->var) {
-                return "x";
+                return "x,";
             } else {
-                return "y";
+                return "y,";
             }
         }
     }

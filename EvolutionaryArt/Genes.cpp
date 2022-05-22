@@ -1,6 +1,6 @@
 #include "Genes.h"
 
-char* Genes::convertGenotypeToPhenotype()
+char* Genes::convertGenotypeToPhenotype(Individual individual)
 {
 	return nullptr;
 }
@@ -28,7 +28,7 @@ int Genes::getNFunctionArgument(int pos) {
 }
 bool Genes::setNFunctionArguments(int* n_function_arguments, int len) {
 	setLen(len);
-	this->n_function_arguments = new int[this->len];
-	this->n_function_arguments = new int(*n_function_arguments);
+	this->n_function_arguments = new int[len];
+	this->n_function_arguments = n_function_arguments;
 	return true;
 }

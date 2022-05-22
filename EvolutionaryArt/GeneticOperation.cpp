@@ -1,12 +1,10 @@
 #include "GeneticOperation.h"
-#include <iostream>
 
 
 Node* GeneticOperation::randomlyGenerateGenotype(int depth, Genes genes, Node* head) {
-
 	if (depth != 0) {
 		//parent node; they have an operation (+, -, sin, sqrt, ...)
-		int r = (std::rand() % (genes.getLen()+1));
+		int r = (std::rand() % (genes.getLen()));
 		head->setOperation(genes.getGene(r));
 		
 		Node* left_child = new Node();
@@ -21,12 +19,14 @@ Node* GeneticOperation::randomlyGenerateGenotype(int depth, Genes genes, Node* h
 	}
 	else {
 		//leaf nodes; they can have a constant, x and y
-		int r = std::rand() % (2 + 1);
+		int r = (std::rand() % (2 + 1));
+		
 		if (r == 0) {
-			head->setValue(std::rand() % (20 + 1)); //the consatnt is a random number between 0 and 20
+			int value = (std::rand() % (20 + 1));
+			head->setValue(value); //the constant is a random number between 0 and 20
 		}
 		else {
-			head->setVar(r == 1); //true means x, false means y
+			head->setVar(r==1); //true means x, false means y
 		}
 		return head;
 	}

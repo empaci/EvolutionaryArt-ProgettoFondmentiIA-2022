@@ -8,6 +8,7 @@ int main() {
 	std::cout << " Hello World!\n";
 	std::srand(420);
 	Genes gene = Black_and_white_basic_genes();
-	Individual i = Individual(6, gene);
+	Individual i = Individual(4, gene);
 	std::cout << i.toString();
+	char* image = gene.convertGenotypeToPhenotype(i);
 }

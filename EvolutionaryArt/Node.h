@@ -15,12 +15,12 @@ class Node{
 
     public:
         Node();
-        void setOperation(std::string operation);
-        void setVar(bool var);
-        void setValue(int value);
+        void setOperation(std::string);
+        void setVar(bool);
+        void setValue(int);
         bool isLeaf();
-        void setLeftChildren(Node* n);
-        void setRightChildren(Node* n);
+        void setLeftChildren(Node*);
+        void setRightChildren(Node*);
         std::string toString();
 };
 

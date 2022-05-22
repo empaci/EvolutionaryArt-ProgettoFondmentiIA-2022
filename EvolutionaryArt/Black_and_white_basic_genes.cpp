@@ -22,6 +22,6 @@ Black_and_white_basic_genes::Black_and_white_basic_genes() {
 	setGenes(basic_genes_types, len);
 }
 
-char* Black_and_white_basic_genes::convertGenotypeToPhenotype() {
+char* Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual individual) {
 	return NULL;
 }
