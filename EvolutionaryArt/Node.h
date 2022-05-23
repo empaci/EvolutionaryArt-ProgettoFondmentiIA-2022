@@ -32,6 +32,8 @@ class Node{
         static int getNumberOfParentsAux(Node*, int*);
         static int getNode(Node*, int*, Node*);
         static void getRandomChild(Node*, Node*);
+        static int sobstitute_branch(Node*, Node*, int*);
+        static int insert(Node*, Node*, int*);
 };
 
 #endif

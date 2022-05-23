@@ -93,9 +93,9 @@ void Node::getRandomChild(Node* head, Node* randomChild) {
         l_or_r = (std::rand() % 2);
     }
     if (l_or_r == 0) {
-        *randomChild = *(n->getLeftChild());
+        *randomChild = *(n->getLeftChild()); /***************************/
     } else {
-        *randomChild = *(n->getRightChild());
+        *randomChild = *(n->getRightChild()); /***************************/
     }
     
     return;
@@ -134,7 +134,7 @@ int Node::getNode(Node* head, int* n, Node* child) {
         
         *n = *n - 1;
         if (*n == 0) {
-            *child = *head;
+            *child = *head; /***************************/
             return -1;
         }
 
@@ -146,6 +146,49 @@ int Node::getNode(Node* head, int* n, Node* child) {
         }
     }
     if(n==0) {
+        return 0;
+    }
+}
+
+int Node::sobstitute_branch(Node* head, Node* tree, int* n) {
+    if (!head->isLeaf()) {
+
+        *n = *n - 1;
+        if (*n == 0) {
+            head->setLeftChildren(tree);
+            return -1;
+        }
+
+        if (head->getLeftChild() && !head->getRightChild()) {
+            return *n + sobstitute_branch(head->getLeftChild(), tree, n);
+        }
+        else {
+            return *n + sobstitute_branch(head->getLeftChild(), tree, n) + sobstitute_branch(head->getRightChild(), tree, n);
+        }
+    }
+    if (n == 0) {
+        return 0;
+    }
+}
+
+int Node::insert(Node* head, Node* element, int* n) {
+    if (!head->isLeaf()) {
+
+        *n = *n - 1;
+        if (*n == 0) {
+            element->setLeftChildren(head->getLeftChild());
+            head->setLeftChildren(element);
+            return -1;
+        }
+
+        if (head->getLeftChild() && !head->getRightChild()) {
+            return *n + insert(head->getLeftChild(), element, n);
+        }
+        else {
+            return *n + insert(head->getLeftChild(), element, n) + insert(head->getRightChild(), element, n);
+        }
+    }
+    if (n == 0) {
         return 0;
     }
 }
