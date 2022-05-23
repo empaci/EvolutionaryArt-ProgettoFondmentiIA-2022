@@ -1,6 +1,6 @@
 #include "Genes.h"
 
-char* Genes::convertGenotypeToPhenotype(Individual individual)
+char* Genes::convertGenotypeToPhenotype(Individual* individual)
 {
 	return nullptr;
 }

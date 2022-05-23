@@ -2,7 +2,8 @@
 #define GENE_TYPES_H
 
 #include <string>
-#include "Individual.h"
+
+class Individual;
 
 class Genes {
 	private:
@@ -10,7 +11,7 @@ class Genes {
 		int* n_function_arguments;
 		int len;
 	public:
-		virtual char* convertGenotypeToPhenotype(Individual);
+		virtual char* convertGenotypeToPhenotype(Individual*);
 
 		std::string getGene(int);
 		bool setGenes(std::string*, int);

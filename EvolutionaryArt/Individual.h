@@ -1,7 +1,6 @@
 #ifndef INDIVIDUAL_H
 #define INDIVIDUAL_H
 
-#include "Node.h"
 #include "GeneticOperation.h"
 
 class Individual {

@@ -13,5 +13,6 @@ int main() {
 	Node* n = new Node();
 	Node p = Node();
 	p.getRandomChild(i.getGenotype(), n);
+	std::cout << (*n).toString();
 	//char* image = gene.convertGenotypeToPhenotype(i);
 }
