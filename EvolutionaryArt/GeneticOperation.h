@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include "Genes.h"
+#include "Individual.h"
 
 class Genes;
 
@@ -14,7 +15,7 @@ class GeneticOperation {
 		//static void crossover(Individual*, Individual*);
 		// mutation
 		//static void subtree_swap(Individual*);
-		//static void subtree_replacement(Individual*);
+		static void subtree_replacement(Individual*,Genes);
 		//static void node_insertion(Individual*);
 		//static void node_deletion(Individual*);
 		//static void node_mutation(Individual*);

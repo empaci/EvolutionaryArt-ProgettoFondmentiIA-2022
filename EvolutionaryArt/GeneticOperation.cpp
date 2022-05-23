@@ -31,3 +31,11 @@ Node* GeneticOperation::randomlyGenerateGenotype(int depth, Genes genes, Node* h
 		return head;
 	}
 }
+
+void GeneticOperation::subtree_replacement(Individual* individual, Genes genes) {
+	Node* n = new Node();
+	Node::getRandomChild(individual->getGenotype(), n);
+	randomlyGenerateGenotype(4, genes, n);
+	return;
+}
+

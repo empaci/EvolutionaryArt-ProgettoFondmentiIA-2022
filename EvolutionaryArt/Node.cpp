@@ -148,18 +148,4 @@ int Node::getNode(Node* head, int* n, Node* child) {
     if(n==0) {
         return 0;
     }
-    /*
-    if (*n == 0) {
-        return head;
-    }
-    else {
-        if (head->getLeftChild()) {
-            *n = *n - 1;
-            return getNode(head->getLeftChild(), n);
-        }
-        if (head->getRightChild()) {
-            return getNode(head->getRightChild(), n);
-        }
-    }
-    */
 }

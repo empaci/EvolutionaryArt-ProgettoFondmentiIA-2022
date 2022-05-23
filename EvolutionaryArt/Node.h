@@ -28,10 +28,10 @@ class Node{
         
         std::string toString();
         
-        int getNumberOfParents(Node*, int*);
-        int getNumberOfParentsAux(Node*, int*);
-        int getNode(Node*, int*, Node*);
-        void getRandomChild(Node*, Node*);
+        static int getNumberOfParents(Node*, int*);
+        static int getNumberOfParentsAux(Node*, int*);
+        static int getNode(Node*, int*, Node*);
+        static void getRandomChild(Node*, Node*);
 };
 
 #endif
