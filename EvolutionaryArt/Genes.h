@@ -11,7 +11,7 @@ class Genes {
 		int* n_function_arguments;
 		int len;
 	public:
-		virtual char* convertGenotypeToPhenotype(Individual*);
+		virtual int** convertGenotypeToPhenotype(Individual*) = 0;
 
 		std::string getGene(int);
 		bool setGenes(std::string*, int);

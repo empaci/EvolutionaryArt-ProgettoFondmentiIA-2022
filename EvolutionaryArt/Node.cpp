@@ -12,16 +12,28 @@ void Node::setOperation(std::string operation) {
     this->operation = operation;
 }
 
+std::string Node::getOperation() {
+    return this->operation;
+}
+
 void Node::setVar(bool var) {
     if (isLeaf()) {
         this->var = var;
     }
 }
 
+bool Node::getVar() {
+    return this->var;
+}
+
 void Node::setValue(int value) {
     if (isLeaf()) {
         this->value = value;
     }
+}
+
+int Node::getValue() {
+    return this->value;
 }
 
 bool Node::isLeaf() {
@@ -121,7 +133,7 @@ int Node::getNumberOfParentsAux(Node* head, int* n) {
         }
         if (head->getRightChild()) {
             *n = *n + 1;
-            return getNumberOfParentsAux(head->getRightChild(), n) + getNumberOfParentsAux(head->getLeftChild(), n);
+            return getNumberOfParentsAux(head->getLeftChild(), n) + getNumberOfParentsAux(head->getRightChild(), n);
         }
     }
     else {
@@ -145,7 +157,7 @@ int Node::getNode(Node* head, int* n, Node* child) {
             return *n + getNode(head->getLeftChild(), n, child) + getNode(head->getRightChild(), n, child);
         }
     }
-    if(n==0) {
+    else {
         return 0;
     }
 }
@@ -188,7 +200,7 @@ int Node::insertNode(Node* head, Node* element, int* n) {
             return *n + insertNode(head->getLeftChild(), element, n) + insertNode(head->getRightChild(), element, n);
         }
     }
-    if (n == 0) {
+    else {
         return 0;
     }
 }
@@ -224,7 +236,7 @@ int Node::deleteNodeAux(Node* head, Node* parent, int* n, char l_or_r) {
             return *n + deleteNodeAux(head->getLeftChild(), head, n, 'l') + deleteNodeAux(head->getRightChild(), head, n, 'r');
         }
     }
-    if (n == 0) {
+    else {
         return 0;
     }
 }
@@ -275,7 +287,7 @@ int Node::sobstituteNodeAux(Node* head, Node* unaryElement, Node* binaryElement,
             return *n + sobstituteNodeAux(head->getLeftChild(), unaryElement, binaryElement, n, 'l', head) + sobstituteNodeAux(head->getRightChild(), unaryElement, binaryElement, n, 'r', head);
         }
     }
-    if (n == 0) {
+    else {
         return 0;
     }
 }
@@ -344,8 +356,6 @@ int Node::swapSubtreeAux(Node* head, int* n1, int* n2, Node* parent1, char l_or_
         }
     }
     else {
-        //if (n == 0) {
         return 0;
-        //}
     }
 }

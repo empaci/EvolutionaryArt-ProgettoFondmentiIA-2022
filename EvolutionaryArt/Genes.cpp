@@ -1,9 +1,5 @@
 #include "Genes.h"
 
-char* Genes::convertGenotypeToPhenotype(Individual* individual)
-{
-	return nullptr;
-}
 
 std::string Genes::getGene(int i) {
 	return genes_types[i];

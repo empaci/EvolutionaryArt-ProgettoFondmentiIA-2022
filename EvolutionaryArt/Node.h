@@ -17,8 +17,11 @@ class Node{
         Node();
         //Node(Node*);
         void setOperation(std::string);
+        std::string getOperation();
         void setVar(bool);
+        bool getVar();
         void setValue(int);
+        int getValue();
         bool isLeaf();
 
         void setLeftChildren(Node*);

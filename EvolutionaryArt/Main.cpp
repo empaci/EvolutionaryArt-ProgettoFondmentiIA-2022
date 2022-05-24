@@ -7,8 +7,8 @@ int main() {
 
 	std::cout << " Hello World!\n";
 	std::srand(420);
-	Genes gene = Black_and_white_basic_genes();
-	Individual i = Individual(4, gene);
+	Black_and_white_basic_genes gene = Black_and_white_basic_genes();
+	Individual i = Individual(4, &gene);
 	std::cout << i.toString();
 	//Node* n = new Node();
 	//Node p = Node();

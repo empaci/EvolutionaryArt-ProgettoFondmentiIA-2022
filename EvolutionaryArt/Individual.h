@@ -9,7 +9,7 @@ class Individual {
 		int fitness_value;
 
 	public:
-		Individual(int, Genes);
+		Individual(int, Genes*);
 		void setFitnessValue(int);
 		Node* getGenotype();
 		std::string toString();
