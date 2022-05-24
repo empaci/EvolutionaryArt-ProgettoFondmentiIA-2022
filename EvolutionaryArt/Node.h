@@ -33,7 +33,11 @@ class Node{
         static int getNode(Node*, int*, Node*);
         static void getRandomChild(Node*, Node*);
         static int sobstitute_branch(Node*, Node*, int*);
-        static int insert(Node*, Node*, int*);
+        static int insertNode(Node*, Node*, int*);
+        static int deleteNode(Node*, int*);
+        static int deleteNodeAux(Node*, Node*, int*, char);
+        static int sobstituteNode(Node*, Node*, Node*, int*);
+        static int sobstituteNodeAux(Node*, Node*, Node*, int*, char, Node*);
 };
 
 #endif

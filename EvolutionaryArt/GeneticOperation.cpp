@@ -64,7 +64,7 @@ void GeneticOperation::node_insertion(Individual* individual, Genes genes) {
 		new_element->setRightChildren(right_child);
 	}
 
-	Node::insert(n, new_element, &r); //add the new element in positions r, always putting the rest of the tree on the left child
+	Node::insertNode(n, new_element, &r); //add the new element in positions r, always putting the rest of the tree on the left child
 	return;
 }
 
@@ -74,7 +74,7 @@ void GeneticOperation::node_deletion(Individual* individual) {
 	Node::getNumberOfParents(n, n_node);
 	int r = (std::rand() % (*n_node));
 
-	Node::delete(n, &r); //delete the element in the r position
+	Node::deleteNode(n, &r); //delete the element in the r position
 
 	return;
 }
@@ -84,9 +84,21 @@ void GeneticOperation::node_mutation(Individual* individual, Genes genes) {
 	int* n_node = new int();
 	Node::getNumberOfParents(n, n_node);
 	int r = (std::rand() % (*n_node));
+	int r_copy = r;
+	Node* unaryElement = new Node();
+	Node* binaryElement = new Node();
 
-	//need to check if the sobstituted element is a unary or bianry operation
-	//Node::sobstitute(n, element, &r); //sobstitute the element in the r position
+	int o = (std::rand() % (genes.getLen()));
+	while (genes.getNFunctionArgument(o) != 2) {
+		o = (std::rand() % (genes.getLen()));
+	}
+	binaryElement->setOperation(genes.getGene(o));
+	while (genes.getNFunctionArgument(o) != 1) {
+		o = (std::rand() % (genes.getLen()));
+	}
+	unaryElement->setOperation(genes.getGene(o));
+
+	Node::sobstituteNode(n, unaryElement, binaryElement, &r); //sobstitute the element in the r position
 	
 	return;
 }

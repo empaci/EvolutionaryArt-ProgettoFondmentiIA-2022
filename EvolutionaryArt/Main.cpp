@@ -14,7 +14,9 @@ int main() {
 	//Node p = Node();
 	//p.getRandomChild(i.getGenotype(), n);
 	//GeneticOperation::subtree_replacement(&i, gene);
-	GeneticOperation::node_insertion(&i, gene);
+	//GeneticOperation::node_insertion(&i, gene);
+	//GeneticOperation::node_deletion(&i);
+	GeneticOperation::node_mutation(&i, gene);
 	std::cout << i.toString();
 	//char* image = gene.convertGenotypeToPhenotype(i);
 }
