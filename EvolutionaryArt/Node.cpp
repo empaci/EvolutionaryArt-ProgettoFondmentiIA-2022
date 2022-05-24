@@ -198,7 +198,7 @@ int Node::deleteNode(Node* head, int* n) {
         return deleteNodeAux(head, nullptr, n, 'l');
     }
     else {
-        return 0;
+return 0;
     }
 }
 
@@ -277,5 +277,75 @@ int Node::sobstituteNodeAux(Node* head, Node* unaryElement, Node* binaryElement,
     }
     if (n == 0) {
         return 0;
+    }
+}
+
+int Node::swapSubtree(Node* head, int* n1, int* n2) {
+    if (!head->isLeaf()) {
+        return swapSubtreeAux(head, n1, n2, nullptr, 'l', new char('l'), nullptr, 'l', new char('l'));
+    }
+    else {
+        return 0;
+    }
+}
+
+int Node::swapSubtreeAux(Node* head, int* n1, int* n2, Node* parent1, char l_or_r1, char* locked_l_or_r1, Node* parent2, char l_or_r2, char* locked_l_or_r2) {
+    if (!head->isLeaf()) {
+
+        *n1 = *n1 - 1;
+        if (*n1 == 0) {
+            locked_l_or_r1 = new char(l_or_r1);
+        }
+        else if (*n1 > 0) {
+            parent1 = head;
+        }
+        *n2 = *n2 - 1;
+        if (*n2 == 0) {
+            locked_l_or_r2 = new char(l_or_r2);
+        }
+        else if (*n2 > 0) {
+            parent2 = head;
+        }
+        if (*n1 <= 0 && *n2 <= 0) {
+            //copy
+            Node temp = *parent1;
+            if (*locked_l_or_r1 == 'l' && *locked_l_or_r2 == 'l') {
+                parent1->setLeftChildren(parent2->getLeftChild());
+            }
+            if (*locked_l_or_r1 == 'l' && *locked_l_or_r2 == 'r') {
+                parent1->setLeftChildren(parent2->getRightChild());
+            }
+            if (*locked_l_or_r1 == 'r' && *locked_l_or_r2 == 'l') {
+                parent1->setRightChildren(parent2->getLeftChild());
+            }
+            if (*locked_l_or_r1 == 'r' && *locked_l_or_r2 == 'r') {
+                parent1->setRightChildren(parent2->getRightChild());
+            }
+
+            if (*locked_l_or_r1 == 'l' && *locked_l_or_r2 == 'l') {
+                parent2->setLeftChildren(temp.getLeftChild());
+            }
+            if (*locked_l_or_r1 == 'r' && *locked_l_or_r2 == 'l') {
+                parent2->setLeftChildren(temp.getRightChild());
+            }
+            if (*locked_l_or_r1 == 'l' && *locked_l_or_r2 == 'r') {
+                parent2->setRightChildren(temp.getLeftChild());
+            }
+            if (*locked_l_or_r1 == 'r' && *locked_l_or_r2 == 'r') {
+                parent2->setRightChildren(temp.getRightChild());
+            }
+            return -1;
+        }
+        if (head->getLeftChild() && !head->getRightChild()) {
+            return *n1 + swapSubtreeAux(head->getLeftChild(), n1, n2, parent1, 'l', locked_l_or_r1, parent2, 'l', locked_l_or_r2);
+        }
+        else {
+            return *n1 + swapSubtreeAux(head->getLeftChild(), n1, n2, parent1, 'l', locked_l_or_r1, parent2, 'l', locked_l_or_r2) + swapSubtreeAux(head->getRightChild(), n1, n2, parent1, 'r', locked_l_or_r1, parent2, 'r', locked_l_or_r2);
+        }
+    }
+    else {
+        //if (n == 0) {
+        return 0;
+        //}
     }
 }

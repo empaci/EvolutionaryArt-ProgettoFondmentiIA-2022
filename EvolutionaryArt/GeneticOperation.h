@@ -14,7 +14,7 @@ class GeneticOperation {
 		// recombination
 		static void crossover(Individual*, Individual*);
 		// mutation
-		//static void subtree_swap(Individual*);
+		static void subtree_swap(Individual*);
 		static void subtree_replacement(Individual*,Genes);
 		static void node_insertion(Individual*, Genes);
 		static void node_deletion(Individual*);

@@ -38,6 +38,8 @@ class Node{
         static int deleteNodeAux(Node*, Node*, int*, char);
         static int sobstituteNode(Node*, Node*, Node*, int*);
         static int sobstituteNodeAux(Node*, Node*, Node*, int*, char, Node*);
+        static int swapSubtree(Node*, int*, int*);
+        static int swapSubtreeAux(Node*, int*, int*, Node*, char, char*, Node*, char, char*);
 };
 
 #endif
