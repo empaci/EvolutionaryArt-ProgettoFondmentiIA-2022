@@ -13,7 +13,6 @@ void Image::setPhenotype(std::vector<std::vector<int>> phenotype) {
 }
 
 void Image::save(std::string path) {
-	path = "";
 	std::ofstream myfile(path);
 	myfile << this->header + " ";
 	for (int i = 0; i < this->information.size(); i++)

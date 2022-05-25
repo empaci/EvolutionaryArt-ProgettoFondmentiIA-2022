@@ -22,7 +22,7 @@ Node* GeneticOperation::randomlyGenerateGenotype(int depth, Genes* genes, Node* 
 		int r = (std::rand() % (2 + 1));
 		
 		if (r == 0) {
-			int value = (std::rand() % (20 + 1));
+			int value = (std::rand() % (100 + 1));
 			head->setValue(value); //the constant is a random number between 0 and 20
 		}
 		else {
