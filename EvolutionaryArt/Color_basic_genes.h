@@ -1,15 +1,14 @@
-#ifndef BLACK_AND_WHITE_BASIC_GENES_H
-#define BLACK_AND_WHITE_BASIC_GENES_H
+#ifndef COLOR_GENES_H
+#define COLOR_GENES_H
 
 #include "Genes.h";
 #include "Individual.h";
 #include "Image.h"
 #include <cmath>
 
-
-class Black_and_white_basic_genes : public Genes {
+class Color_basic_genes : public Genes {
     public:
-        Black_and_white_basic_genes();
+        Color_basic_genes();
         void convertGenotypeToPhenotype(Individual*, Image*);
         int eval(int, int, Node*, int*);
         int unaryOp(int, std::string);
@@ -17,4 +16,3 @@ class Black_and_white_basic_genes : public Genes {
 };
 
 #endif
-

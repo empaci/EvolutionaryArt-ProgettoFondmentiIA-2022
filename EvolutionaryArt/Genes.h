@@ -4,6 +4,7 @@
 #include <string>
 
 class Individual;
+class Image;
 
 class Genes {
 	private:
@@ -11,7 +12,7 @@ class Genes {
 		int* n_function_arguments;
 		int len;
 	public:
-		virtual int** convertGenotypeToPhenotype(Individual*) = 0;
+		virtual void convertGenotypeToPhenotype(Individual*, Image*) = 0;
 
 		std::string getGene(int);
 		bool setGenes(std::string*, int);

@@ -1,8 +1,8 @@
-#include "Black_and_white_basic_genes.h"
+#include "Color_basic_genes.h"
 #include <iostream>
 #include <vector>
 
-Black_and_white_basic_genes::Black_and_white_basic_genes() {
+Color_basic_genes::Color_basic_genes() {
 	int len = 9;
 	std::string* basic_genes_types = new std::string[len]{
 		"sqrt",
@@ -18,29 +18,29 @@ Black_and_white_basic_genes::Black_and_white_basic_genes() {
 	//tells if the operation, in the same position, is unary or binary
 	int* n_argument_operation = new int[len] {
 		1,
-		2,
-		2,
-		1,
-		1,
-		2,
-		2,
-		2,
-		1,
+			2,
+			2,
+			1,
+			1,
+			2,
+			2,
+			2,
+			1,
 	};
 	setNFunctionArguments(n_argument_operation, len);
 	setGenes(basic_genes_types, len);
 }
 
-void Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image* image) {
-	int dim = 480;
-	std::string header = { "P2" }; //gray scale image
-	std::vector<int> info = { dim, dim, 60 }; // 255x255 image with color range between 0 and 254
+void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image* image) {
+	int dim = 255*3;
+	std::string header = { "P3" }; //gray scale image
+	std::vector<int> info = { dim/3, dim/3, 60 }; // 255x255 image with color range between 0 and 254
 	std::vector<std::vector<int>> phenotype(dim, std::vector<int>(dim));
 
 	for (int i = 0; i < dim; i++) {
 		for (int j = 0; j < dim; j++) {
 			int r = 0;
-			phenotype[i][j] = this->eval(i, j, individual->getGenotype(), &r)%50;
+			phenotype[i][j] = this->eval(i, j, individual->getGenotype(), &r) % 50;
 		}
 	}
 
@@ -51,7 +51,7 @@ void Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual* individ
 	return;
 }
 
-int Black_and_white_basic_genes::eval(int x, int y, Node* head, int* res) {
+int Color_basic_genes::eval(int x, int y, Node* head, int* res) {
 
 	if (!head->isLeaf()) {
 		if (head->getLeftChild() && !head->getRightChild()) {
@@ -76,33 +76,41 @@ int Black_and_white_basic_genes::eval(int x, int y, Node* head, int* res) {
 	}
 }
 
-int Black_and_white_basic_genes::unaryOp(int x, std::string operation) {
+int Color_basic_genes::unaryOp(int x, std::string operation) {
 	if (operation == "sin") {
 		return (int)sin(x);
-	} else if (operation == "cos") {
+	}
+	else if (operation == "cos") {
 		return (int)cos(x);
-	} else if (operation == "sqrt") {
+	}
+	else if (operation == "sqrt") {
 		return (int)sqrt(x);
-	} else if (operation == "tanh") {
+	}
+	else if (operation == "tanh") {
 		return (int)tanh(x);
 	}
 }
 
-int Black_and_white_basic_genes::binaryOp(int x, int y, std::string operation) {
+int Color_basic_genes::binaryOp(int x, int y, std::string operation) {
 	if (operation == "+") {
-		return (int) x+y;
-	} else if (operation == "-") {
-		return (int) sqrt(pow(x-y, 2));
-	} else if (operation == "xor") {
-		return (int) x ^ y;
-	} else if (operation == "/") {
+		return (int)x + y;
+	}
+	else if (operation == "-") {
+		return (int)sqrt(pow(x - y, 2));
+	}
+	else if (operation == "xor") {
+		return (int)x ^ y;
+	}
+	else if (operation == "/") {
 		if (y != 0) {
 			return (int)x / y;
-		} else {
+		}
+		else {
 			return x;
 		}
-	} else if (operation == "*") {
-		return (int) x * y;
+	}
+	else if (operation == "*") {
+		return (int)x * y;
 	}
 
 }

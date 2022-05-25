@@ -128,7 +128,7 @@ void GeneticOperation::crossover(Individual* i1, Individual* i2) {
 	int* n_node1 = new int();
 	Node::getNumberOfParents(n1, n_node1);
 	int r1 = 1 + (std::rand() % (*n_node1+1));
-	Node* subtree1 = nullptr;
+	Node* subtree1 = new Node();
 	int r1_copy = r1;
 	Node::getNode(n1, &r1_copy, subtree1);
 
@@ -136,7 +136,7 @@ void GeneticOperation::crossover(Individual* i1, Individual* i2) {
 	int* n_node2 = new int();
 	Node::getNumberOfParents(n1, n_node2);
 	int r2 = 1 + (std::rand() % (*n_node2+1));
-	Node* subtree2 = nullptr;
+	Node* subtree2 = new Node();
 	int r2_copy = r2;
 	Node::getNode(n2, &r2_copy, subtree2);
 
