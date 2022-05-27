@@ -8,6 +8,7 @@ class Controller {
 		Controller();
 		Controller(int, int);
 		void generateImages();
+		void evaluate(std::vector<int>);
 	private:
 		Population* population;
 

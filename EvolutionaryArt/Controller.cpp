@@ -7,8 +7,14 @@ Controller::Controller() {
 }
 
 Controller::Controller(int population_size, int depth) {
+	srand(time(NULL));
 	Genes* gene = new Black_and_white_basic_genes();
 	this->population = new Population(population_size, depth, gene);
+}
+
+void Controller::evaluate(std::vector<int> fitness_values) {
+	population->setFitnessValues(fitness_values);
+	population->evolve();
 }
 
 void Controller::generateImages() {

@@ -57,7 +57,7 @@
     <ClInclude Include="Controller.h">
       <Filter>controller</Filter>
     </ClInclude>
-    <ClInclude Include="EvolutionFrame.h">
+    <ClInclude Include="myImageGridCellRendered.h">
       <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,7 +92,7 @@
     <ClCompile Include="Controller.cpp">
       <Filter>controller</Filter>
     </ClCompile>
-    <ClCompile Include="EvolutionFrame.cpp">
+    <ClCompile Include="myImageGridCellRendered.cpp">
       <Filter>ui</Filter>
     </ClCompile>
   </ItemGroup>

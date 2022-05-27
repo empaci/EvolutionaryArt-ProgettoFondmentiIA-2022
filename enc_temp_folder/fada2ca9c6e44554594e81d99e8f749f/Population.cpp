@@ -36,7 +36,6 @@ std::vector<Individual> Population::proportionalSelection() {
 		total_fitness = total_fitness + this->individuals[i].getFitnessValue();
 	}
 
-	//CHANGE THIS PART! PROB: WRONG
 	int probability = 0;
 	int r = 1 + (std::rand() % (100));
 	

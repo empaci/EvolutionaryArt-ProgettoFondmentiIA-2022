@@ -133,12 +133,12 @@
     <ClInclude Include="Black_and_white_basic_genes.h" />
     <ClInclude Include="Color_basic_genes.h" />
     <ClInclude Include="Controller.h" />
-    <ClInclude Include="EvolutionFrame.h" />
     <ClInclude Include="Genes.h" />
     <ClInclude Include="GeneticOperation.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="myImageGridCellRendered.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Population.h" />
   </ItemGroup>
@@ -146,12 +146,12 @@
     <ClCompile Include="Black_and_white_basic_genes.cpp" />
     <ClCompile Include="Color_basic_genes.cpp" />
     <ClCompile Include="Controller.cpp" />
-    <ClCompile Include="EvolutionFrame.cpp" />
     <ClCompile Include="Genes.cpp" />
     <ClCompile Include="GeneticOperation.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="myImageGridCellRendered.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Population.cpp" />
   </ItemGroup>

@@ -32,7 +32,7 @@ Color_basic_genes::Color_basic_genes() {
 }
 
 void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image* image) {
-	int dim = 600*3;
+	int dim = 300*3;
 	std::string header = { "P3" }; //gray scale image
 	std::vector<int> info = { dim/3, dim/3, 80 }; // 255x255 image with color range between 0 and 254
 	std::vector<std::vector<int>> phenotype(dim, std::vector<int>(dim));
