@@ -11,6 +11,7 @@ class Individual {
 	public:
 		Individual(int, Genes*);
 		void setFitnessValue(int);
+		int getFitnessValue();
 		Node* getGenotype();
 		std::string toString();
 };

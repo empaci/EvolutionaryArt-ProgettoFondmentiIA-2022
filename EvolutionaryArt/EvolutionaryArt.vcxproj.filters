@@ -1,66 +1,87 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="model">
+      <UniqueIdentifier>{c787e7d7-422a-4c26-94ab-f6b2188471ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="model\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="model\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="controller">
+      <UniqueIdentifier>{fd57f410-06a8-44f4-af8a-07cd1a903c46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ui">
+      <UniqueIdentifier>{55461d98-c86c-4623-b139-3a6e44e18a7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{45ddc8b1-8189-4a77-8a8d-b134658ce774}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Individual.h">
-      <Filter>Header Files</Filter>
+      <Filter>model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Node.h">
-      <Filter>Header Files</Filter>
+      <Filter>model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GeneticOperation.h">
-      <Filter>Header Files</Filter>
+      <Filter>model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Genes.h">
-      <Filter>Header Files</Filter>
+      <Filter>model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Black_and_white_basic_genes.h">
-      <Filter>Header Files</Filter>
+      <Filter>model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Image.h">
-      <Filter>Header Files</Filter>
+      <Filter>model\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Color_basic_genes.h">
-      <Filter>Header Files</Filter>
+      <Filter>model\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Main.h">
+      <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Population.h">
+      <Filter>model\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Individual.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Node.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GeneticOperation.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Genes.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Black_and_white_basic_genes.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Image.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>model\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Color_basic_genes.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>model\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Population.cpp">
+      <Filter>model\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

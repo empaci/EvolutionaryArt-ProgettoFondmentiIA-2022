@@ -13,7 +13,11 @@ void Image::setPhenotype(std::vector<std::vector<int>> phenotype) {
 }
 
 void Image::save(std::string path) {
-	std::ofstream myfile(path);
+	std::string suffix = ".pgm";
+	if (this->header == "P3") {
+		suffix = ".ppm";
+	}
+	std::ofstream myfile(path + suffix);
 	myfile << this->header + " ";
 	for (int i = 0; i < this->information.size(); i++)
 		myfile << information[i] << " ";

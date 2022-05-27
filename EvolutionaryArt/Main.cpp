@@ -3,29 +3,84 @@
 #include "Genes.h"
 #include "Black_and_white_basic_genes.h"
 #include <time.h>
+#include "Main.h"
 
-int main() {
+// wxWidgets "Hello World" Program
+#include <wx/wxprec.h>
 
-	std::srand(time(NULL));
-	//Color_basic_genes gene = Color_basic_genes();
-	Black_and_white_basic_genes gene = Black_and_white_basic_genes();
-	Individual i1 = Individual(4, &gene);
-	Individual i2 = Individual(4, &gene);
-	std::cout << "i1: " + i1.toString() + "\ni2: " + i2.toString() + "\n";
-	//Node* n = new Node();
-	//Node p = Node();
-	//p.getRandomChild(i.getGenotype(), n);
-	//GeneticOperation::subtree_replacement(&i1, &gene);
-	//GeneticOperation::node_insertion(&i, &gene);
-	//GeneticOperation::node_deletion(&i);
-	//GeneticOperation::node_mutation(&i, &gene);
-	//GeneticOperation::subtree_swap(&i);
-	GeneticOperation::crossover(&i1, &i2);
+#ifndef WX_PRECOMP
+#include <wx/wx.h>
+#endif
 
-	Image* image = new Image();
-	gene.convertGenotypeToPhenotype(&i1, image);
-	image->save("");
+class MyApp : public wxApp
+{
+public:
+    virtual bool OnInit();
+};
 
-	std::cout << "i1: " + i1.toString() + "\ni2: " + i2.toString() + "\n";
-	//char* image = gene.convertGenotypeToPhenotype(i);
+class MyFrame : public wxFrame
+{
+public:
+    MyFrame();
+
+private:
+    void OnHello(wxCommandEvent& event);
+    void OnExit(wxCommandEvent& event);
+    void OnAbout(wxCommandEvent& event);
+};
+
+enum
+{
+    ID_Hello = 1
+};
+
+wxIMPLEMENT_APP(MyApp);
+
+bool MyApp::OnInit()
+{
+    MyFrame* frame = new MyFrame();
+    frame->Show(true);
+    return true;
+}
+
+MyFrame::MyFrame()
+    : wxFrame(NULL, wxID_ANY, "Evolution Art")
+{
+    wxMenu* menuFile = new wxMenu;
+    menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
+        "Help string shown in status bar for this menu item");
+    menuFile->AppendSeparator();
+    menuFile->Append(wxID_EXIT);
+
+    wxMenu* menuHelp = new wxMenu;
+    menuHelp->Append(wxID_ABOUT);
+
+    wxMenuBar* menuBar = new wxMenuBar;
+    menuBar->Append(menuFile, "&File");
+    menuBar->Append(menuHelp, "&Help");
+
+    SetMenuBar(menuBar);
+
+    CreateStatusBar();
+    SetStatusText("Welcome to wxWidgets!");
+
+    Bind(wxEVT_MENU, &MyFrame::OnHello, this, ID_Hello);
+    Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
+    Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
+}
+
+void MyFrame::OnExit(wxCommandEvent& event)
+{
+    Close(true);
+}
+
+void MyFrame::OnAbout(wxCommandEvent& event)
+{
+    wxMessageBox("This is a wxWidgets Hello World example",
+        "About Hello World", wxOK | wxICON_INFORMATION);
+}
+
+void MyFrame::OnHello(wxCommandEvent& event)
+{
+    wxLogMessage("Hello world from wxWidgets!");
 }

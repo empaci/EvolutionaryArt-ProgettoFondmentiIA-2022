@@ -10,6 +10,10 @@ void Individual::setFitnessValue(int fitness_value) {
 	this->fitness_value = fitness_value;
 }
 
+int Individual::getFitnessValue() {
+	return this->fitness_value;
+}
+
 Node* Individual::getGenotype() {
 	return genotype;
 }
