@@ -132,6 +132,8 @@
   <ItemGroup>
     <ClInclude Include="Black_and_white_basic_genes.h" />
     <ClInclude Include="Color_basic_genes.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="EvolutionFrame.h" />
     <ClInclude Include="Genes.h" />
     <ClInclude Include="GeneticOperation.h" />
     <ClInclude Include="Image.h" />
@@ -143,6 +145,8 @@
   <ItemGroup>
     <ClCompile Include="Black_and_white_basic_genes.cpp" />
     <ClCompile Include="Color_basic_genes.cpp" />
+    <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="EvolutionFrame.cpp" />
     <ClCompile Include="Genes.cpp" />
     <ClCompile Include="GeneticOperation.cpp" />
     <ClCompile Include="Image.cpp" />

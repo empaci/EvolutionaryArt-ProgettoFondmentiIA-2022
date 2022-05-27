@@ -4,6 +4,8 @@
 #include "Black_and_white_basic_genes.h"
 #include <time.h>
 #include "Main.h"
+#include "Controller.h"
+#include "EvolutionFrame.h"
 
 // wxWidgets "Hello World" Program
 #include <wx/wxprec.h>
@@ -16,40 +18,48 @@ class MyApp : public wxApp
 {
 public:
     virtual bool OnInit();
+private:
 };
 
-class MyFrame : public wxFrame
+class InitialFrame : public wxFrame
 {
 public:
-    MyFrame();
+    InitialFrame();
+
+protected:
+    Controller controller;
+    wxStaticText* Text1;
+    wxTextCtrl* TextCtrl1;
+    wxStaticText* Text2;
+    wxTextCtrl* TextCtrl2;
 
 private:
-    void OnHello(wxCommandEvent& event);
     void OnExit(wxCommandEvent& event);
     void OnAbout(wxCommandEvent& event);
+    void OnStart(wxCommandEvent& event);
 };
 
 enum
 {
-    ID_Hello = 1
+    ID_Hello = 1,
+    START = 101,
+    IN_POP_SIZE = 102,
+    IN_DEPTH = 103,
 };
 
 wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
-    MyFrame* frame = new MyFrame();
+    InitialFrame* frame = new InitialFrame();
     frame->Show(true);
     return true;
 }
 
-MyFrame::MyFrame()
+InitialFrame::InitialFrame()
     : wxFrame(NULL, wxID_ANY, "Evolution Art")
 {
     wxMenu* menuFile = new wxMenu;
-    menuFile->Append(ID_Hello, "&Hello...\tCtrl-H",
-        "Help string shown in status bar for this menu item");
-    menuFile->AppendSeparator();
     menuFile->Append(wxID_EXIT);
 
     wxMenu* menuHelp = new wxMenu;
@@ -61,26 +71,37 @@ MyFrame::MyFrame()
 
     SetMenuBar(menuBar);
 
-    CreateStatusBar();
-    SetStatusText("Welcome to wxWidgets!");
+    this->Text1 = new wxStaticText(this, wxID_ANY, _("Population size: "), wxPoint(10, 30), wxSize(100, 30), 0, _T("ID_TEXT1"));
+    this->TextCtrl1 = new wxTextCtrl(this, IN_POP_SIZE, _("1"), wxPoint(120, 30), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    this->Text2 = new wxStaticText(this, wxID_ANY, _("Individual depth: "), wxPoint(10, 60), wxSize(100, 30), 0, _T("ID_TEXT2"));
+    this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("1"), wxPoint(120, 60), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    
+    new wxButton(this, START, _T("Start"), wxPoint(10, 90), wxSize(80, 30));
 
-    Bind(wxEVT_MENU, &MyFrame::OnHello, this, ID_Hello);
-    Bind(wxEVT_MENU, &MyFrame::OnAbout, this, wxID_ABOUT);
-    Bind(wxEVT_MENU, &MyFrame::OnExit, this, wxID_EXIT);
+    Bind(wxEVT_MENU, &InitialFrame::OnAbout, this, wxID_ABOUT);
+    Bind(wxEVT_MENU, &InitialFrame::OnExit, this, wxID_EXIT);
+    Bind(wxEVT_BUTTON, &InitialFrame::OnStart, this, START);
 }
 
-void MyFrame::OnExit(wxCommandEvent& event)
+void InitialFrame::OnExit(wxCommandEvent& event)
 {
     Close(true);
 }
 
-void MyFrame::OnAbout(wxCommandEvent& event)
+void InitialFrame::OnAbout(wxCommandEvent& event)
 {
-    wxMessageBox("This is a wxWidgets Hello World example",
-        "About Hello World", wxOK | wxICON_INFORMATION);
+    wxMessageBox("This is a Evolutionary Art program",
+        "About Evolutionary Art", wxOK | wxICON_INFORMATION);
 }
 
-void MyFrame::OnHello(wxCommandEvent& event)
+void InitialFrame::OnStart(wxCommandEvent& event)
 {
-    wxLogMessage("Hello world from wxWidgets!");
+    int population_size = atoi(this->TextCtrl1->GetValue());
+    int depth = atoi(this->TextCtrl2->GetValue());
+    this->controller = Controller(population_size, depth);
+    controller.generateImages();
+    wxLogMessage("banana " + this->TextCtrl1->GetValue());
+    //show other frame
+    //EvolutionFrame* eframe = new EvolutionFrame();
+    //eframe->Show(true);
 }
