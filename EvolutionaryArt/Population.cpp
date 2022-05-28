@@ -17,7 +17,7 @@ void Population::setFitnessValues(std::vector<int> values) {
 }
 
 void Population::evolve() {
-	std::vector<Individual> parents = proportionalSelection(); //proportionaly select parents
+	std::vector<Individual> parents = proportionalSelection(1, 10); //proportionaly select parents
 	std::vector<Individual> childrens = recombination_and_mutation(parents); //crossover and mutations on new individuals
 	//concat parent and children to form the new population
 	std::vector<Individual> new_population;
@@ -28,36 +28,81 @@ void Population::evolve() {
 	return;
 }
 
-std::vector<Individual> Population::proportionalSelection() {
+std::vector<Individual> Population::proportionalSelection(int min, int max) {
 	std::vector<Individual> parents;
+
+	std::vector<float> probabilities = generateProbabilities(min, max);
+
+	Individual* temp_individual = nullptr;
+
+	float r = ((float)std::rand() / (RAND_MAX)); // generate number between 0 and 1
 	
-	float total_fitness = 0;
-	for (int i = 0; i < this->individuals.size(); i++) {
-		total_fitness = total_fitness + this->individuals[i].getFitnessValue();
-	}
+	while( parents.size() < population_size/2) {
 
-	//CHANGE THIS PART! PROB: WRONG
-	int probability = 0;
-	int r = 1 + (std::rand() % (100));
-	
-	for (int i = 0; i < this->individuals.size(); i++) {
-
-		probability = (this->individuals[i].getFitnessValue() / total_fitness) * 100;
-
-		if (probability >= r) {
-			parents.push_back(this->individuals[i]);
+		for (int j = min; j <= max; j++) {
+			if (r < probabilities[j - min]) {
+				temp_individual = getRandomIndividualWithFitness(j);
+				if (temp_individual) {
+					parents.push_back(*temp_individual);
+				}
+				break;
+			}
 		}
-		r = 1 + (std::rand() % (100));
+		r = ((float) std::rand() / (RAND_MAX));
 	}
 	return parents;
+}
+
+std::vector<float> Population::generateProbabilities(int min, int max) {
+	std::vector<float> probabilities;
+	float previous_probability = 0.0;
+	float p = 0;
+	float totalFitness = min;
+
+	for (int i = min+1; i <= max; i++) {
+		totalFitness = totalFitness + i;
+	}
+
+	for (int i = min; i <= max; i++) {
+		p = (previous_probability + (i / totalFitness));
+		probabilities.push_back(p);
+		previous_probability = p;
+	}
+	return probabilities;
+}
+
+Individual* Population::getRandomIndividualWithFitness(int fitness) {
+	int n = 0;
+
+	for (int i = 0; i < this->individuals.size(); i++) {
+		if (this->individuals[i].getFitnessValue() == fitness) {
+			n = n + 1;
+		}
+	}
+	if (n != 0) {
+		int r = 1 + (std::rand() % n);
+		n = 0;
+		for (int i = 0; i < this->individuals.size(); i++) {
+			if (this->individuals[i].getFitnessValue() == fitness) {
+				n = n + 1;
+				if (n == r) {
+					Individual* rand_individual = &this->individuals[i];
+					this->individuals.erase(this->individuals.begin() + i);
+					return rand_individual;
+				}
+			}
+		}
+	} else {
+		return nullptr;
+	}
 }
 
 std::vector<Individual> Population::recombination_and_mutation(std::vector<Individual> parents) {
 	std::vector<Individual> children;
 
-	int r1, r2 = 0;
+	int r1 = 0, r2 = 0;
 
-	while (this->population_size < parents.size() + children.size()) {
+	while (this->population_size > parents.size() + children.size()) {
 		r1 = std::rand() % (parents.size());
 		r2 = std::rand() % (parents.size());
 		while (r1 == r2) {
@@ -73,7 +118,7 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 		apply_random_mutation(i2);
 
 		children.push_back(*i1);
-		if (this->population_size < parents.size() + children.size()) {
+		if (this->population_size > parents.size() + children.size()) {
 			children.push_back(*i2);
 		}
 	}

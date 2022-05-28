@@ -32,7 +32,7 @@ Black_and_white_basic_genes::Black_and_white_basic_genes() {
 }
 
 void Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image* image) {
-	int dim = 480;
+	int dim = 300;
 	std::string header = { "P2" }; //gray scale image
 	std::vector<int> info = { dim, dim, 60 }; // 255x255 image with color range between 0 and 254
 	std::vector<std::vector<int>> phenotype(dim, std::vector<int>(dim));

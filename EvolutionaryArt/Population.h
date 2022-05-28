@@ -14,7 +14,9 @@ class Population {
 		Population(int, int, Genes*);
 		void setFitnessValues(std::vector<int>);
 		void evolve();
-		std::vector<Individual> proportionalSelection();
+		std::vector<Individual> proportionalSelection(int, int);
+		std::vector<float> generateProbabilities(int, int);
+		Individual* getRandomIndividualWithFitness(int fitness);
 		std::vector<Individual> recombination_and_mutation(std::vector<Individual>);
 		void apply_random_mutation(Individual*);
 		void replacement(std::vector<Individual>);
