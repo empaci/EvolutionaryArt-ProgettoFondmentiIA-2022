@@ -20,6 +20,6 @@ void Controller::evaluate(std::vector<int> fitness_values) {
 	population->evolve();
 }
 
-void Controller::generateImages() {
-	this->population->saveImages();
+std::vector<Image> Controller::generateImages() {
+	return this->population->saveImages();
 }

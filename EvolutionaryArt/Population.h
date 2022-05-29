@@ -20,7 +20,7 @@ class Population {
 		std::vector<Individual> recombination_and_mutation(std::vector<Individual>);
 		void apply_random_mutation(Individual*);
 		void replacement(std::vector<Individual>);
-		void saveImages();
+		std::vector<Image> saveImages();
 };
 
 #endif

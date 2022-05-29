@@ -138,7 +138,7 @@
     <ClInclude Include="Image.h" />
     <ClInclude Include="Individual.h" />
     <ClInclude Include="Main.h" />
-    <ClInclude Include="myImageGridCellRendered.h" />
+    <ClInclude Include="myImageGridCellRenderer.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Population.h" />
   </ItemGroup>
@@ -151,7 +151,7 @@
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="Individual.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="myImageGridCellRendered.cpp" />
+    <ClCompile Include="myImageGridCellRenderer.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Population.cpp" />
   </ItemGroup>

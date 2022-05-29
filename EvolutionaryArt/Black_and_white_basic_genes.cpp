@@ -40,9 +40,9 @@ Black_and_white_basic_genes::Black_and_white_basic_genes() {
 }
 
 void Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image* image) {
-	int dim = 400;
+	int dim = 200;
 	std::string header = { "P2" }; //gray scale image
-	//std::vector<int> info = { dim, dim, 255 }; // 255x255 image with color range between 0 and 254
+	std::vector<int> info = { dim, dim, 255 }; // 255x255 image with color range between 0 and 254
 	std::vector<std::vector<int>> phenotype(dim, std::vector<int>(dim));
 
 	/*
@@ -58,7 +58,7 @@ void Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual* individ
 			phenotype[i][j] = (abs(this->eval(i, j, individual->getGenotype(), &r)) % 255);
 		}
 	}
-
+	/*
 	//max: NOTE:this elimanet all balck images that would have a value, but also eliminate images with dark tones
 	int max = 0;
 	for (int i = 0; i < dim; i++) {
@@ -70,7 +70,7 @@ void Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual* individ
 	}
 
 	std::vector<int> info = { dim, dim, max + 10 };
-
+	*/
 	image->setHeader(header);
 	image->setInformation(info);
 	image->setPhenotype(phenotype);

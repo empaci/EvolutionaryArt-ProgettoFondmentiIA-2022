@@ -12,6 +12,10 @@ void Image::setPhenotype(std::vector<std::vector<int>> phenotype) {
 	this->phenotype = phenotype;
 }
 
+std::vector<std::vector<int>> Image::getPhenotype() {
+	return this->phenotype;
+}
+
 void Image::save(std::string path) {
 	std::string suffix = ".pgm";
 	if (this->header == "P3") {

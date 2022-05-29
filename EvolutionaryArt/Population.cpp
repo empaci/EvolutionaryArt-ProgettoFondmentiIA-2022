@@ -152,13 +152,14 @@ void Population::replacement(std::vector<Individual> population) {
 	this->individuals = population;
 }
 
-void Population::saveImages() {
+std::vector<Image> Population::saveImages() {
 	std::string path = "..\\images\\";
+	std::vector<Image> images = std::vector<Image>();
 	Image* image = new Image();
 	for (int i = 0; i < this->individuals.size(); i++) {
 		this->genes->convertGenotypeToPhenotype(&this->individuals[i], image);
 		image->save(path + std::to_string(i));
-
+		images.push_back(*image);
 	}
-	return;
+	return images;
 }

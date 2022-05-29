@@ -7,7 +7,7 @@ class Controller {
 	public:
 		Controller();
 		Controller(int, int);
-		void generateImages();
+		std::vector<Image> generateImages();
 		void evaluate(std::vector<int>);
 	private:
 		Population* population;

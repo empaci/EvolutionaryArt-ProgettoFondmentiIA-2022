@@ -7,7 +7,7 @@
 #include "Controller.h"
 
 #include <wx/wxprec.h>
-#include "myImageGridCellRendered.h"
+#include "myImageGridCellRenderer.h"
 
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
@@ -110,22 +110,29 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     population_size = atoi(this->TextCtrl1->GetValue());
     int depth = atoi(this->TextCtrl2->GetValue());
     this->controller = Controller(population_size, depth);
-    controller.generateImages();
-    //wxLogMessage("banana " + this->TextCtrl1->GetValue());
+    std::vector<Image> images = controller.generateImages();
 
-    //grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size));
+    grid = new wxGrid(this, wxID_ANY, wxPoint(130, 130), wxSize(1000, 800));
+
+    grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
+    
     //grid->SetCellRenderer(0, 0, new myImageGridCellRenderer);
-    /*
+    grid->SetRowLabelSize(0);
+    grid->SetColLabelSize(0);
+
     grid->CreateGrid(population_size/5, 5); 
     for (int i = 0; i < 5; i++) {
-        grid->SetColSize(i, 320);
+        grid->SetColSize(i, 220);
     }
     for (int i = 0; i < population_size / 5; i++) {
-        grid->SetRowSize(i, 320);
+        grid->SetRowSize(i, 220);
     }
-    */
-    // We can specify that some cells are read-only 
-    //grid->SetCellValue(0, 3, wxT("This is read-only")); grid->SetReadOnly(0, 3);
+    
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < population_size / 5; j++) {
+            grid->SetReadOnly(j, i);
+        }
+    }
 
     for (int i = 0; i < population_size; i++) {
         wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 5, 1, 10, wxPoint(10, 120+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
@@ -144,5 +151,7 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
         sliders[i]->SetValue(5);
     }
     controller.evaluate(fitness_values);
-    controller.generateImages();
+    std::vector<Image> images = controller.generateImages();
+    grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
+    grid->ForceRefresh();
 }

@@ -57,7 +57,7 @@
     <ClInclude Include="Controller.h">
       <Filter>controller</Filter>
     </ClInclude>
-    <ClInclude Include="myImageGridCellRendered.h">
+    <ClInclude Include="myImageGridCellRenderer.h">
       <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,7 +92,7 @@
     <ClCompile Include="Controller.cpp">
       <Filter>controller</Filter>
     </ClCompile>
-    <ClCompile Include="myImageGridCellRendered.cpp">
+    <ClCompile Include="myImageGridCellRenderer.cpp">
       <Filter>ui</Filter>
     </ClCompile>
   </ItemGroup>

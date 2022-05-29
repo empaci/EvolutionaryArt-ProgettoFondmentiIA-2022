@@ -14,6 +14,7 @@ class Image {
 		void setHeader(std::string);
 		void setInformation(std::vector<int>);
 		void setPhenotype(std::vector<std::vector<int>>);
+		std::vector<std::vector<int>> getPhenotype();
 		void save(std::string);
 };
 
