@@ -3,7 +3,7 @@
 #include <vector>
 
 Color_basic_genes::Color_basic_genes() {
-	int len = 9;
+	int len = 13;
 	std::string* basic_genes_types = new std::string[len]{
 		"sqrt",
 		"+",
@@ -14,18 +14,26 @@ Color_basic_genes::Color_basic_genes() {
 		"/",
 		"*",
 		"tanh",
+		"pow",
+		"log",
+		"hypot",
+		"gamma",
 	};
 	//tells if the operation, in the same position, is unary or binary
 	int* n_argument_operation = new int[len] {
 		1,
-			2,
-			2,
-			1,
-			1,
-			2,
-			2,
-			2,
-			1,
+		2,
+		2,
+		1,			
+		1,
+		2,
+		2,
+		2,
+		1,
+		2,
+		1,
+		2,
+		1,
 	};
 	setNFunctionArguments(n_argument_operation, len);
 	setGenes(basic_genes_types, len);
@@ -33,16 +41,28 @@ Color_basic_genes::Color_basic_genes() {
 
 void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image* image) {
 	int dim = 300*3;
-	std::string header = { "P3" }; //gray scale image
-	std::vector<int> info = { dim/3, dim/3, 80 }; // 255x255 image with color range between 0 and 254
+	std::string header = { "P3" }; //RGB scale image
+	//std::vector<int> info = { dim/3, dim/3, 255 }; // 255x255 image with color range between 0 and 254
 	std::vector<std::vector<int>> phenotype(dim, std::vector<int>(dim));
 
 	for (int i = 0; i < dim; i++) {
 		for (int j = 0; j < dim; j++) {
 			int r = 0;
-			phenotype[i][j] = this->eval(i, j, individual->getGenotype(), &r) % 80;
+			phenotype[i][j] = (abs(this->eval(i, j, individual->getGenotype(), &r)) % 255);
 		}
 	}
+
+	//max: NOTE:this elimanet all balck images that would have a value, but also eliminate images with dark tones
+	int max = 0;
+	for (int i = 0; i < dim; i++) {
+		for (int j = 0; j < dim; j++) {
+			if (phenotype[i][j] > max) {
+				max = phenotype[i][j];
+			}
+		}
+	}
+
+	std::vector<int> info = { dim / 3, dim / 3, max + 10 };
 
 	image->setHeader(header);
 	image->setInformation(info);
@@ -78,16 +98,32 @@ int Color_basic_genes::eval(int x, int y, Node* head, int* res) {
 
 int Color_basic_genes::unaryOp(int x, std::string operation) {
 	if (operation == "sin") {
-		return (int)sin(x);
+		return (int)(sin(x) * 100);
 	}
 	else if (operation == "cos") {
-		return (int)cos(x);
+		return (int)(cos(x) * 100);
 	}
 	else if (operation == "sqrt") {
-		return (int)sqrt(x);
+		if (x > 0) {
+			return (int)sqrt(x);
+		}
+		else {
+			return x;
+		}
 	}
 	else if (operation == "tanh") {
-		return (int)tanh(x);
+		return (int)(tanh(x) * 100);
+	}
+	else if (operation == "log") {
+		if (x > 0) {
+			return (int)(log(x) * 100);
+		}
+		else {
+			return x;
+		}
+	}
+	else if (operation == "gamma") {
+		return (int)tgamma(x) * 10;
 	}
 }
 
@@ -111,6 +147,12 @@ int Color_basic_genes::binaryOp(int x, int y, std::string operation) {
 	}
 	else if (operation == "*") {
 		return (int)x * y;
+	}
+	else if (operation == "pow") {
+		return (int)pow(x, y);
+	}
+	else if (operation == "hypot") {
+		return (int)hypot(x, y);
 	}
 
 }

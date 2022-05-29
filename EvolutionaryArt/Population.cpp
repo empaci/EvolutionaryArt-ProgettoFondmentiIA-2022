@@ -37,7 +37,8 @@ std::vector<Individual> Population::proportionalSelection(int min, int max) {
 
 	float r = ((float)std::rand() / (RAND_MAX)); // generate number between 0 and 1
 	
-	while( parents.size() < population_size/2) {
+	//Choose number of parents
+	while( parents.size() < population_size/3) {
 
 		for (int j = min; j <= max; j++) {
 			if (r < probabilities[j - min]) {

@@ -43,6 +43,7 @@ class Node{
         static int sobstituteNodeAux(Node*, Node*, Node*, int*, char, Node*);
         static int swapSubtree(Node*, int*, int*);
         static int swapSubtreeAux(Node*, int*, int*, Node*, char, char*, Node*, char, char*);
+        static bool isSwappable(Node*, int, int);
 };
 
 #endif

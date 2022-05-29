@@ -111,7 +111,7 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     int depth = atoi(this->TextCtrl2->GetValue());
     this->controller = Controller(population_size, depth);
     controller.generateImages();
-    wxLogMessage("banana " + this->TextCtrl1->GetValue());
+    //wxLogMessage("banana " + this->TextCtrl1->GetValue());
 
     //grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size));
     //grid->SetCellRenderer(0, 0, new myImageGridCellRenderer);

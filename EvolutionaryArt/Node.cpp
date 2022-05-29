@@ -243,7 +243,7 @@ int Node::deleteNodeAux(Node* head, Node* parent, int* n, char l_or_r) {
 
 int Node::sobstituteNode(Node* head, Node* unaryElement, Node* binaryElement, int* n) {
     if (!head->isLeaf()) {
-        return sobstituteNodeAux(head, unaryElement, binaryElement, n, 'l', nullptr);
+        return sobstituteNodeAux(head, unaryElement, binaryElement, n, 'l', head);
     }
     else {
         return 0;
@@ -358,4 +358,8 @@ int Node::swapSubtreeAux(Node* head, int* n1, int* n2, Node* parent1, char l_or_
     else {
         return 0;
     }
+}
+
+bool Node::isSwappable(Node* head, int r1, int r2) {
+    return true;
 }

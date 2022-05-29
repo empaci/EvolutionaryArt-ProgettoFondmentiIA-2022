@@ -83,7 +83,7 @@ void GeneticOperation::node_mutation(Individual* individual, Genes* genes) {
 	Node* n = individual->getGenotype();
 	int* n_node = new int();
 	Node::getNumberOfParents(n, n_node);
-	int r = (std::rand() % (*n_node));
+	int r = 1 + (std::rand() % (*n_node));
 	int r_copy = r;
 	Node* unaryElement = new Node();
 	Node* binaryElement = new Node();
@@ -107,19 +107,19 @@ void GeneticOperation::subtree_swap(Individual* individual) {
 	Node* n = individual->getGenotype();
 	int* n_node = new int();
 	Node::getNumberOfParents(n, n_node);
-	int r1 = 2 + (std::rand() % (*n_node - 2 ));
-	int r2 = 2 + (std::rand() % (*n_node - 2 ));
-	//can't swap if one is a sub-tree of the other
-	// rememebr to put a copy of r1 and r2 ,otherwise they will be modified!
-	//while (!Node::isSwappable(n, r1, r2)) {
-		while (r1 == r2) {
-			r2 = (std::rand() % (*n_node));
+	if (*n_node > 2) {
+		int r1 = 2 + (std::rand() % (*n_node - 2));
+		int r2 = 2 + (std::rand() % (*n_node - 2));
+		//can't swap if one is a sub-tree of the other
+		// rememebr to put a copy of r1 and r2 ,otherwise they will be modified!
+		while (!Node::isSwappable(n, r1, r2)) {
+			while (r1 == r2) {
+				r2 = (std::rand() % (*n_node));
+			}
 		}
-	//}
-	
-	r2 = 3;
 
-	Node::swapSubtree(n, &r2, &r1); //put subtree1 in pos r1, and subtree2 in position r2
+		Node::swapSubtree(n, &r2, &r1); //put subtree1 in pos r1, and subtree2 in position r2
+	}
 	return;
 }
 
