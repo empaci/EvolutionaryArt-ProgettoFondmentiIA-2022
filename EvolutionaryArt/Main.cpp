@@ -81,7 +81,7 @@ InitialFrame::InitialFrame()
     this->Text1 = new wxStaticText(this, wxID_ANY, _("Population size: "), wxPoint(10, 30), wxSize(100, 30), 0, _T("ID_TEXT1"));
     this->TextCtrl1 = new wxTextCtrl(this, IN_POP_SIZE, _("20"), wxPoint(120, 30), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     this->Text2 = new wxStaticText(this, wxID_ANY, _("Individual depth: "), wxPoint(10, 60), wxSize(100, 30), 0, _T("ID_TEXT2"));
-    this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("4"), wxPoint(120, 60), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("2"), wxPoint(120, 60), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
     
     new wxButton(this, START, _T("Start"), wxPoint(10, 90), wxSize(80, 30));
 
@@ -120,12 +120,17 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     grid->SetRowLabelSize(0);
     grid->SetColLabelSize(0);
 
+    grid->DisableFocusFromKeyboard();
+    grid->DisableDragCell();
+    grid->DisableCellEditControl();
+    grid->DisableDragGridSize();
+
     grid->CreateGrid(population_size/5, 5); 
     for (int i = 0; i < 5; i++) {
-        grid->SetColSize(i, 220);
+        grid->SetColSize(i, 205);
     }
     for (int i = 0; i < population_size / 5; i++) {
-        grid->SetRowSize(i, 220);
+        grid->SetRowSize(i, 205);
     }
     
     for (int i = 0; i < 5; i++) {
@@ -133,11 +138,22 @@ void InitialFrame::OnStart(wxCommandEvent& event)
             grid->SetReadOnly(j, i);
         }
     }
-
+    /*
+    int img_size = 200;
+    for (int i = 0; i < 5; i++) { //col
+        for (int j = 0; j < population_size / 5; j++) { //row
+            wxSlider* slider = new wxSlider(this, IN_SLIDER + i, 5, 1, 10, wxPoint((j+1)*img_size + 10, (10+img_size)*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
+            sliders.push_back(slider);
+        }
+    }
+    */
+    
     for (int i = 0; i < population_size; i++) {
-        wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 5, 1, 10, wxPoint(10, 120+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
+        new wxStaticText(this, wxID_ANY, _(std::to_string(i)), wxPoint(10, 125+30*i), wxSize(20, 20), 0, _T("ID_TEXTI"));
+        wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 5, 1, 10, wxPoint(25, 120+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
         sliders.push_back(slider);
     }
+    
 
     evaluate = new wxButton(this, EVALUATE, _T("Evaluate"), wxPoint(10, 120+30*population_size), wxSize(80, 30));
     Bind(wxEVT_BUTTON, &InitialFrame::OnEvaluate, this, EVALUATE);
