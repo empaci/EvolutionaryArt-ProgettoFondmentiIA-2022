@@ -87,7 +87,7 @@ Individual* Population::getRandomIndividualWithFitness(int fitness) {
 			if (this->individuals[i].getFitnessValue() == fitness) {
 				n = n + 1;
 				if (n == r) {
-					Individual* rand_individual = &this->individuals[i];
+					Individual* rand_individual = new Individual(this->individuals[i]);
 					this->individuals.erase(this->individuals.begin() + i);
 					return rand_individual;
 				}
@@ -117,6 +117,8 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 
 		apply_random_mutation(i1);
 		apply_random_mutation(i2);
+		//apply_random_mutation(i1);
+		//apply_random_mutation(i2);
 
 		children.push_back(*i1);
 		if (this->population_size > parents.size() + children.size()) {

@@ -220,11 +220,13 @@ int Node::deleteNodeAux(Node* head, Node* parent, int* n, char l_or_r) {
         *n = *n - 1;
         if (*n == 0) {
             //use of a character to know if we need to remove the right or left side of the tree from the parent
-            if (l_or_r == 'l') {
-                parent->setLeftChildren(head->getLeftChild());
-            }
-            else if (l_or_r == 'r') {
-                parent->setRightChildren(head->getLeftChild());
+            if (parent) {
+                if (l_or_r == 'l') {
+                    parent->setLeftChildren(head->getLeftChild());
+                }
+                else if (l_or_r == 'r') {
+                    parent->setRightChildren(head->getLeftChild());
+                }
             }
             return -1;
         }

@@ -72,10 +72,11 @@ void GeneticOperation::node_deletion(Individual* individual) {
 	Node* n = individual->getGenotype();
 	int* n_node = new int();
 	Node::getNumberOfParents(n, n_node);
-	int r = (std::rand() % (*n_node));
+	if (*n_node > 1) {
+		int r = (std::rand() % (*n_node));
 
-	Node::deleteNode(n, &r); //delete the element in the r position
-
+		Node::deleteNode(n, &r); //delete the element in the r position
+	}
 	return;
 }
 
@@ -108,15 +109,15 @@ void GeneticOperation::subtree_swap(Individual* individual) {
 	int* n_node = new int();
 	Node::getNumberOfParents(n, n_node);
 	if (*n_node > 2) {
-		int r1 = 2 + (std::rand() % (*n_node - 2));
-		int r2 = 2 + (std::rand() % (*n_node - 2));
+		int r1 = 2 + (std::rand() % (*n_node - 2)) + 1; //+1 to avoid the root
+		int r2 = 2 + (std::rand() % (*n_node - 2)) + 1;
 		//can't swap if one is a sub-tree of the other
 		// rememebr to put a copy of r1 and r2 ,otherwise they will be modified!
-		while (!Node::isSwappable(n, r1, r2)) {
+		//while (!Node::isSwappable(n, r1, r2)) {
 			while (r1 == r2) {
-				r2 = (std::rand() % (*n_node));
+				r2 = 2 + (std::rand() % (*n_node - 2)) + 1;
 			}
-		}
+		//}
 
 		Node::swapSubtree(n, &r2, &r1); //put subtree1 in pos r1, and subtree2 in position r2
 	}
