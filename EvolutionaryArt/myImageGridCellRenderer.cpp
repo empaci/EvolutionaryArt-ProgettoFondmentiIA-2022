@@ -10,27 +10,27 @@ void myImageGridCellRenderer::Draw(wxGrid& grid, wxGridCellAttr& attr, wxDC& dc,
 	
 	wxGridCellStringRenderer::Draw(grid, attr, dc, rect, row, col, isSelected);
 
-	//wxImage cellImage;
-	//cellImage.AddHandler(new wxPNMHandler);
+	int dim = 300;
 	int p = 0;
 
 	p = col + row * 5;
 
 	std::vector<std::vector<int>> img = this->images[p].getPhenotype();
 
-	unsigned char* buffer = static_cast<unsigned char*>(malloc(200*200*3));
+	unsigned char* buffer = static_cast<unsigned char*>(malloc(dim*dim*3));
 	unsigned char*ptr = buffer;
 
-	for (int y = 0; y < 200; ++y)
-		for (int x = 0; x < 200; ++x) {
-			unsigned char c = (unsigned char)img[x][y];
+	for (int y = 0; y < dim; ++y)
+		for (int x = 0; x < dim; ++x) {
+			unsigned char c = (unsigned char)img[y][x];
 			*(ptr++) = c;
 			*(ptr++) = c;
 			*(ptr++) = c;
 		}
-		//*(++ptr) = static_cast<unsigned char>(img[x][y]);
 
-	wxImage* cellImage = new wxImage(200, 200, buffer, true);
+	wxImage* cellImage = new wxImage(dim, dim, buffer, true);
+
+	cellImage->Rescale(200, 200, wxIMAGE_QUALITY_NORMAL);
 
 	wxBitmap cellBitmap(*cellImage);
 	dc.DrawBitmap(cellBitmap, rect.x, rect.y);

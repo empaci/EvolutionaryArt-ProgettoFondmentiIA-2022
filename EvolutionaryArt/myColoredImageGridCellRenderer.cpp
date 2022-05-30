@@ -10,7 +10,7 @@ void myColoredImageGridCellRenderer::Draw(wxGrid& grid, wxGridCellAttr& attr, wx
 
 	wxGridCellStringRenderer::Draw(grid, attr, dc, rect, row, col, isSelected);
 
-	int dim = 200;
+	int dim = 300;
 	int p = 0;
 
 	p = col + row * 5;
@@ -31,6 +31,8 @@ void myColoredImageGridCellRenderer::Draw(wxGrid& grid, wxGridCellAttr& attr, wx
 		}
 
 	wxImage* cellImage = new wxImage(dim, dim, buffer, true);
+
+	cellImage->Rescale(200, 200, wxIMAGE_QUALITY_NORMAL);
 
 	wxBitmap cellBitmap(*cellImage);
 	dc.DrawBitmap(cellBitmap, rect.x, rect.y);

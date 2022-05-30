@@ -119,7 +119,7 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     this->controller = Controller(population_size, depth, this->CheckBox->IsChecked());
     std::vector<Image> images = controller.generateImages();
 
-    grid = new wxGrid(this, wxID_ANY, wxPoint(130, 130), wxSize(1000, 800));
+    grid = new wxGrid(this, wxID_ANY, wxPoint(130, 130), wxSize(5*205, population_size / 5 * 205));
 
 
     if (this->CheckBox->IsChecked()) {
@@ -162,7 +162,7 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     
     for (int i = 0; i < population_size; i++) {
         new wxStaticText(this, wxID_ANY, _(std::to_string(i)), wxPoint(10, 155+30*i), wxSize(20, 20), 0, _T("ID_TEXTI"));
-        wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 5, 1, 10, wxPoint(25, 150+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
+        wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 1, 1, 10, wxPoint(25, 150+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
         sliders.push_back(slider);
     }
     
@@ -179,7 +179,7 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
     std::vector<int> fitness_values;
     for (int i = 0; i < population_size; i++) {
         fitness_values.push_back(sliders[i]->GetValue());
-        sliders[i]->SetValue(5);
+        sliders[i]->SetValue(1);
     }
     if (this->CheckBox->IsChecked() && !controller.getColor()) {
         controller.changeGenes();
