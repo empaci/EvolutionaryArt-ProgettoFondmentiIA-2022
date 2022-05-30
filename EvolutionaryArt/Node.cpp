@@ -382,9 +382,14 @@ void Node::copyTree(Node* head, Node* copy) {
 }
 
 Node* Node::cloneNode(Node* node) {
-    Node* clone = new Node();
-    clone->setValue(node->getValue());
-    clone->setOperation(node->getOperation());
-    clone->setVar(node->getVar());
-    return clone;
+    if (node) {
+        Node* clone = new Node();
+        clone->setValue(node->getValue());
+        clone->setOperation(node->getOperation());
+        clone->setVar(node->getVar());
+        return clone;
+    }
+    else {
+        return nullptr;
+    }
 }
