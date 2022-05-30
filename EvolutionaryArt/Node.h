@@ -4,12 +4,13 @@
 #include <cstddef>
 #include <iterator>
 #include <string>
+#include <vector>
 
 class Node{ 
     private:
         std::string operation;
         bool var;
-        int value;
+        std::vector<int> value;
         Node* left;
         Node* right;
 
@@ -20,8 +21,9 @@ class Node{
         std::string getOperation();
         void setVar(bool);
         bool getVar();
-        void setValue(int);
+        void setValues(int, int, int);
         int getValue();
+        int getValueAt(int);
         bool isLeaf();
 
         void setLeftChildren(Node*);

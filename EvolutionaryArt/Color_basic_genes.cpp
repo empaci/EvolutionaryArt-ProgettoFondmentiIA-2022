@@ -60,16 +60,10 @@ void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image
 	for (int i = 0; i < dim; i++) {
 		for (int j = 0; j < dim*3; j++) {
 			int r = 0;
-			int c = j % 3;
-			if (c == 0) {
-				phenotype[i][j] = (abs(this->eval(i, j, individual->getGenotype(), &r)) % 255);
+			for (int k = 0; k < 3; k++) {
+				phenotype[i][j+k] = (abs(this->eval(i, j, k, individual->getGenotype(), &r)) % 255);
 			}
-			else if (c == 1) {
-				phenotype[i][j] = (abs(this->eval(i+200, j+200, individual->getGenotype(), &r)) % 255);
-			} 
-			else if (c == 2) {
-				phenotype[i][j] = (abs(this->eval(i+400, j+400, individual->getGenotype(), &r)) % 255);
-			}
+			j += 2;
 		}
 	}
 
@@ -80,19 +74,19 @@ void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image
 	return;
 }
 
-int Color_basic_genes::eval(int x, int y, Node* head, int* res) {
+int Color_basic_genes::eval(int x, int y, int c, Node* head, int* res) {
 
 	if (!head->isLeaf()) {
 		if (head->getLeftChild() && !head->getRightChild()) {
-			return *res + unaryOp(eval(x, y, head->getLeftChild(), res), head->getOperation());
+			return *res + unaryOp(eval(x, y, c, head->getLeftChild(), res), head->getOperation());
 		}
 		if (head->getRightChild()) {
-			return *res + binaryOp(eval(x, y, head->getLeftChild(), res), eval(x, y, head->getRightChild(), res), head->getOperation());
+			return *res + binaryOp(eval(x, y, c, head->getLeftChild(), res), eval(x, y, c, head->getRightChild(), res), head->getOperation());
 		}
 	}
 	else {
 		if (head->getValue() != -1) {
-			return head->getValue();
+			return head->getValueAt(c);
 		}
 		else {
 			if (head->getVar()) {

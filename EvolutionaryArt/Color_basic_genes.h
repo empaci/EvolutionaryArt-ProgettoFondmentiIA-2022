@@ -10,7 +10,7 @@ class Color_basic_genes : public Genes {
     public:
         Color_basic_genes();
         void convertGenotypeToPhenotype(Individual*, Image*);
-        int eval(int, int, Node*, int*);
+        int eval(int, int, int, Node*, int*);
         int unaryOp(int, std::string);
         int binaryOp(int, int, std::string);
 };

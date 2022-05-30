@@ -3,7 +3,7 @@
 
 
 Node::Node() {
-    this->value = -1;
+    this->value = { -1, -1, -1 };
     this->var = false;
     this->right = nullptr;
     this->left = nullptr;
@@ -27,14 +27,20 @@ bool Node::getVar() {
     return this->var;
 }
 
-void Node::setValue(int value) {
+void Node::setValues(int r, int g, int b) {
     if (isLeaf()) {
-        this->value = value;
+        this->value[0] = r;
+        this->value[1] = g;
+        this->value[2] = b;
     }
 }
 
 int Node::getValue() {
-    return this->value;
+    return this->value[0];
+}
+
+int Node::getValueAt(int p) {
+    return this->value[p];
 }
 
 bool Node::isLeaf() {
@@ -76,8 +82,8 @@ std::string Node::toString() {
         return op;
     }
     else {
-        if (this->value != -1) {
-            return std::to_string(value) + ",";
+        if (this->value[0] != -1) {
+            return std::to_string(value[0]) + ",";
         }
         else {
             if (this->var) {
@@ -384,7 +390,7 @@ void Node::copyTree(Node* head, Node* copy) {
 Node* Node::cloneNode(Node* node) {
     if (node) {
         Node* clone = new Node();
-        clone->setValue(node->getValue());
+        clone->setValues(node->getValueAt(0), node->getValueAt(1), node->getValueAt(2));
         clone->setOperation(node->getOperation());
         clone->setVar(node->getVar());
         return clone;

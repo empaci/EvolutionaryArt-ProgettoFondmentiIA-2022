@@ -12,6 +12,7 @@ class Population {
 		Genes* genes;
 	public:
 		Population(int, int, Genes*);
+		void setGenes(Genes*);
 		void setFitnessValues(std::vector<int>);
 		void evolve();
 		std::vector<Individual> proportionalSelection(int, int);

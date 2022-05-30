@@ -9,6 +9,10 @@ Population::Population(int population_size, int depth, Genes* genes) {
 	}
 }
 
+void Population::setGenes(Genes* genes) {
+	this->genes = genes;
+}
+
 void Population::setFitnessValues(std::vector<int> values) {
 	for (int i = 0; i < this->individuals.size(); i++) {
 		this->individuals[i].setFitnessValue(values[i]);

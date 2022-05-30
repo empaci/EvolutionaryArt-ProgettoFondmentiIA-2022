@@ -181,6 +181,9 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
         fitness_values.push_back(sliders[i]->GetValue());
         sliders[i]->SetValue(5);
     }
+    if (this->CheckBox->IsChecked() && !controller.getColor()) {
+        controller.changeGenes();
+    }
     controller.evaluate(fitness_values);
     std::vector<Image> images = controller.generateImages();
     if (this->CheckBox->IsChecked()) {

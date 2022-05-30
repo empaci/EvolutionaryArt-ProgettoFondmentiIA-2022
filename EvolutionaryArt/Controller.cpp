@@ -11,6 +11,7 @@ Controller::Controller() {
 Controller::Controller(int population_size, int depth, bool color) {
 	srand(time(NULL));
 	Genes* gene;
+	this->color = color;
 	if (color) {
 		gene = new Color_basic_genes();
 	}
@@ -18,6 +19,14 @@ Controller::Controller(int population_size, int depth, bool color) {
 		gene = new Black_and_white_basic_genes();
 	}
 	this->population = new Population(population_size, depth, gene);
+}
+
+bool Controller::getColor() {
+	return this->color;
+}
+
+void Controller::changeGenes() {
+	this->population->setGenes(new Color_basic_genes());
 }
 
 void Controller::evaluate(std::vector<int> fitness_values) {
