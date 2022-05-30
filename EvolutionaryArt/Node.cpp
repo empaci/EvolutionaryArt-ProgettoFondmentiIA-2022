@@ -4,6 +4,7 @@
 
 Node::Node() {
     this->value = -1;
+    this->var = false;
     this->right = nullptr;
     this->left = nullptr;
 }
@@ -364,4 +365,26 @@ int Node::swapSubtreeAux(Node* head, int* n1, int* n2, Node* parent1, char l_or_
 
 bool Node::isSwappable(Node* head, int r1, int r2) {
     return true;
+}
+
+void Node::copyTree(Node* head, Node* copy) {
+    if (head) {
+        Node* leftNode = cloneNode(head->getLeftChild());
+        copy->setLeftChildren(leftNode);
+        copyTree(head->getLeftChild(), copy->getLeftChild());
+        
+        if (head->getRightChild()) {
+            Node* rightNode = cloneNode(head->getRightChild());
+            copy->setRightChildren(rightNode);
+            copyTree(head->getRightChild(), copy->getRightChild());
+        }
+    }
+}
+
+Node* Node::cloneNode(Node* node) {
+    Node* clone = new Node();
+    clone->setValue(node->getValue());
+    clone->setOperation(node->getOperation());
+    clone->setVar(node->getVar());
+    return clone;
 }

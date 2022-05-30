@@ -110,8 +110,8 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 			r2 = std::rand() % (parents.size());
 		}
 
-		Individual* i1 = new Individual(parents[r1]);
-		Individual* i2 = new Individual(parents[r2]);
+		Individual* i1 = new Individual(&parents[r1]);
+		Individual* i2 = new Individual(&parents[r2]);
 
 		GeneticOperation::crossover(i1, i2);
 

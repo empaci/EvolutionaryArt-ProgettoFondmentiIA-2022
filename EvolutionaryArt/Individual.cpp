@@ -6,6 +6,12 @@ Individual::Individual(int depth, Genes* genes) {
 	fitness_value = -1; // -1 is not a valid number; the range is [1,10]
 }
 
+Individual::Individual(Individual* i) {
+	this->fitness_value = i->getFitnessValue();
+	Node::copyTree(i->getGenotype(), this->genotype);
+}
+
+
 void Individual::setFitnessValue(int fitness_value) {
 	this->fitness_value = fitness_value;
 }

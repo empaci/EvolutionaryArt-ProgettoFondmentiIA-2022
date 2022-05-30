@@ -10,6 +10,7 @@ class Individual {
 
 	public:
 		Individual(int, Genes*);
+		Individual(Individual*);
 		void setFitnessValue(int);
 		int getFitnessValue();
 		Node* getGenotype();

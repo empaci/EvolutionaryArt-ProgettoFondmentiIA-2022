@@ -108,14 +108,14 @@ void GeneticOperation::subtree_swap(Individual* individual) {
 	Node* n = individual->getGenotype();
 	int* n_node = new int();
 	Node::getNumberOfParents(n, n_node);
-	if (*n_node > 2) {
-		int r1 = 2 + (std::rand() % (*n_node - 2)) + 1; //+1 to avoid the root
-		int r2 = 2 + (std::rand() % (*n_node - 2)) + 1;
+	if (*n_node > 3) {
+		int r1 = 2 + (std::rand() % (*n_node - 2));
+		int r2 = 2 + (std::rand() % (*n_node - 2));
 		//can't swap if one is a sub-tree of the other
 		// rememebr to put a copy of r1 and r2 ,otherwise they will be modified!
 		//while (!Node::isSwappable(n, r1, r2)) {
 			while (r1 == r2) {
-				r2 = 2 + (std::rand() % (*n_node - 2)) + 1;
+				r2 = 2 + (std::rand() % (*n_node - 2));
 			}
 		//}
 
@@ -136,7 +136,7 @@ void GeneticOperation::crossover(Individual* i1, Individual* i2) {
 	Node* n2 = i2->getGenotype();
 	int* n_node2 = new int();
 	Node::getNumberOfParents(n1, n_node2);
-	int r2 = 1 + (std::rand() % (*n_node2+1));
+	int r2 = 1 + (std::rand() % (*n_node2));
 	Node* subtree2 = new Node();
 	int r2_copy = r2;
 	Node::getNode(n2, &r2_copy, subtree2);
