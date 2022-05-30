@@ -3,7 +3,7 @@
 #include <vector>
 
 Black_and_white_basic_genes::Black_and_white_basic_genes() {
-	int len = 18;
+	int len = 17;
 	std::string* basic_genes_types = new std::string[len]{
 		"sqrt",
 		"+",
@@ -13,37 +13,39 @@ Black_and_white_basic_genes::Black_and_white_basic_genes() {
 		"xor",
 		"/",
 		"*",
-		"tanh",
 		"pow",
-		"log",
+		//"log",
 		"hypot",
-		"gamma",
+		//"gamma",
 		"max",
 		"min",
 		"and",
 		"or",
 		"not",
+		"hyperbola",
+		"paraboloid",
 	};
 	//tells if the operation, in the same position, is unary or binary
 	int* n_argument_operation = new int[len] {
-		1,
-		2,
-		2,
-		1,
-		1,
-		2,
-		2,
-		2,
-		1,
-		2,
-		1,
-		2,
-		1,
-		2,
-		2,
-		2,
-		2,
-		1,
+		1, //sqrt
+		2, //+
+		2, //-
+		1, //sin
+		1, //cos
+		2, //xor
+		2, // /
+		2, // *
+		1, // pow
+	//	1, //log
+		2, //hypot
+	//	1, //gamma
+		2, //max
+		2, //min
+		2, //and
+		2, //or
+		1, //not
+		2, //hyperbola
+		2, //paraboloid
 	};
 	setNFunctionArguments(n_argument_operation, len);
 	setGenes(basic_genes_types, len);
@@ -225,6 +227,8 @@ int Black_and_white_basic_genes::unaryOp(int x, std::string operation) {
 		return (int) tgamma(x)*10;
 	} else if (operation == "not") {
 		return (int) ~x;
+	} else if (operation == "pow") {
+		return (int)pow(x, 2);
 	}
 }
 
@@ -255,5 +259,9 @@ int Black_and_white_basic_genes::binaryOp(int x, int y, std::string operation) {
 		return (int) x & y;
 	} else if (operation == "or") {
 		return (int) x | y;
+	} else if (operation == "hyperbola") {
+		return (int) x^2 - y^2;
+	} else if (operation == "paraboloid") {
+		return (int) x^2 + y^2;
 	}
 }

@@ -36,7 +36,9 @@ protected:
     wxGrid* grid;
     std::vector<wxSlider*> sliders;
     wxButton* evaluate;
+    wxStaticText* TextGeneration;
 
+    int generation;
     int population_size;
 
 private:
@@ -111,6 +113,7 @@ void InitialFrame::OnAbout(wxCommandEvent& event)
 
 void InitialFrame::OnStart(wxCommandEvent& event)
 {
+    generation = 0;
     population_size = atoi(this->TextCtrl1->GetValue());
     int depth = atoi(this->TextCtrl2->GetValue());
     this->controller = Controller(population_size, depth, this->CheckBox->IsChecked());
@@ -166,6 +169,9 @@ void InitialFrame::OnStart(wxCommandEvent& event)
 
     evaluate = new wxButton(this, EVALUATE, _T("Evaluate"), wxPoint(10, 150+30*population_size), wxSize(80, 30));
     Bind(wxEVT_BUTTON, &InitialFrame::OnEvaluate, this, EVALUATE);
+
+    new wxStaticText(this, wxID_ANY, _("Current\ngeneration: "), wxPoint(10, 200 + 30 * population_size), wxSize(60, 60), 0, _T("ID_TEXTGEN"));
+    TextGeneration = new wxStaticText(this, wxID_ANY, _(std::to_string(generation)), wxPoint(100, 215 + 30 * population_size), wxSize(30, 20), 0, _T("ID_TEXTGEN"));
 }
 
 void InitialFrame::OnEvaluate(wxCommandEvent& event)
@@ -184,4 +190,8 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
         grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
     }
     grid->ForceRefresh();
+
+    generation++;
+    TextGeneration->SetLabel(std::to_string(generation));
+    TextGeneration->Refresh();
 }

@@ -3,7 +3,7 @@
 #include <vector>
 
 Color_basic_genes::Color_basic_genes() {
-	int len = 18;
+	int len = 15;
 	std::string* basic_genes_types = new std::string[len]{
 		"sqrt",
 		"+",
@@ -13,37 +13,39 @@ Color_basic_genes::Color_basic_genes() {
 		"xor",
 		"/",
 		"*",
-		"tanh",
 		"pow",
-		"log",
+		//"log",
 		"hypot",
-		"gamma",
+		//"gamma",
 		"max",
 		"min",
 		"and",
 		"or",
 		"not",
+	//	"hyperbola",
+	//	"paraboloid",
 	};
 	//tells if the operation, in the same position, is unary or binary
 	int* n_argument_operation = new int[len] {
-		1,
-		2,
-		2,
-		1,
-		1,
-		2,
-		2,
-		2,
-		1,
-		2,
-		1,
-		2,
-		1,
-		2,
-		2,
-		2,
-		2,
-		1,
+		1, //sqrt
+		2, //+
+		2, //-
+		1, //sin
+		1, //cos
+		2, //xor
+		2, // /
+		2, // *
+		1, // pow
+	//	1, //log
+		2, //hypot
+	//	1, //gamma
+		2, //max
+		2, //min
+		2, //and
+		2, //or
+		1, //not
+	//	2, //hyperbola
+	//	2, //paraboloid
 	};
 	setNFunctionArguments(n_argument_operation, len);
 	setGenes(basic_genes_types, len);
@@ -58,7 +60,16 @@ void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image
 	for (int i = 0; i < dim; i++) {
 		for (int j = 0; j < dim*3; j++) {
 			int r = 0;
-			phenotype[i][j] = (abs(this->eval(i, j, individual->getGenotype(), &r)) % 255);
+			int c = j % 3;
+			if (c == 0) {
+				phenotype[i][j] = (abs(this->eval(i, j, individual->getGenotype(), &r)) % 255);
+			}
+			else if (c == 1) {
+				phenotype[i][j] = (abs(this->eval(i+200, j+200, individual->getGenotype(), &r)) % 255);
+			} 
+			else if (c == 2) {
+				phenotype[i][j] = (abs(this->eval(i+400, j+400, individual->getGenotype(), &r)) % 255);
+			}
 		}
 	}
 
@@ -126,6 +137,9 @@ int Color_basic_genes::unaryOp(int x, std::string operation) {
 	else if (operation == "not") {
 		return (int)~x;
 	}
+	else if (operation == "pow") {
+		return (int)pow(x, 2);
+	}
 }
 
 int Color_basic_genes::binaryOp(int x, int y, std::string operation) {
@@ -166,5 +180,9 @@ int Color_basic_genes::binaryOp(int x, int y, std::string operation) {
 	}
 	else if (operation == "or") {
 		return (int)x | y;
+	} else if (operation == "hyperbola") {
+		return (int) x^2 - y^2;
+	} else if (operation == "paraboloid") {
+		return (int) x^2 + y^2;
 	}
 }
