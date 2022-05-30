@@ -6,7 +6,7 @@
 class Controller {
 	public:
 		Controller();
-		Controller(int, int);
+		Controller(int, int, bool);
 		std::vector<Image> generateImages();
 		void evaluate(std::vector<int>);
 	private:

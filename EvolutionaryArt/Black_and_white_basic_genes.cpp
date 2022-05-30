@@ -3,7 +3,7 @@
 #include <vector>
 
 Black_and_white_basic_genes::Black_and_white_basic_genes() {
-	int len = 13;
+	int len = 18;
 	std::string* basic_genes_types = new std::string[len]{
 		"sqrt",
 		"+",
@@ -18,6 +18,11 @@ Black_and_white_basic_genes::Black_and_white_basic_genes() {
 		"log",
 		"hypot",
 		"gamma",
+		"max",
+		"min",
+		"and",
+		"or",
+		"not",
 	};
 	//tells if the operation, in the same position, is unary or binary
 	int* n_argument_operation = new int[len] {
@@ -32,6 +37,11 @@ Black_and_white_basic_genes::Black_and_white_basic_genes() {
 		1,
 		2,
 		1,
+		2,
+		1,
+		2,
+		2,
+		2,
 		2,
 		1,
 	};
@@ -213,6 +223,8 @@ int Black_and_white_basic_genes::unaryOp(int x, std::string operation) {
 		}
 	} else if (operation == "gamma") {
 		return (int) tgamma(x)*10;
+	} else if (operation == "not") {
+		return (int) ~x;
 	}
 }
 
@@ -233,9 +245,15 @@ int Black_and_white_basic_genes::binaryOp(int x, int y, std::string operation) {
 		return (int) x * y;
 	} else if (operation == "pow") {
 		return (int)pow(x, y);
-	}
-	else if (operation == "hypot") {
+	} else if (operation == "hypot") {
 		return (int)hypot(x, y);
+	} else if (operation == "max") {
+		return (int) std::max(x, y);
+	} else if (operation == "min") {
+		return (int)std::min(x, y);
+	} else if (operation == "and") {
+		return (int) x & y;
+	} else if (operation == "or") {
+		return (int) x | y;
 	}
-
 }

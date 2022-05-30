@@ -3,7 +3,7 @@
 #include <vector>
 
 Color_basic_genes::Color_basic_genes() {
-	int len = 13;
+	int len = 18;
 	std::string* basic_genes_types = new std::string[len]{
 		"sqrt",
 		"+",
@@ -18,13 +18,18 @@ Color_basic_genes::Color_basic_genes() {
 		"log",
 		"hypot",
 		"gamma",
+		"max",
+		"min",
+		"and",
+		"or",
+		"not",
 	};
 	//tells if the operation, in the same position, is unary or binary
 	int* n_argument_operation = new int[len] {
 		1,
 		2,
 		2,
-		1,			
+		1,
 		1,
 		2,
 		2,
@@ -32,6 +37,11 @@ Color_basic_genes::Color_basic_genes() {
 		1,
 		2,
 		1,
+		2,
+		1,
+		2,
+		2,
+		2,
 		2,
 		1,
 	};
@@ -40,29 +50,17 @@ Color_basic_genes::Color_basic_genes() {
 }
 
 void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image* image) {
-	int dim = 300*3;
+	int dim = 200;
 	std::string header = { "P3" }; //RGB scale image
-	//std::vector<int> info = { dim/3, dim/3, 255 }; // 255x255 image with color range between 0 and 254
-	std::vector<std::vector<int>> phenotype(dim, std::vector<int>(dim));
+	std::vector<int> info = { dim, dim, 255 }; // 255x255 image with color range between 0 and 254
+	std::vector<std::vector<int>> phenotype(dim, std::vector<int>(dim*3));
 
 	for (int i = 0; i < dim; i++) {
-		for (int j = 0; j < dim; j++) {
+		for (int j = 0; j < dim*3; j++) {
 			int r = 0;
 			phenotype[i][j] = (abs(this->eval(i, j, individual->getGenotype(), &r)) % 255);
 		}
 	}
-
-	//max: NOTE:this elimanet all balck images that would have a value, but also eliminate images with dark tones
-	int max = 0;
-	for (int i = 0; i < dim; i++) {
-		for (int j = 0; j < dim; j++) {
-			if (phenotype[i][j] > max) {
-				max = phenotype[i][j];
-			}
-		}
-	}
-
-	std::vector<int> info = { dim / 3, dim / 3, max + 10 };
 
 	image->setHeader(header);
 	image->setInformation(info);
@@ -125,6 +123,9 @@ int Color_basic_genes::unaryOp(int x, std::string operation) {
 	else if (operation == "gamma") {
 		return (int)tgamma(x) * 10;
 	}
+	else if (operation == "not") {
+		return (int)~x;
+	}
 }
 
 int Color_basic_genes::binaryOp(int x, int y, std::string operation) {
@@ -154,5 +155,16 @@ int Color_basic_genes::binaryOp(int x, int y, std::string operation) {
 	else if (operation == "hypot") {
 		return (int)hypot(x, y);
 	}
-
+	else if (operation == "max") {
+		return (int)std::max(x, y);
+	}
+	else if (operation == "min") {
+		return (int)std::min(x, y);
+	}
+	else if (operation == "and") {
+		return (int)x & y;
+	}
+	else if (operation == "or") {
+		return (int)x | y;
+	}
 }

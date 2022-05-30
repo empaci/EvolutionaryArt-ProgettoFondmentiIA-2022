@@ -60,6 +60,9 @@
     <ClInclude Include="myImageGridCellRenderer.h">
       <Filter>ui</Filter>
     </ClInclude>
+    <ClInclude Include="myColoredImageGridCellRenderer.h">
+      <Filter>ui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Individual.cpp">
@@ -93,6 +96,9 @@
       <Filter>controller</Filter>
     </ClCompile>
     <ClCompile Include="myImageGridCellRenderer.cpp">
+      <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="myColoredImageGridCellRenderer.cpp">
       <Filter>ui</Filter>
     </ClCompile>
   </ItemGroup>

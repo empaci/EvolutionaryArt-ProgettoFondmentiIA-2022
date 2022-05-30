@@ -59,7 +59,7 @@ void GeneticOperation::node_insertion(Individual* individual, Genes* genes) {
 		Node* right_child = new Node();
 		int r = (std::rand() % (2 + 1));
 
-		randomlyGenerateGenotype(std::rand() % 4, genes, right_child);
+		randomlyGenerateGenotype(std::rand() % 3, genes, right_child);
 
 		new_element->setRightChildren(right_child);
 	}

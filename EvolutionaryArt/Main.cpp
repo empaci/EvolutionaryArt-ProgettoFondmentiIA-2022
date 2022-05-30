@@ -8,6 +8,7 @@
 
 #include <wx/wxprec.h>
 #include "myImageGridCellRenderer.h"
+#include "myColoredImageGridCellRenderer.h"
 
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
@@ -31,6 +32,7 @@ protected:
     wxTextCtrl* TextCtrl1;
     wxStaticText* Text2;
     wxTextCtrl* TextCtrl2;
+    wxCheckBox* CheckBox;
     wxGrid* grid;
     std::vector<wxSlider*> sliders;
     wxButton* evaluate;
@@ -51,7 +53,8 @@ enum
     IN_POP_SIZE = 102,
     IN_DEPTH = 103,
     EVALUATE = 104,
-    IN_SLIDER = 105,
+    COLOR_SELECTION = 105,
+    IN_SLIDER = 106,
 };
 
 wxIMPLEMENT_APP(MyApp);
@@ -82,8 +85,9 @@ InitialFrame::InitialFrame()
     this->TextCtrl1 = new wxTextCtrl(this, IN_POP_SIZE, _("20"), wxPoint(120, 30), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     this->Text2 = new wxStaticText(this, wxID_ANY, _("Individual depth: "), wxPoint(10, 60), wxSize(100, 30), 0, _T("ID_TEXT2"));
     this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("2"), wxPoint(120, 60), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
-    
-    new wxButton(this, START, _T("Start"), wxPoint(10, 90), wxSize(80, 30));
+    this->CheckBox = new wxCheckBox(this, COLOR_SELECTION, _("Generate colored Images"), wxPoint(10, 90), wxSize(200, 30), 0, wxDefaultValidator, _T("ID_CHECKBOX"));
+
+    new wxButton(this, START, _T("Start"), wxPoint(10, 120), wxSize(80, 30));
 
     Bind(wxEVT_MENU, &InitialFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &InitialFrame::OnExit, this, wxID_EXIT);
@@ -109,13 +113,18 @@ void InitialFrame::OnStart(wxCommandEvent& event)
 {
     population_size = atoi(this->TextCtrl1->GetValue());
     int depth = atoi(this->TextCtrl2->GetValue());
-    this->controller = Controller(population_size, depth);
+    this->controller = Controller(population_size, depth, this->CheckBox->IsChecked());
     std::vector<Image> images = controller.generateImages();
 
     grid = new wxGrid(this, wxID_ANY, wxPoint(130, 130), wxSize(1000, 800));
 
-    grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
-    
+
+    if (this->CheckBox->IsChecked()) {
+        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images));
+    }
+    else {
+        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
+    }
     //grid->SetCellRenderer(0, 0, new myImageGridCellRenderer);
     grid->SetRowLabelSize(0);
     grid->SetColLabelSize(0);
@@ -149,13 +158,13 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     */
     
     for (int i = 0; i < population_size; i++) {
-        new wxStaticText(this, wxID_ANY, _(std::to_string(i)), wxPoint(10, 125+30*i), wxSize(20, 20), 0, _T("ID_TEXTI"));
-        wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 5, 1, 10, wxPoint(25, 120+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
+        new wxStaticText(this, wxID_ANY, _(std::to_string(i)), wxPoint(10, 155+30*i), wxSize(20, 20), 0, _T("ID_TEXTI"));
+        wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 5, 1, 10, wxPoint(25, 150+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
         sliders.push_back(slider);
     }
     
 
-    evaluate = new wxButton(this, EVALUATE, _T("Evaluate"), wxPoint(10, 120+30*population_size), wxSize(80, 30));
+    evaluate = new wxButton(this, EVALUATE, _T("Evaluate"), wxPoint(10, 150+30*population_size), wxSize(80, 30));
     Bind(wxEVT_BUTTON, &InitialFrame::OnEvaluate, this, EVALUATE);
 }
 
@@ -168,6 +177,11 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
     }
     controller.evaluate(fitness_values);
     std::vector<Image> images = controller.generateImages();
-    grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
+    if (this->CheckBox->IsChecked()) {
+        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images));
+    }
+    else {
+        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
+    }
     grid->ForceRefresh();
 }
