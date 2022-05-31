@@ -36,6 +36,10 @@ class Genes {
 			"max",
 			"min",
 			"noise",
+			"noise2",
+			"cellular",
+			"cellular2",
+			"cellular3",
 		};
 		//tells if the operation, in the same position, is unary or binary
 		std::vector<int> n_function_arguments = {
@@ -62,11 +66,19 @@ class Genes {
 			2, //arc length
 			2, //max
 			2, //min
-			2, //noise
+			2, //noise opensimplex
+			2, //noise type 2
+			2, //cellular noise
+			2, //cellular noise type 2
+			2, //cellular noise type 3
 		};
 	protected:
 		int dim = 600;
 		FastNoiseLite noise;
+		FastNoiseLite noise_2;
+		FastNoiseLite cellular_noise;
+		FastNoiseLite cellular_noise_2;
+		FastNoiseLite cellular_noise_3;
 	public:
 		virtual void convertGenotypeToPhenotype(Individual*, Image*) = 0;
 

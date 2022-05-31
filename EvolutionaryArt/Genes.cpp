@@ -3,6 +3,38 @@
 
 Genes::Genes() {
 	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+	noise.SetFractalGain(FastNoiseLite::FractalType_Ridged);
+	noise.SetFractalGain(0.9);
+	noise.SetFractalLacunarity(2);
+	noise.SetFractalOctaves(3);
+	noise.SetFractalWeightedStrength(0.5);
+
+	noise_2.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
+	noise_2.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
+	noise_2.SetDomainWarpAmp(50);
+	noise_2.SetFractalGain(FastNoiseLite::FractalType_DomainWarpProgressive);
+
+	cellular_noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+	cellular_noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
+
+	cellular_noise_2.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+	cellular_noise_2.SetFractalGain(FastNoiseLite::FractalType_PingPong);
+	cellular_noise_2.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Euclidean);
+	cellular_noise_2.SetDomainWarpAmp(50);
+	cellular_noise_2.SetFractalOctaves(5);
+	cellular_noise_2.SetFractalLacunarity(2);
+	cellular_noise_2.SetFractalGain(0.6);
+
+	cellular_noise_3.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+	cellular_noise_3.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
+	cellular_noise_3.SetDomainWarpType(FastNoiseLite::DomainWarpType_OpenSimplex2);
+	cellular_noise_3.SetDomainWarpAmp(100);
+
+	noise.SetSeed(std::rand());
+	noise_2.SetSeed(std::rand());
+	cellular_noise.SetSeed(std::rand());
+	cellular_noise_2.SetSeed(std::rand());
+	cellular_noise_3.SetSeed(std::rand());
 }
 
 std::string Genes::getGene(int i) {
@@ -129,7 +161,19 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 		return (int)fmin(x, y);
 	}
 	else if (operation == "noise") {
-		return (int) noise.GetNoise((float)x, (float)y);;
+		return (int) ((noise.GetNoise((float)x, (float)y) + 1 )* 255/2);
+	}
+	else if (operation == "noise2") {
+		return (int) ((noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+	}
+	else if (operation == "cellular") {
+		return (int) ((cellular_noise.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+	}
+	else if (operation == "cellular2") {
+		return (int) ((cellular_noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+	}
+	else if (operation == "cellular3") {
+		return (int) ((cellular_noise_3.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
 	}
 	return x;
 }
