@@ -7,7 +7,7 @@ mySlider::mySlider(wxWindow* parent, wxWindowID id, int value, int minValue, int
 }
 
 void mySlider::OnMouseOver(wxMouseEvent& event) {
-	this->grid->SetCellBackgroundColour(i / 5, i % 5, *wxBLUE);
+	this->grid->SetCellBackgroundColour(i / 5, i % 5, *wxRED);
 	this->grid->ForceRefresh();
 }
 

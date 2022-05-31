@@ -85,9 +85,9 @@ InitialFrame::InitialFrame()
     SetMenuBar(menuBar);
 
     this->Text1 = new wxStaticText(this, wxID_ANY, _("Population size: "), wxPoint(10, 30), wxSize(100, 30), 0, _T("ID_TEXT1"));
-    this->TextCtrl1 = new wxTextCtrl(this, IN_POP_SIZE, _("20"), wxPoint(120, 30), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    this->TextCtrl1 = new wxTextCtrl(this, IN_POP_SIZE, _("20"), wxPoint(115, 25), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     this->Text2 = new wxStaticText(this, wxID_ANY, _("Individual depth: "), wxPoint(10, 60), wxSize(100, 30), 0, _T("ID_TEXT2"));
-    this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("2"), wxPoint(120, 60), wxSize(30, 30), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("2"), wxPoint(115, 55), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
     this->CheckBox = new wxCheckBox(this, COLOR_SELECTION, _("Generate colored Images"), wxPoint(10, 90), wxSize(200, 30), 0, wxDefaultValidator, _T("ID_CHECKBOX"));
 
     new wxButton(this, START, _T("Start"), wxPoint(10, 120), wxSize(80, 30));
