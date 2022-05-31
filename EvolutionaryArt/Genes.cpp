@@ -53,11 +53,14 @@ int Genes::unaryOp(int x, std::string operation) {
 	else if (operation == "sqrt") {
 		return (int)sqrt(abs(x));
 	}
+	else if (operation == "cbrt") {
+		return (int)cbrt(abs(x));
+	}
 	else if (operation == "log") {
 		return (int)(log(abs(x)) * 100);
 	}
 	else if (operation == "gamma") {
-		return (int)tgamma(x) * 10;
+		return (int)tgamma(((float)x)/50) * 10;
 	}
 	else if (operation == "not") {
 		return (int)~x;
@@ -67,7 +70,16 @@ int Genes::unaryOp(int x, std::string operation) {
 	}
 	else if (operation == "exp") {
 		return (int)exp(x);
+	} else if (operation == "exp2") {
+		return (int)exp2(x);
 	}
+	else if (operation == "erf") {
+		return (int)erf(((float)x)/100)*100;
+	}
+	else if (operation == "lgamma") {
+		return (int)lgamma(((float)x) / 50)*10;
+	}
+	return x;
 }
 
 int Genes::binaryOp(int x, int y, std::string operation) {
@@ -103,4 +115,14 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 	else if (operation == "or") {
 		return (int)x | y;
 	}
+	else if (operation == "arclength") {
+		return (int)((float)x / 360) * 2 * 3.14159 * y;
+	}
+	else if (operation == "max") {
+		return (int) fmax(x, y);
+	}
+	else if (operation == "min") {
+		return (int)fmin(x, y);
+	}
+	return x;
 }

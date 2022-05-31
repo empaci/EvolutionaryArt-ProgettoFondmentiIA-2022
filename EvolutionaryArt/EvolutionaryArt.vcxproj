@@ -140,6 +140,7 @@
     <ClInclude Include="Main.h" />
     <ClInclude Include="myColoredImageGridCellRenderer.h" />
     <ClInclude Include="myImageGridCellRenderer.h" />
+    <ClInclude Include="mySlider.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Population.h" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="myColoredImageGridCellRenderer.cpp" />
     <ClCompile Include="myImageGridCellRenderer.cpp" />
+    <ClCompile Include="mySlider.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Population.cpp" />
   </ItemGroup>

@@ -12,6 +12,7 @@ class Genes {
 	private:
 		std::vector<std::string> genes_types = {
 			"sqrt",
+			"cbrt",
 			"+",
 			"-",
 			"sin",
@@ -27,10 +28,17 @@ class Genes {
 			"or",
 			"not",
 			"exp",
+			"exp2",
+			"lgamma",
+			"erf",
+			"arclength",
+			"max",
+			"min",
 		};
 		//tells if the operation, in the same position, is unary or binary
 		std::vector<int> n_function_arguments = {
 			1, //sqrt
+			1, //cbrt
 			2, //+
 			2, //-
 			1, //sin
@@ -46,6 +54,12 @@ class Genes {
 			2, //or
 			1, //not
 			1, //exp
+			1, //exp2 (2^x)
+			1, //lgamma
+			1, //erf
+			2, //arc length
+			2, //max
+			2, //min
 		};
 	protected:
 		int dim = 600;

@@ -9,6 +9,7 @@
 #include <wx/wxprec.h>
 #include "myImageGridCellRenderer.h"
 #include "myColoredImageGridCellRenderer.h"
+#include "mySlider.h"
 
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
@@ -34,7 +35,7 @@ protected:
     wxTextCtrl* TextCtrl2;
     wxCheckBox* CheckBox;
     wxGrid* grid;
-    std::vector<wxSlider*> sliders;
+    std::vector<mySlider*> sliders;
     wxButton* evaluate;
     wxStaticText* TextGeneration;
 
@@ -94,10 +95,6 @@ InitialFrame::InitialFrame()
     Bind(wxEVT_MENU, &InitialFrame::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &InitialFrame::OnExit, this, wxID_EXIT);
     Bind(wxEVT_BUTTON, &InitialFrame::OnStart, this, START);
-
-    //grid = new wxGrid(this, wxID_ANY, wxPoint(10, 140), wxSize(800, 600));
-    //grid->Fit(); // Set the parent frame client size to fit the grid 
-    //this->SetClientSize(grid->GetSize());
 }
 
 void InitialFrame::OnExit(wxCommandEvent& event)
@@ -128,7 +125,6 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     else {
         grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
     }
-    //grid->SetCellRenderer(0, 0, new myImageGridCellRenderer);
     grid->SetRowLabelSize(0);
     grid->SetColLabelSize(0);
 
@@ -150,19 +146,11 @@ void InitialFrame::OnStart(wxCommandEvent& event)
             grid->SetReadOnly(j, i);
         }
     }
-    /*
-    int img_size = 200;
-    for (int i = 0; i < 5; i++) { //col
-        for (int j = 0; j < population_size / 5; j++) { //row
-            wxSlider* slider = new wxSlider(this, IN_SLIDER + i, 5, 1, 10, wxPoint((j+1)*img_size + 10, (10+img_size)*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
-            sliders.push_back(slider);
-        }
-    }
-    */
     
     for (int i = 0; i < population_size; i++) {
         new wxStaticText(this, wxID_ANY, _(std::to_string(i)), wxPoint(10, 155+30*i), wxSize(20, 20), 0, _T("ID_TEXTI"));
-        wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 1, 1, 10, wxPoint(25, 150+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
+        //wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 1, 1, 10, wxPoint(25, 150+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
+        mySlider* slider = new mySlider(this, IN_SLIDER + i, 1, 1, 10, wxPoint(25, 150 + 30 * i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"), grid, i);
         sliders.push_back(slider);
     }
     
