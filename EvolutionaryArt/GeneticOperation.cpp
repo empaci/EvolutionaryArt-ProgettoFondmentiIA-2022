@@ -19,7 +19,7 @@ Node* GeneticOperation::randomlyGenerateGenotype(int depth, Genes* genes, Node* 
 	}
 	else {
 		//leaf nodes; they can have a constant, x and y
-		int r = (std::rand() % (2 + 1));
+		int r = (std::rand() % 3);
 		
 		if (r == 0) {
 			head->setValues((std::rand() % (100 + 1)), (std::rand() % (100 + 1)), (std::rand() % (100 + 1))); //the constant is a random number between 0 and 20

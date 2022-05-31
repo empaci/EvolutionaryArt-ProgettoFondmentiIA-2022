@@ -10,7 +10,7 @@ void myImageGridCellRenderer::Draw(wxGrid& grid, wxGridCellAttr& attr, wxDC& dc,
 	
 	wxGridCellStringRenderer::Draw(grid, attr, dc, rect, row, col, isSelected);
 
-	int dim = 300;
+	int dim = 600;
 	int p = 0;
 
 	p = col + row * 5;

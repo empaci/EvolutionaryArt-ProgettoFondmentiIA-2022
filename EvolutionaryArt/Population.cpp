@@ -119,13 +119,15 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 
 		GeneticOperation::crossover(i1, i2);
 
-		apply_random_mutation(i1);
-		apply_random_mutation(i2);
-		//apply_random_mutation(i1);
-		//apply_random_mutation(i2);
-
+		if ((std::rand() / (RAND_MAX)) <= 0.4) {
+			apply_random_mutation(i1); 
+		}
 		children.push_back(*i1);
+		
 		if (this->population_size > parents.size() + children.size()) {
+			if ((std::rand() / (RAND_MAX)) <= 0.4) {
+				apply_random_mutation(i2);
+			}
 			children.push_back(*i2);
 		}
 	}
