@@ -122,13 +122,17 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 		if ((std::rand() / (RAND_MAX)) <= 0.4) {
 			apply_random_mutation(i1); 
 		}
-		children.push_back(*i1);
+		if (genotypeFilter(i1)) {
+			children.push_back(*i1);
+		}
 		
 		if (this->population_size > parents.size() + children.size()) {
 			if ((std::rand() / (RAND_MAX)) <= 0.4) {
 				apply_random_mutation(i2);
 			}
-			children.push_back(*i2);
+			if (genotypeFilter(i2)) {
+				children.push_back(*i2);
+			}
 		}
 	}
 
@@ -155,6 +159,37 @@ void Population::apply_random_mutation(Individual* i) {
 		break;
 	}
 }
+
+bool Population::genotypeFilter(Individual i) {
+	Node* root = i.getGenotype();
+	return checkXandY(root);
+}
+
+bool Population::checkXandY(Node* head) {
+	bool* thereIsX = new bool(false);
+	bool* thereIsY = new bool(false);
+	checkXandYAux(head, thereIsX, thereIsY);
+	return (*thereIsX && *thereIsY);
+}
+
+void Population::checkXandYAux(Node* head, bool* thereIsX, bool* thereIsY) {
+	if (head) {
+		if (!head->isLeaf()) {
+			checkXandYAux(head->getLeftChild(), thereIsX, thereIsY);
+			if (head->getRightChild()) {
+				checkXandYAux(head->getRightChild(), thereIsX, thereIsY);
+			}
+		} else{
+			if (head->getVar()) {
+				*thereIsX = true;
+			}
+			else if (!head->getVar() && head->getValue() == -1) {
+				*thereIsY = true;
+			}
+		}
+	}
+}
+
 
 void Population::replacement(std::vector<Individual> population) {
 	this->individuals = population;

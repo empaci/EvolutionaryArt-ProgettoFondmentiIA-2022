@@ -10,6 +10,8 @@ class Population {
 		std::vector<Individual> individuals;
 		int population_size;
 		Genes* genes;
+
+		void checkXandYAux(Node*, bool*, bool*);
 	public:
 		Population(int, int, Genes*);
 		void setGenes(Genes*);
@@ -20,6 +22,8 @@ class Population {
 		Individual* getRandomIndividualWithFitness(int fitness);
 		std::vector<Individual> recombination_and_mutation(std::vector<Individual>);
 		void apply_random_mutation(Individual*);
+		bool genotypeFilter(Individual);
+		bool checkXandY(Node*);
 		void replacement(std::vector<Individual>);
 		std::vector<Image> saveImages();
 };

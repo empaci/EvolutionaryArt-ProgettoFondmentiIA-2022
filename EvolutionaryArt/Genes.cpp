@@ -1,6 +1,10 @@
 #include "Genes.h"
 
 
+Genes::Genes() {
+	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+}
+
 std::string Genes::getGene(int i) {
 	return genes_types[i];
 }
@@ -123,6 +127,9 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 	}
 	else if (operation == "min") {
 		return (int)fmin(x, y);
+	}
+	else if (operation == "noise") {
+		return (int) noise.GetNoise((float)x, (float)y);;
 	}
 	return x;
 }

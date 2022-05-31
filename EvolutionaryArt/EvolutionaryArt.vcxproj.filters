@@ -25,6 +25,9 @@
     <Filter Include="Images">
       <UniqueIdentifier>{45ddc8b1-8189-4a77-8a8d-b134658ce774}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Fastnoise">
+      <UniqueIdentifier>{86c09ce6-e360-4163-948d-d790697cb4af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Individual.h">
@@ -65,6 +68,9 @@
     </ClInclude>
     <ClInclude Include="mySlider.h">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="FastNoiseLite.h">
+      <Filter>Fastnoise</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
