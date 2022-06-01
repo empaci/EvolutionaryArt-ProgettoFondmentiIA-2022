@@ -29,6 +29,7 @@ bool Controller::getColor() {
 
 void Controller::changeGenes() {
 	this->population->setGenes(new Color_basic_genes());
+	this->frozenIndividuals->changeGenes();
 }
 
 void Controller::evaluate(std::vector<int> fitness_values) {

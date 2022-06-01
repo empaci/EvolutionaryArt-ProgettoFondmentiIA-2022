@@ -96,6 +96,12 @@ int Genes::unaryOp(int x, std::string operation) {
 	if (operation == "sin") {
 		return (int)(sin(x) * 100);
 	}
+	if (operation == "cos") {
+		return (int)(cos(x) * 100);
+	}
+	if (operation == "tan") {
+		return (int)(tan(x*3.14/180) * 100);
+	}
 	else if (operation == "sqrt") {
 		return (int)sqrt(abs(x));
 	}

@@ -53,6 +53,9 @@ private:
     void OnStart(wxCommandEvent& event);
     void OnEvaluate(wxCommandEvent& event);
     void OnUnfreeze(wxCommandEvent& event);
+    void OnClick(wxGridEvent& event);
+
+    DECLARE_EVENT_TABLE()
 };
 
 enum
@@ -66,7 +69,8 @@ enum
     IN_POP_IND = 106,
     IN_FR_IND = 107,
     COLOR_SELECTION = 108,
-    IN_SLIDER = 109,
+    CLICK = 109,
+    IN_SLIDER = 110,
 };
 
 wxIMPLEMENT_APP(MyApp);
@@ -117,6 +121,33 @@ void InitialFrame::OnAbout(wxCommandEvent& event)
         "About Evolutionary Art", wxOK | wxICON_INFORMATION);
 }
 
+void InitialFrame::OnClick(wxGridEvent& event) {
+
+    int row = -1;
+    int col = -1;
+    int pos = -1;
+    wxGridCellCoords position;
+
+    wxGrid* ptr = (wxGrid*)event.GetEventObject();
+    if (ptr == grid)
+    {
+        position = grid->XYToCell(wxGetMousePosition());
+        row = position.GetRow();
+        col = position.GetCol();
+        pos = col + row * 5;
+        popIndividual->SetValue(_(std::to_string(pos)));
+    }
+    else if (ptr == frozenGrid)
+    {
+        frozenGrid->XYToCell(wxGetMousePosition());
+        row = position.GetRow();
+        col = position.GetCol();
+        pos = col + row * 2;
+        frozenIndividual->SetValue(_(std::to_string(pos)));
+    }
+
+}
+
 void InitialFrame::OnStart(wxCommandEvent& event)
 {
     generation = 0;
@@ -149,7 +180,7 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     for (int i = 0; i < population_size / 5; i++) {
         grid->SetRowSize(i, 205);
     }
-    
+ 
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < population_size / 5; j++) {
             grid->SetReadOnly(j, i);
@@ -265,3 +296,7 @@ void InitialFrame::OnUnfreeze(wxCommandEvent& event) {
     }
     grid->ForceRefresh();
 }
+
+BEGIN_EVENT_TABLE(InitialFrame, wxFrame)
+    EVT_GRID_CELL_LEFT_CLICK(InitialFrame::OnClick)
+END_EVENT_TABLE()
