@@ -39,6 +39,10 @@ protected:
     wxButton* evaluate;
     wxStaticText* TextGeneration;
     wxButton* unfreeze;
+    wxStaticText* TextPopIndividual;
+    wxTextCtrl*  popIndividual;
+    wxStaticText* TextFrozenIndividual;
+    wxTextCtrl* frozenIndividual;
 
     int generation;
     int population_size;
@@ -59,8 +63,10 @@ enum
     IN_DEPTH = 103,
     EVALUATE = 104,
     UNFREEZE = 105,
-    COLOR_SELECTION = 106,
-    IN_SLIDER = 107,
+    IN_POP_IND = 106,
+    IN_FR_IND = 107,
+    COLOR_SELECTION = 108,
+    IN_SLIDER = 109,
 };
 
 wxIMPLEMENT_APP(MyApp);
@@ -179,7 +185,7 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     for (int i = 0; i < 2; i++) {
         frozenGrid->SetColSize(i, 205);
     }
-    for (int i = 0; i < population_size / 3; i++) {
+    for (int i = 0; i < 3; i++) {
         frozenGrid->SetRowSize(i, 205);
     }
 
@@ -197,8 +203,12 @@ void InitialFrame::OnStart(wxCommandEvent& event)
     frozenGrid->DisableCellEditControl();
     frozenGrid->DisableDragGridSize();
 
-   // unfreeze = new wxButton(this, EVALUATE, _T("Unfreeze"), wxPoint(100 + 5 * 205 + 102, 150 + 3 * 205), wxSize(80, 30));
-   // Bind(wxEVT_BUTTON, &InitialFrame::OnUnfreeze, this, UNFREEZE);
+    unfreeze = new wxButton(this, UNFREEZE, _T("Unfreeze"), wxPoint(100 + 5 * 205 + 102, 150 + 3 * 205), wxSize(80, 30));
+    TextPopIndividual = new wxStaticText(this, wxID_ANY, _("Pop. ind."), wxPoint(100 + 5 * 205 + 102 + 100, 150 + 3 * 205), wxSize(60, 20), 0, _T("ID_TEXTPOPIND"));
+    popIndividual = new wxTextCtrl(this, IN_POP_IND, _("0"), wxPoint(100 + 5 * 205 + 102 + 180, 150 + 3 * 205), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRLPOP"));
+    TextFrozenIndividual = new wxStaticText(this, wxID_ANY, _("Frozen Ind."), wxPoint(100 + 5 * 205 + 102 + 100, 150 + 3 * 205 + 30), wxSize(60, 20), 0, _T("ID_TEXTFROZIND"));
+    frozenIndividual = new wxTextCtrl(this, IN_FR_IND, _("0"), wxPoint(100 + 5 * 205 + 102 + 180, 150 + 3 * 205 + 30), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRLFR"));
+    Bind(wxEVT_BUTTON, &InitialFrame::OnUnfreeze, this, UNFREEZE);
 }
 
 void InitialFrame::OnEvaluate(wxCommandEvent& event)
@@ -242,5 +252,16 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
 }
 
 void InitialFrame::OnUnfreeze(wxCommandEvent& event) {
-
+    int pop = atoi(this->popIndividual->GetValue());
+    int frozen = atoi(this->frozenIndividual->GetValue());
+    controller.unfreeze(pop, frozen);
+    //refresh grid
+    std::vector<Image> images = controller.getTempImages();
+    if (this->CheckBox->IsChecked()) {
+        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images, 5));
+    }
+    else {
+        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images, 5));
+    }
+    grid->ForceRefresh();
 }

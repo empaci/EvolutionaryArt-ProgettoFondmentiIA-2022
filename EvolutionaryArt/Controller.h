@@ -14,6 +14,8 @@ class Controller {
 		void evaluate(std::vector<int>);
 		std::vector<Image> getFrozenImages();
 		int getNFrozenImages();
+		void unfreeze(int, int);
+		std::vector<Image> getTempImages();
 	private:
 		Population* population;
 		FrozenIndividuals* frozenIndividuals;

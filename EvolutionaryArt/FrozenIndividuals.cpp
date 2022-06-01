@@ -44,3 +44,11 @@ std::vector<Image> FrozenIndividuals::getImages() {
 	}
 	return this->images;
 }
+
+Image FrozenIndividuals::getImageAt(int pos) {
+	return this->images[pos];
+}
+
+Individual* FrozenIndividuals::getIndividualAt(int pos) {
+	return &(this->individuals[pos]);
+}

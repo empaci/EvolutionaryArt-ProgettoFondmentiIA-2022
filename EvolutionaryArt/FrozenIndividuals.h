@@ -11,6 +11,8 @@ class FrozenIndividuals {
 		void pushImage(Image);
 		std::vector<Image> getImages();
 		int getNumImages();
+		Individual* getIndividualAt(int);
+		Image getImageAt(int);
 		void changeGenes();
 	private:
 		std::vector<Individual> individuals;

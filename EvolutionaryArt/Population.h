@@ -27,6 +27,7 @@ class Population {
 		void replacement(std::vector<Individual>);
 		std::vector<Image> saveImages();
 		Individual* getRandomBestIndividual(int*);
+		void setIndividualAt(int, Individual*);
 };
 
 #endif

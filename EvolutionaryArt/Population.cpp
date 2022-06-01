@@ -235,3 +235,7 @@ Individual* Population::getRandomBestIndividual(int* pos) {
 		return nullptr;
 	}
 }
+
+void Population::setIndividualAt(int pos, Individual* i) {
+	this->individuals[pos] = new Individual(i);
+}

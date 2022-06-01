@@ -53,3 +53,12 @@ std::vector<Image> Controller::getFrozenImages() {
 int Controller::getNFrozenImages() {
 	return this->frozenIndividuals->getNumImages();
 }
+
+void Controller::unfreeze(int posPopulation, int posFrozen) {
+	this->population->setIndividualAt(posPopulation, this->frozenIndividuals->getIndividualAt(posFrozen));
+	this->tempImages[posPopulation] = this->frozenIndividuals->getImageAt(posFrozen);
+}
+
+std::vector<Image> Controller::getTempImages() {
+	return this->tempImages;
+}
