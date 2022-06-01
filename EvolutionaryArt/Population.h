@@ -26,6 +26,7 @@ class Population {
 		bool checkXandY(Node*);
 		void replacement(std::vector<Individual>);
 		std::vector<Image> saveImages();
+		Individual* getRandomBestIndividual(int*);
 };
 
 #endif

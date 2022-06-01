@@ -6,6 +6,10 @@ mySlider::mySlider(wxWindow* parent, wxWindowID id, int value, int minValue, int
 	this->i = i;
 }
 
+void mySlider::setGrid(wxGrid* grid) {
+	this->grid = grid;
+}
+
 void mySlider::OnMouseOver(wxMouseEvent& event) {
 	this->grid->SetCellBackgroundColour(i / 5, i % 5, *wxRED);
 	this->grid->ForceRefresh();

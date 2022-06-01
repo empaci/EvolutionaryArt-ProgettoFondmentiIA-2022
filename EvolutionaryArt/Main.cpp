@@ -3,7 +3,6 @@
 #include "Genes.h"
 #include "Black_and_white_basic_genes.h"
 #include <time.h>
-#include "Main.h"
 #include "Controller.h"
 
 #include <wx/wxprec.h>
@@ -35,9 +34,11 @@ protected:
     wxTextCtrl* TextCtrl2;
     wxCheckBox* CheckBox;
     wxGrid* grid;
+    wxGrid* frozenGrid;
     std::vector<mySlider*> sliders;
     wxButton* evaluate;
     wxStaticText* TextGeneration;
+    wxButton* unfreeze;
 
     int generation;
     int population_size;
@@ -47,6 +48,7 @@ private:
     void OnAbout(wxCommandEvent& event);
     void OnStart(wxCommandEvent& event);
     void OnEvaluate(wxCommandEvent& event);
+    void OnUnfreeze(wxCommandEvent& event);
 };
 
 enum
@@ -56,8 +58,9 @@ enum
     IN_POP_SIZE = 102,
     IN_DEPTH = 103,
     EVALUATE = 104,
-    COLOR_SELECTION = 105,
-    IN_SLIDER = 106,
+    UNFREEZE = 105,
+    COLOR_SELECTION = 106,
+    IN_SLIDER = 107,
 };
 
 wxIMPLEMENT_APP(MyApp);
@@ -120,10 +123,10 @@ void InitialFrame::OnStart(wxCommandEvent& event)
 
 
     if (this->CheckBox->IsChecked()) {
-        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images));
+        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images, 5));
     }
     else {
-        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
+        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images, 5));
     }
     grid->SetRowLabelSize(0);
     grid->SetColLabelSize(0);
@@ -147,11 +150,18 @@ void InitialFrame::OnStart(wxCommandEvent& event)
         }
     }
     
-    for (int i = 0; i < population_size; i++) {
-        new wxStaticText(this, wxID_ANY, _(std::to_string(i)), wxPoint(10, 155+30*i), wxSize(20, 20), 0, _T("ID_TEXTI"));
-        //wxSlider* slider = new wxSlider(this, IN_SLIDER+i, 1, 1, 10, wxPoint(25, 150+30*i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"));
-        mySlider* slider = new mySlider(this, IN_SLIDER + i, 1, 1, 10, wxPoint(25, 150 + 30 * i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"), grid, i);
-        sliders.push_back(slider);
+    if (sliders.size() == population_size) {
+        for (int i = 0; i < population_size; i++) {
+            sliders[i]->setGrid(grid);
+        }
+    }
+    else {
+
+        for (int i = 0; i < population_size; i++) {
+            new wxStaticText(this, wxID_ANY, _(std::to_string(i)), wxPoint(10, 155 + 30 * i), wxSize(20, 20), 0, _T("ID_TEXTI"));
+            mySlider* slider = new mySlider(this, IN_SLIDER + i, 1, 1, 10, wxPoint(25, 150 + 30 * i), wxSize(100, 30), wxSL_HORIZONTAL, wxDefaultValidator, _T("ID_SLIDER"), grid, i);
+            sliders.push_back(slider);
+        }
     }
     
 
@@ -160,6 +170,35 @@ void InitialFrame::OnStart(wxCommandEvent& event)
 
     new wxStaticText(this, wxID_ANY, _("Current\ngeneration: "), wxPoint(10, 200 + 30 * population_size), wxSize(60, 60), 0, _T("ID_TEXTGEN"));
     TextGeneration = new wxStaticText(this, wxID_ANY, _(std::to_string(generation)), wxPoint(100, 215 + 30 * population_size), wxSize(30, 20), 0, _T("ID_TEXTGEN"));
+
+    //grid for frozen individuals
+
+    frozenGrid = new wxGrid(this, wxID_ANY, wxPoint(200 + 5*205, 130), wxSize(2 * 205, 3 * 205));
+
+    frozenGrid->CreateGrid(3,2);
+    for (int i = 0; i < 2; i++) {
+        frozenGrid->SetColSize(i, 205);
+    }
+    for (int i = 0; i < population_size / 3; i++) {
+        frozenGrid->SetRowSize(i, 205);
+    }
+
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 2; j++) {
+            frozenGrid->SetReadOnly(j, i);
+        }
+    }
+
+    frozenGrid->SetRowLabelSize(0);
+    frozenGrid->SetColLabelSize(0);
+
+    frozenGrid->DisableFocusFromKeyboard();
+    frozenGrid->DisableDragCell();
+    frozenGrid->DisableCellEditControl();
+    frozenGrid->DisableDragGridSize();
+
+   // unfreeze = new wxButton(this, EVALUATE, _T("Unfreeze"), wxPoint(100 + 5 * 205 + 102, 150 + 3 * 205), wxSize(80, 30));
+   // Bind(wxEVT_BUTTON, &InitialFrame::OnUnfreeze, this, UNFREEZE);
 }
 
 void InitialFrame::OnEvaluate(wxCommandEvent& event)
@@ -175,14 +214,33 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
     controller.evaluate(fitness_values);
     std::vector<Image> images = controller.generateImages();
     if (this->CheckBox->IsChecked()) {
-        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images));
+        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images, 5));
     }
     else {
-        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images));
+        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images, 5));
     }
     grid->ForceRefresh();
+
+    //only if a 10 was assigned refresh the frozen grid
+    for (int i = 0; i < population_size; i++) {
+        if (fitness_values[i] == 10) {
+            std::vector<Image> frozen_images = controller.getFrozenImages();
+            if (this->CheckBox->IsChecked()) {
+                frozenGrid->SetDefaultRenderer(new myColoredImageGridCellRenderer(controller.getNFrozenImages(), frozen_images, 2));
+            }
+            else {
+                frozenGrid->SetDefaultRenderer(new myImageGridCellRenderer(controller.getNFrozenImages(), frozen_images, 2));
+            }
+            frozenGrid->ForceRefresh();
+            break;
+        }
+    }
 
     generation++;
     TextGeneration->SetLabel(std::to_string(generation));
     TextGeneration->Refresh();
+}
+
+void InitialFrame::OnUnfreeze(wxCommandEvent& event) {
+
 }

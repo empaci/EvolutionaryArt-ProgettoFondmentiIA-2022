@@ -196,7 +196,7 @@ void Population::replacement(std::vector<Individual> population) {
 }
 
 std::vector<Image> Population::saveImages() {
-	std::string path = "..\\images\\";
+	std::string path = "..\\Images\\";
 	std::vector<Image> images = std::vector<Image>();
 	Image* image = new Image();
 	for (int i = 0; i < this->individuals.size(); i++) {
@@ -205,4 +205,33 @@ std::vector<Image> Population::saveImages() {
 		images.push_back(*image);
 	}
 	return images;
+}
+
+Individual* Population::getRandomBestIndividual(int* pos) {
+	int n = 0;
+	int fitness = 10;
+
+	for (int i = 0; i < this->individuals.size(); i++) {
+		if (this->individuals[i].getFitnessValue() == fitness) {
+			n = n + 1;
+		}
+	}
+	if (n != 0) {
+		int r = 1 + (std::rand() % n);
+		n = 0;
+		for (int i = 0; i < this->individuals.size(); i++) {
+			if (this->individuals[i].getFitnessValue() == fitness) {
+				n = n + 1;
+				if (n == r) {
+					Individual* rand_individual = new Individual(this->individuals[i]);
+					*pos = i;
+					return rand_individual;
+				}
+			}
+		}
+	}
+	else {
+		*pos = -1;
+		return nullptr;
+	}
 }

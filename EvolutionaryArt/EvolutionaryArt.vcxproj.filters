@@ -72,6 +72,9 @@
     <ClInclude Include="FastNoiseLite.h">
       <Filter>Fastnoise</Filter>
     </ClInclude>
+    <ClInclude Include="FrozenIndividuals.h">
+      <Filter>model\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Individual.cpp">
@@ -112,6 +115,9 @@
     </ClCompile>
     <ClCompile Include="mySlider.cpp">
       <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="FrozenIndividuals.cpp">
+      <Filter>model\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

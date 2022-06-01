@@ -12,11 +12,12 @@
 
 class myImageGridCellRenderer : public wxGridCellStringRenderer {
     public:
-        myImageGridCellRenderer(int, std::vector<Image>);
+        myImageGridCellRenderer(int, std::vector<Image>, int);
         virtual void Draw(wxGrid&, wxGridCellAttr&, wxDC&, const wxRect&, int, int, bool);
     private:
         int n_images;
         std::vector<Image> images;
+        int col_size;
 };
 
 #endif

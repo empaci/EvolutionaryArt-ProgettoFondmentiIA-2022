@@ -2,6 +2,7 @@
 #define CONTROLLER_H
 
 #include "Population.h"
+#include "FrozenIndividuals.h"
 
 class Controller {
 	public:
@@ -11,9 +12,14 @@ class Controller {
 		void changeGenes();
 		std::vector<Image> generateImages();
 		void evaluate(std::vector<int>);
+		std::vector<Image> getFrozenImages();
+		int getNFrozenImages();
 	private:
 		Population* population;
+		FrozenIndividuals* frozenIndividuals;
 		bool color;
+		int lastBestIndividual;
+		std::vector<Image> tempImages;
 
 };
 

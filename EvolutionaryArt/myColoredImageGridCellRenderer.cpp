@@ -1,9 +1,10 @@
 #include "myColoredImageGridCellRenderer.h"
 #include "Image.h"
 
-myColoredImageGridCellRenderer::myColoredImageGridCellRenderer(int n_images, std::vector<Image> images) {
+myColoredImageGridCellRenderer::myColoredImageGridCellRenderer(int n_images, std::vector<Image> images, int col_size) {
 	this->n_images = n_images;
 	this->images = images;
+	this->col_size = col_size;
 }
 
 void myColoredImageGridCellRenderer::Draw(wxGrid& grid, wxGridCellAttr& attr, wxDC& dc, const wxRect& rect, int row, int col, bool isSelected) {
@@ -13,7 +14,7 @@ void myColoredImageGridCellRenderer::Draw(wxGrid& grid, wxGridCellAttr& attr, wx
 	int dim = 600;
 	int p = 0;
 
-	p = col + row * 5;
+	p = col + row * col_size;
 
 	std::vector<std::vector<int>> img = this->images[p].getPhenotype();
 

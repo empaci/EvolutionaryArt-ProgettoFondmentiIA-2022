@@ -134,6 +134,7 @@
     <ClInclude Include="Color_basic_genes.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="FastNoiseLite.h" />
+    <ClInclude Include="FrozenIndividuals.h" />
     <ClInclude Include="Genes.h" />
     <ClInclude Include="GeneticOperation.h" />
     <ClInclude Include="Image.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="Black_and_white_basic_genes.cpp" />
     <ClCompile Include="Color_basic_genes.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="FrozenIndividuals.cpp" />
     <ClCompile Include="Genes.cpp" />
     <ClCompile Include="GeneticOperation.cpp" />
     <ClCompile Include="Image.cpp" />

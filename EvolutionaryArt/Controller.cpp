@@ -1,6 +1,7 @@
 #include "Controller.h"
 #include "Black_and_white_basic_genes.h"
 #include "Color_basic_genes.h"
+#include "FrozenIndividuals.h"
 
 Controller::Controller() {
 	Genes* gene = new Black_and_white_basic_genes();
@@ -19,6 +20,7 @@ Controller::Controller(int population_size, int depth, bool color) {
 		gene = new Black_and_white_basic_genes();
 	}
 	this->population = new Population(population_size, depth, gene);
+	this->frozenIndividuals = new FrozenIndividuals(6);
 }
 
 bool Controller::getColor() {
@@ -31,9 +33,23 @@ void Controller::changeGenes() {
 
 void Controller::evaluate(std::vector<int> fitness_values) {
 	population->setFitnessValues(fitness_values);
+	//select an image with a 10 rating, save it in the frozen attribute
+	frozenIndividuals->pushIndividual(population->getRandomBestIndividual(&lastBestIndividual));
+	if (lastBestIndividual != -1) {
+		frozenIndividuals->pushImage(this->tempImages[lastBestIndividual]);
+	}
 	population->evolve();
 }
 
 std::vector<Image> Controller::generateImages() {
-	return this->population->saveImages();
+	this->tempImages =  this->population->saveImages();
+	return this->tempImages;
+}
+
+std::vector<Image> Controller::getFrozenImages() {
+	return this->frozenIndividuals->getImages();
+}
+
+int Controller::getNFrozenImages() {
+	return this->frozenIndividuals->getNumImages();
 }

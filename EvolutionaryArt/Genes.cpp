@@ -8,14 +8,24 @@ Genes::Genes() {
 	noise.SetFractalLacunarity(2);
 	noise.SetFractalOctaves(3);
 	noise.SetFractalWeightedStrength(0.5);
+	noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
+	noise.SetFractalType(FastNoiseLite::FractalType_DomainWarpIndependent);
 
 	noise_2.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
 	noise_2.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
 	noise_2.SetDomainWarpAmp(50);
 	noise_2.SetFractalGain(FastNoiseLite::FractalType_DomainWarpProgressive);
 
-	cellular_noise.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
+	cellular_noise.SetNoiseType(FastNoiseLite::NoiseType_Value);
 	cellular_noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
+	cellular_noise.SetCellularReturnType(FastNoiseLite::CellularReturnType_CellValue);
+	cellular_noise.SetCellularJitter(1);
+	cellular_noise.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
+	cellular_noise.SetDomainWarpAmp(50);
+	cellular_noise.SetFractalType(FastNoiseLite::FractalType_DomainWarpProgressive);
+	cellular_noise.SetFractalOctaves(5);
+	cellular_noise.SetFractalLacunarity(2);
+	cellular_noise.SetFractalGain(0.6);
 
 	cellular_noise_2.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 	cellular_noise_2.SetFractalGain(FastNoiseLite::FractalType_PingPong);
