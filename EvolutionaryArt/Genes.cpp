@@ -2,7 +2,7 @@
 
 
 Genes::Genes() {
-	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2);
+	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2S);
 	noise.SetFractalGain(FastNoiseLite::FractalType_Ridged);
 	noise.SetFractalGain(0.9);
 	noise.SetFractalLacunarity(2);
@@ -15,6 +15,14 @@ Genes::Genes() {
 	noise_2.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
 	noise_2.SetDomainWarpAmp(50);
 	noise_2.SetFractalGain(FastNoiseLite::FractalType_DomainWarpProgressive);
+
+	noise_3.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
+	noise_3.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
+	noise_3.SetDomainWarpAmp(50);
+	noise_3.SetFractalType(FastNoiseLite::FractalType_FBm);
+	noise_3.SetFractalOctaves(4);
+	noise_3.SetFractalLacunarity(2);
+	noise_3.SetFractalGain(0.8);
 
 	cellular_noise.SetNoiseType(FastNoiseLite::NoiseType_Value);
 	cellular_noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
@@ -141,6 +149,14 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 	else if (operation == "-") {
 		return (int)abs(x - y);
 	}
+	else if (operation == "mod") {
+		if (y != 0) {
+			return (int)x % y;
+		}
+		else {
+			return x;
+		}
+	}
 	else if (operation == "xor") {
 		return (int)x ^ y;
 	}
@@ -181,6 +197,9 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 	}
 	else if (operation == "noise2") {
 		return (int) ((noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+	}
+	else if (operation == "noise3") {
+		return (int)((noise_3.GetNoise((float)x, (float)y) + 1) * 255 / 2);
 	}
 	else if (operation == "cellular") {
 		return (int) ((cellular_noise.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);

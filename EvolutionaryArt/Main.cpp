@@ -55,6 +55,8 @@ private:
     void OnUnfreeze(wxCommandEvent& event);
     void OnClick(wxGridEvent& event);
 
+    int XYtoCell(int, int, int, int, int, int);
+
     DECLARE_EVENT_TABLE()
 };
 
@@ -98,9 +100,9 @@ InitialFrame::InitialFrame()
     SetMenuBar(menuBar);
 
     this->Text1 = new wxStaticText(this, wxID_ANY, _("Population size: "), wxPoint(10, 30), wxSize(100, 30), 0, _T("ID_TEXT1"));
-    this->TextCtrl1 = new wxTextCtrl(this, IN_POP_SIZE, _("20"), wxPoint(115, 25), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
+    this->TextCtrl1 = new wxTextCtrl(this, IN_POP_SIZE, _("15"), wxPoint(115, 25), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRL1"));
     this->Text2 = new wxStaticText(this, wxID_ANY, _("Individual depth: "), wxPoint(10, 60), wxSize(100, 30), 0, _T("ID_TEXT2"));
-    this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("2"), wxPoint(115, 55), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
+    this->TextCtrl2 = new wxTextCtrl(this, IN_DEPTH, _("1"), wxPoint(115, 55), wxSize(30, 20), 0, wxDefaultValidator, _T("ID_TEXTCTRL2"));
     this->CheckBox = new wxCheckBox(this, COLOR_SELECTION, _("Generate colored Images"), wxPoint(10, 90), wxSize(200, 30), 0, wxDefaultValidator, _T("ID_CHECKBOX"));
 
     new wxButton(this, START, _T("Start"), wxPoint(10, 120), wxSize(80, 30));
@@ -123,26 +125,18 @@ void InitialFrame::OnAbout(wxCommandEvent& event)
 
 void InitialFrame::OnClick(wxGridEvent& event) {
 
-    int row = -1;
-    int col = -1;
     int pos = -1;
-    wxGridCellCoords position;
-
+    wxPoint mousePos = InitialFrame::ScreenToClient(wxGetMousePosition());
     wxGrid* ptr = (wxGrid*)event.GetEventObject();
+
     if (ptr == grid)
     {
-        position = grid->XYToCell(wxGetMousePosition());
-        row = position.GetRow();
-        col = position.GetCol();
-        pos = col + row * 5;
+        pos = XYtoCell(mousePos.x, mousePos.y, 5, population_size/3, 130, 130);
         popIndividual->SetValue(_(std::to_string(pos)));
     }
     else if (ptr == frozenGrid)
     {
-        frozenGrid->XYToCell(wxGetMousePosition());
-        row = position.GetRow();
-        col = position.GetCol();
-        pos = col + row * 2;
+        pos = XYtoCell(mousePos.x, mousePos.y, 2, 3, 1225,130);
         frozenIndividual->SetValue(_(std::to_string(pos)));
     }
 
@@ -296,6 +290,27 @@ void InitialFrame::OnUnfreeze(wxCommandEvent& event) {
     }
     grid->ForceRefresh();
 }
+
+int InitialFrame::XYtoCell(int x, int y, int n_col, int n_rows, int left_space, int top_space) {
+    int col = -1;
+    int row = -1;
+
+    for (int i = 0; i < n_col; i++) {
+        if (x > left_space + i*205 && x < left_space + (i+1)*205) {
+            col = i;
+            break;
+        }
+    }
+    for (int i = 0; i < n_rows; i++) {
+        if (y > top_space + i * 205 && y < top_space + (i + 1) * 205) {
+            row = i;
+            break;
+        }
+    }
+
+    return col + row * n_col;
+}
+
 
 BEGIN_EVENT_TABLE(InitialFrame, wxFrame)
     EVT_GRID_CELL_LEFT_CLICK(InitialFrame::OnClick)

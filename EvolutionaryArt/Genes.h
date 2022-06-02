@@ -16,6 +16,7 @@ class Genes {
 			"cbrt",
 			"+",
 			"-",
+			"mod",
 			"sin",
 			"cos",
 		//	"tan",
@@ -39,6 +40,7 @@ class Genes {
 			"min",
 			"noise",
 			"noise2",
+			"noise3",
 			"cellular",
 			"cellular2",
 			"cellular3",
@@ -49,6 +51,7 @@ class Genes {
 			1, //cbrt
 			2, //+
 			2, //-
+			2, //mod
 			1, //sin
 			1, //cos
 		//	1, //tan
@@ -72,6 +75,7 @@ class Genes {
 			2, //min
 			2, //noise opensimplex
 			2, //noise type 2
+			2, //noise type 3
 			2, //cellular noise
 			2, //cellular noise type 2
 			2, //cellular noise type 3
@@ -80,6 +84,7 @@ class Genes {
 		int dim = 600;
 		FastNoiseLite noise;
 		FastNoiseLite noise_2;
+		FastNoiseLite noise_3;
 		FastNoiseLite cellular_noise;
 		FastNoiseLite cellular_noise_2;
 		FastNoiseLite cellular_noise_3;
