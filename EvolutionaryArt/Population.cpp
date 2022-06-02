@@ -164,9 +164,14 @@ void Population::apply_random_mutation(Individual* i) {
 //Filter that checks if the individual contains both x and y in the genotype. 
 //If they are missing the image will be one uniform color
 //If only one is present the image will be made of stripes
+//Also if the root is a noise generator the images would be noise
 bool Population::genotypeFilter(Individual i) {
 	Node* root = i.getGenotype();
-	return checkXandY(root);
+	bool result = false;
+	//if (root->getOperation().find("noise") == std::string::npos) {
+	result = checkXandY(root);
+	//}
+	return result;
 }
 
 bool Population::checkXandY(Node* head) {

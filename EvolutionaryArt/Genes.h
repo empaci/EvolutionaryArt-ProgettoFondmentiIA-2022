@@ -41,9 +41,9 @@ class Genes {
 			"noise",
 			"noise2",
 			"noise3",
-			"cellular",
-			"cellular2",
-			"cellular3",
+			"noisecellular",
+			"noisecellular2",
+			"noisecellular3",
 		};
 		//tells if the operation, in the same position, is unary or binary
 		std::vector<int> n_function_arguments = {

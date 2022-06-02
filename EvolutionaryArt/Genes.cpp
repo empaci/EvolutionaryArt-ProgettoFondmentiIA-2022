@@ -201,13 +201,13 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 	else if (operation == "noise3") {
 		return (int)((noise_3.GetNoise((float)x, (float)y) + 1) * 255 / 2);
 	}
-	else if (operation == "cellular") {
+	else if (operation == "noisecellular") {
 		return (int) ((cellular_noise.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
 	}
-	else if (operation == "cellular2") {
+	else if (operation == "noisecellular2") {
 		return (int) ((cellular_noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
 	}
-	else if (operation == "cellular3") {
+	else if (operation == "noisecellular3") {
 		return (int) ((cellular_noise_3.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
 	}
 	return x;

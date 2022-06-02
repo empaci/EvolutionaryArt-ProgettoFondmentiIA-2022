@@ -167,7 +167,7 @@ int Node::getNode(Node* head, int* n, Node* child) {
     }
 }
 
-int Node::sobstitute_branch(Node* head, Node* tree, int* n) {
+int Node::sobstituteBranch(Node* head, Node* tree, int* n) {
     if (!head->isLeaf()) {
 
         *n = *n - 1;
@@ -177,13 +177,51 @@ int Node::sobstitute_branch(Node* head, Node* tree, int* n) {
         }
 
         if (head->getLeftChild() && !head->getRightChild()) {
-            return *n + sobstitute_branch(head->getLeftChild(), tree, n);
+            return *n + sobstituteBranch(head->getLeftChild(), tree, n);
         }
         else {
-            return *n + sobstitute_branch(head->getLeftChild(), tree, n) + sobstitute_branch(head->getRightChild(), tree, n);
+            return *n + sobstituteBranch(head->getLeftChild(), tree, n) + sobstituteBranch(head->getRightChild(), tree, n);
         }
     }
     if (n == 0) {
+        return 0;
+    }
+}
+
+int Node::crossBranch(Node* head, Node* tree, int* n) {
+    if (!head->isLeaf()) {
+        return crossBranchAux(head, tree, nullptr, n, 'l');
+    }
+    else {
+        return 0;
+    }
+}
+
+int Node::crossBranchAux(Node* head, Node* tree, Node* parent, int* n, char l_or_r) {
+    if (!head->isLeaf()) {
+
+        *n = *n - 1;
+        if (*n == 0) {
+            //use of a character to know if we need to remove the right or left side of the tree from the parent
+            if (parent) {
+                if (l_or_r == 'l') {
+                    parent->setLeftChildren(tree);
+                }
+                else if (l_or_r == 'r') {
+                    parent->setRightChildren(tree);
+                }
+            }
+            return -1;
+        }
+
+        if (head->getLeftChild() && !head->getRightChild()) {
+            return *n + crossBranchAux(head->getLeftChild(), tree, head, n, 'l');
+        }
+        else {
+            return *n + crossBranchAux(head->getLeftChild(), tree, head, n, 'l') + crossBranchAux(head->getRightChild(), tree, head, n, 'r');
+        }
+    }
+    else {
         return 0;
     }
 }
@@ -215,7 +253,7 @@ int Node::deleteNode(Node* head, int* n) {
         return deleteNodeAux(head, nullptr, n, 'l');
     }
     else {
-return 0;
+        return 0;
     }
 }
 

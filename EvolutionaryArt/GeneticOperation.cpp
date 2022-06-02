@@ -39,7 +39,7 @@ void GeneticOperation::subtree_replacement(Individual* individual, Genes* genes)
 	Node* new_tree = new Node();
 	randomlyGenerateGenotype(2 + (std::rand() % 4), genes, new_tree);
 
-	Node::sobstitute_branch(n, new_tree, &r); //given the node in pos r, sobstitute the branch with the new_tree
+	Node::sobstituteBranch(n, new_tree, &r); //given the node in pos r, sobstitute the branch with the new_tree
 	return;
 }
 
@@ -111,7 +111,6 @@ void GeneticOperation::subtree_swap(Individual* individual) {
 		int r1 = 2 + (std::rand() % (*n_node - 2));
 		int r2 = 2 + (std::rand() % (*n_node - 2));
 		//can't swap if one is a sub-tree of the other
-		// rememebr to put a copy of r1 and r2 ,otherwise they will be modified!
 		//while (!Node::isSwappable(n, r1, r2)) {
 			while (r1 == r2) {
 				r2 = 2 + (std::rand() % (*n_node - 2));
@@ -127,7 +126,7 @@ void GeneticOperation::crossover(Individual* i1, Individual* i2) {
 	Node* n1 = i1->getGenotype();
 	int* n_node1 = new int();
 	Node::getNumberOfParents(n1, n_node1);
-	int r1 = 1 + (std::rand() % (*n_node1+1));
+	int r1 = 1 + (std::rand() % (*n_node1));
 	Node* subtree1 = new Node();
 	int r1_copy = r1;
 	Node::getNode(n1, &r1_copy, subtree1);
@@ -136,12 +135,20 @@ void GeneticOperation::crossover(Individual* i1, Individual* i2) {
 	int* n_node2 = new int();
 	Node::getNumberOfParents(n1, n_node2);
 	int r2 = 1 + (std::rand() % (*n_node2));
+
 	Node* subtree2 = new Node();
 	int r2_copy = r2;
 	Node::getNode(n2, &r2_copy, subtree2);
 
-	Node::sobstitute_branch(n1, subtree2, &r1);
-	Node::sobstitute_branch(n2, subtree1, &r2);
+	//if both are 1 wouldn't make sense to swap them, so each tree is appended on the left of the other
+	if (r1 == 1 && r2 == 1) {
+		Node::sobstituteBranch(n1, subtree2, &r1);
+		Node::sobstituteBranch(n2, subtree1, &r2);
+	}
+	else {
 
+		Node::crossBranch(n1, subtree2, &r1);
+		Node::crossBranch(n2, subtree1, &r2);
+	}
 	return;
 }
