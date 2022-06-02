@@ -3,7 +3,7 @@
 Project for the coruse of Fondamenti di Intelligenza Artificiale.
 This work was based on [NEvAr](https://www.researchgate.net/publication/2244120_NEvAr_--_The_Assessment_of_an_Evolutionary_Art_Tool)
 
-Developed in Visual studio. Uses [wxWidgets](https://www.wxwidgets.org/) and [FastNoiseLite](https://github.com/Auburn/FastNoiseLite) for cpp.
+Developed in Visual studio 2022. Uses [wxWidgets](https://www.wxwidgets.org/) 3.1.6 and [FastNoiseLite](https://github.com/Auburn/FastNoiseLite) for cpp.
 
 ## Main features
 
