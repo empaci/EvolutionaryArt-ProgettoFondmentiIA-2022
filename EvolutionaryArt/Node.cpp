@@ -98,8 +98,6 @@ std::string Node::toString() {
 //return the pointer from a parent to a random child. No head.
 void Node::getRandomChild(Node* head, Node* randomChild) {
     
-    //int depth = treeDepth(head);
-    //int n_children = nChildrenAtDepth(head, depth);
     int* n_node = new int();
     getNumberOfParents(head, n_node);
     int r = (std::rand() % (*n_node));
@@ -112,11 +110,10 @@ void Node::getRandomChild(Node* head, Node* randomChild) {
         l_or_r = (std::rand() % 2);
     }
     if (l_or_r == 0) {
-        *randomChild = *(n->getLeftChild()); /***************************/
+        *randomChild = *(n->getLeftChild()); 
     } else {
-        *randomChild = *(n->getRightChild()); /***************************/
+        *randomChild = *(n->getRightChild());
     }
-    
     return;
 }
 
@@ -148,12 +145,13 @@ int Node::getNumberOfParentsAux(Node* head, int* n) {
     }
 }
 
+//return node in position n; using depth first numbering
 int Node::getNode(Node* head, int* n, Node* child) {
     if (!head->isLeaf()) {
         
         *n = *n - 1;
         if (*n == 0) {
-            *child = *head; /***************************/
+            *child = *head;
             return -1;
         }
 
@@ -310,6 +308,7 @@ int Node::swapSubtree(Node* head, int* n1, int* n2) {
     }
 }
 
+//when the node is found in pos n1 or n2 the parent is returned and is "locked" if the searched node is a left or right child
 int Node::swapSubtreeAux(Node* head, int* n1, int* n2, Node* parent1, char l_or_r1, char* locked_l_or_r1, Node* parent2, char l_or_r2, char* locked_l_or_r2) {
     if (!head->isLeaf()) {
 
@@ -328,7 +327,6 @@ int Node::swapSubtreeAux(Node* head, int* n1, int* n2, Node* parent1, char l_or_
             parent2 = head;
         }
         if (*n1 <= 0 && *n2 <= 0) {
-            //copy
             Node temp = *parent1;
             if (*locked_l_or_r1 == 'l' && *locked_l_or_r2 == 'l') {
                 parent1->setLeftChildren(parent2->getLeftChild());
@@ -373,6 +371,7 @@ bool Node::isSwappable(Node* head, int r1, int r2) {
     return true;
 }
 
+//copy of a tree given the head
 void Node::copyTree(Node* head, Node* copy) {
     if (head) {
         Node* leftNode = cloneNode(head->getLeftChild());

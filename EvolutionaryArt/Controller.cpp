@@ -5,8 +5,6 @@
 
 Controller::Controller() {
 	Genes* gene = new Black_and_white_basic_genes();
-	//Genes* gene = new Color_basic_genes();
-	//this->population = new Population(20, 4, gene);
 }
 
 Controller::Controller(int population_size, int depth, bool color) {
@@ -27,6 +25,7 @@ bool Controller::getColor() {
 	return this->color;
 }
 
+//Used to switch from black_and_whites to colored images
 void Controller::changeGenes() {
 	this->population->setGenes(new Color_basic_genes());
 	this->frozenIndividuals->changeGenes();
@@ -34,14 +33,17 @@ void Controller::changeGenes() {
 
 void Controller::evaluate(std::vector<int> fitness_values) {
 	population->setFitnessValues(fitness_values);
-	//select an image with a 10 rating, save it in the frozen attribute
+	//select an image with a 10 rating, save it in the frozen individuals
 	frozenIndividuals->pushIndividual(population->getRandomBestIndividual(&lastBestIndividual));
+	//since the images of the individuals are saved in the same position of a vector of the individual themselves we can use the same position.
+	//the vector are the images are saved in the controller so we don't have to convert them again when they are added to the frozenIndividuals
 	if (lastBestIndividual != -1) {
 		frozenIndividuals->pushImage(this->tempImages[lastBestIndividual]);
 	}
 	population->evolve();
 }
 
+//use of a temporal array of images saved in the controller allow to trasfer images from/to the FrozenIndividuals without regenerating them
 std::vector<Image> Controller::generateImages() {
 	this->tempImages =  this->population->saveImages();
 	return this->tempImages;

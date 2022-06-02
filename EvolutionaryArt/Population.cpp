@@ -21,14 +21,14 @@ void Population::setFitnessValues(std::vector<int> values) {
 }
 
 void Population::evolve() {
-	std::vector<Individual> parents = proportionalSelection(1, 10); //proportionaly select parents
-	std::vector<Individual> childrens = recombination_and_mutation(parents); //crossover and mutations on new individuals
+	std::vector<Individual> parents = proportionalSelection(1, 10);
+	std::vector<Individual> childrens = recombination_and_mutation(parents);
 	//concat parent and children to form the new population
 	std::vector<Individual> new_population;
 	new_population.insert(new_population.end(), parents.begin(), parents.end());
 	new_population.insert(new_population.end(), childrens.begin(), childrens.end());
 
-	replacement(new_population); //sobtitute the old generation with the new one
+	replacement(new_population);
 	return;
 }
 
@@ -41,7 +41,6 @@ std::vector<Individual> Population::proportionalSelection(int min, int max) {
 
 	float r = ((float)std::rand() / (RAND_MAX)); // generate number between 0 and 1
 	
-	//Choose number of parents
 	while( parents.size() < population_size/3) {
 
 		for (int j = min; j <= max; j++) {
@@ -58,6 +57,7 @@ std::vector<Individual> Population::proportionalSelection(int min, int max) {
 	return parents;
 }
 
+// generate probabilities for the fitness proportional selection (roulette wheel selection)
 std::vector<float> Population::generateProbabilities(int min, int max) {
 	std::vector<float> probabilities;
 	float previous_probability = 0.0;
@@ -76,6 +76,7 @@ std::vector<float> Population::generateProbabilities(int min, int max) {
 	return probabilities;
 }
 
+//return a random individual from the population with the specified fitness; the individual is ERASED from the population. Mainly used to extract parents.
 Individual* Population::getRandomIndividualWithFitness(int fitness) {
 	int n = 0;
 
@@ -160,6 +161,9 @@ void Population::apply_random_mutation(Individual* i) {
 	}
 }
 
+//Filter that checks if the individual contains both x and y in the genotype. 
+//If they are missing the image will be one uniform color
+//If only one is present the image will be made of stripes
 bool Population::genotypeFilter(Individual i) {
 	Node* root = i.getGenotype();
 	return checkXandY(root);
@@ -207,6 +211,7 @@ std::vector<Image> Population::saveImages() {
 	return images;
 }
 
+//return an individual with fitness 10; used to fill FrozenIndividuals. Also gives the position of the individual in the array to perform other operations (for example retrieving the image associated with that individual) 
 Individual* Population::getRandomBestIndividual(int* pos) {
 	int n = 0;
 	int fitness = 10;

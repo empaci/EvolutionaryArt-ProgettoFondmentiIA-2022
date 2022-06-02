@@ -10,6 +10,7 @@ FrozenIndividuals::FrozenIndividuals(int size) {
 
 void FrozenIndividuals::pushIndividual(Individual* i) {
 	if (i) {
+		//an element is added at the bottom, if the array is full then overwrite the oldest inserted element
 		if (this->individuals.size() == size) {
 			this->individuals[n_inserted_elements % 6] = new Individual(i);
 		}

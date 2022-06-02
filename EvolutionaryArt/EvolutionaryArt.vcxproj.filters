@@ -51,9 +51,6 @@
     <ClInclude Include="Color_basic_genes.h">
       <Filter>model\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Main.h">
-      <Filter>ui</Filter>
-    </ClInclude>
     <ClInclude Include="Population.h">
       <Filter>model\Header Files</Filter>
     </ClInclude>

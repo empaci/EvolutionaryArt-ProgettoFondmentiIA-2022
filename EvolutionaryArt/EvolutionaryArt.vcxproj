@@ -139,7 +139,6 @@
     <ClInclude Include="GeneticOperation.h" />
     <ClInclude Include="Image.h" />
     <ClInclude Include="Individual.h" />
-    <ClInclude Include="Main.h" />
     <ClInclude Include="myColoredImageGridCellRenderer.h" />
     <ClInclude Include="myImageGridCellRenderer.h" />
     <ClInclude Include="mySlider.h" />
