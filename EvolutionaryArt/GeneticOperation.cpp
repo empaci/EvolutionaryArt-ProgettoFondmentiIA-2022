@@ -21,10 +21,16 @@ Node* GeneticOperation::randomlyGenerateGenotype(int depth, Genes* genes, Node* 
 		//leaf nodes; they can have a constant, x and y
 		int r = (std::rand() % 3);
 		
+		int red = 0;
+		int green = 0;
+		int blue = 0;
+
 		if (r == 0) {
-			head->setValues((std::rand() % 101), (std::rand() % 101), (std::rand() % 101)); //the constant is a random number between 0 and 100
-		}
-		else {
+			red = (std::rand() % 101);
+			green = (std::rand() % 101);
+			blue = (std::rand() % 101);
+			head->setValues(red, green, blue);
+		} else {
 			head->setVar(r==1); //true means x, false means y
 		}
 		return head;

@@ -15,7 +15,7 @@ Genes::Genes() {
 	noise_2.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
 	noise_2.SetDomainWarpAmp(50);
 	noise_2.SetFractalGain(FastNoiseLite::FractalType_DomainWarpProgressive);
-	noise_2.SetFractalOctaves(4);
+	noise_2.SetFractalOctaves(5);
 
 	noise_3.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 	noise_3.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);

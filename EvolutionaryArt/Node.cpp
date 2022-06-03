@@ -270,6 +270,9 @@ int Node::deleteNodeAux(Node* head, Node* parent, int* n, char l_or_r) {
                 else if (l_or_r == 'r') {
                     parent->setRightChildren(head->getLeftChild());
                 }
+                if (head->getRightChild()) {
+                    cleanUp(head->getRightChild()); //delete the whole tree on the right
+                }
                 delete(head);
             }
             return -1;
@@ -435,5 +438,17 @@ Node* Node::cloneNode(Node* node) {
     }
     else {
         return nullptr;
+    }
+}
+
+void Node::cleanUp(Node* head) {
+    if (head->getLeftChild()) {
+        cleanUp(head->getLeftChild());
+    }
+    if (head->getRightChild()) {
+        cleanUp(head->getRightChild());
+    }
+    if (!head->getLeftChild() && !head->getRightChild()) {
+        delete(head);
     }
 }

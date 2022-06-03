@@ -50,6 +50,7 @@ class Node{
 
         static void copyTree(Node*, Node*);
         static Node* cloneNode(Node*);
+        static void cleanUp(Node*);
 };
 
 #endif

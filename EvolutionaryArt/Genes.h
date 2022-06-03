@@ -8,6 +8,8 @@
 #include <cmath>
 
 #define M_PI 3.14159265358979323846
+#define PHI 1.6180339887498948482
+#define EXP 2.7182818284
 
 class Individual;
 class Image;
@@ -44,12 +46,12 @@ class Genes {
 			">",
 			"<",
 			"==",
-			"!=",
-			"noise",
+			"!=", 
+		//	"noise",
 			"noise2",
-			"noise3",
+		//	"noise3",
 			"noise4",
-			"noisecellular",
+		//	"noisecellular",
 			"noisecellular2",
 			"noisecellular3",
 			"noisecellular4",
@@ -86,11 +88,11 @@ class Genes {
 			2, //<
 			2, //==
 			2, //!=
-			2, //noise opensimplex
+		//	2, //noise opensimplex
 			2, //noise type 2
-			2, //noise type 3
+		//	2, //noise type 3
 			2, //noise type 4
-			2, //cellular noise
+		//	2, //cellular noise
 			2, //cellular noise type 2
 			2, //cellular noise type 3
 			2, //cellular noise type 4
