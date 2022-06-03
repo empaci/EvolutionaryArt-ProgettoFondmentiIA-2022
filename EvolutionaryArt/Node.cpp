@@ -43,6 +43,10 @@ int Node::getValueAt(int p) {
     return this->value[p];
 }
 
+std::vector<int> Node::getValues() {
+    return this->value;
+}
+
 bool Node::isLeaf() {
     if (!left) {
         return true;

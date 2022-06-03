@@ -119,7 +119,7 @@ class Genes {
 		int getNFunctionArgument(int);
 		bool setNFunctionArguments(std::vector<int>);
 
-		int eval(int, int, Node*, int*);
+		int eval(int, int, Node*);
 		int unaryOp(int, std::string);
 		int binaryOp(int, int, std::string);
 };

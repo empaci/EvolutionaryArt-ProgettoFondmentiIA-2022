@@ -89,14 +89,14 @@ bool Genes::setNFunctionArguments(std::vector<int> n_function_arguments) {
 	return true;
 }
 
-int Genes::eval(int x, int y, Node* head, int* res) {
+int Genes::eval(int x, int y, Node* head) {
 
 	if (!head->isLeaf()) {
 		if (head->getLeftChild() && !head->getRightChild()) {
-			return *res + unaryOp(eval(x, y, head->getLeftChild(), res), head->getOperation());
+			return unaryOp(eval(x, y, head->getLeftChild()), head->getOperation());
 		}
 		if (head->getRightChild()) {
-			return *res + binaryOp(eval(x, y, head->getLeftChild(), res), eval(x, y, head->getRightChild(), res), head->getOperation());
+			return binaryOp(eval(x, y, head->getLeftChild()), eval(x, y, head->getRightChild()), head->getOperation());
 		}
 	}
 	else {

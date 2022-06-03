@@ -23,6 +23,7 @@ class Node{
         void setValues(int, int, int);
         int getValue();
         int getValueAt(int);
+        std::vector<int> getValues();
         bool isLeaf();
 
         void setLeftChildren(Node*);

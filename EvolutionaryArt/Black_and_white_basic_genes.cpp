@@ -20,7 +20,7 @@ void Black_and_white_basic_genes::convertGenotypeToPhenotype(Individual* individ
 		for (int j = 0; j < dim; j++) {
 			int r = 0;
 			//phenotype[i][j] = this->eval(i, j, &size, stack, &r)%50;
-			phenotype[i][j] = ((unsigned int)(this->eval(i, j, individual->getGenotype(), &r)) % 255);
+			phenotype[i][j] = ((unsigned int)(this->eval(i, j, individual->getGenotype())) % 255);
 		}
 	}
 	
