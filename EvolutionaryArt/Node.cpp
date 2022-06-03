@@ -270,6 +270,7 @@ int Node::deleteNodeAux(Node* head, Node* parent, int* n, char l_or_r) {
                 else if (l_or_r == 'r') {
                     parent->setRightChildren(head->getLeftChild());
                 }
+                delete(head);
             }
             return -1;
         }

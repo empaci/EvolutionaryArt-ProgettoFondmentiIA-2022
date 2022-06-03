@@ -128,7 +128,7 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 		}
 		
 		if (this->population_size > parents.size() + children.size()) {
-			if ((std::rand() / (RAND_MAX)) <= 0.8) {
+			if ((std::rand() / (RAND_MAX)) <= 0.7) {
 				apply_random_mutation(i2);
 			}
 			if (genotypeFilter(i2)) {
@@ -168,17 +168,17 @@ void Population::apply_random_mutation(Individual* i) {
 bool Population::genotypeFilter(Individual i) {
 	Node* root = i.getGenotype();
 	bool result = false;
-	//if (root->getOperation().find("noise") == std::string::npos) {
-	result = checkXandY(root);
-	//}
+	if (root->getOperation().find("noise") == std::string::npos) {
+		result = checkXandY(root);
+	}
 	return result;
 }
 
 bool Population::checkXandY(Node* head) {
-	bool* thereIsX = new bool(false);
-	bool* thereIsY = new bool(false);
-	checkXandYAux(head, thereIsX, thereIsY);
-	return (*thereIsX && *thereIsY);
+	bool thereIsX = false;
+	bool thereIsY = false;
+	checkXandYAux(head, &thereIsX, &thereIsY);
+	return (thereIsX && thereIsY);
 }
 
 void Population::checkXandYAux(Node* head, bool* thereIsX, bool* thereIsY) {

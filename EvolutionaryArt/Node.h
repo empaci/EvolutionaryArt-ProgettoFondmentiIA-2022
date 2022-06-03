@@ -16,7 +16,6 @@ class Node{
 
     public:
         Node();
-        //Node(Node*);
         void setOperation(std::string);
         std::string getOperation();
         void setVar(bool);

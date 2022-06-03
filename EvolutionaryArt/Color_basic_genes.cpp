@@ -14,7 +14,7 @@ void Color_basic_genes::convertGenotypeToPhenotype(Individual* individual, Image
 		for (int j = 0; j < dim*3; j++) {
 			int r = 0;
 			for (int k = 0; k < 3; k++) {
-				phenotype[i][j+k] = ((abs(this->eval(i, j, k, individual->getGenotype(), &r))) % 255);
+				phenotype[i][j+k] = ((unsigned int)(this->eval(i, j, k, individual->getGenotype(), &r)) % 255);
 			}
 			j += 2;
 		}

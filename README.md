@@ -13,7 +13,7 @@ Developed in Visual studio 2022. Uses [wxWidgets](https://www.wxwidgets.org/) 3.
 - Standard evolutionary alghorithm is applied:
     - A fitness proportionate selection chooses the parents
     - Crossover between the parents to generate the children
-    - 80% chance of mutation on the children
+    - 70% chance of mutation on each child
     - Display the new generation
 - A filter on the genotype is applied to discard the Individual that have no aesthetic value.
 - The 10/10 individuals of previous generation are "frozen" and can be injected in the current generation in the place of a chosen Individual

@@ -6,7 +6,7 @@ Genes::Genes() {
 	noise.SetFractalGain(FastNoiseLite::FractalType_Ridged);
 	noise.SetFractalGain(0.9);
 	noise.SetFractalLacunarity(2);
-	noise.SetFractalOctaves(3);
+	noise.SetFractalOctaves(4);
 	noise.SetFractalWeightedStrength(0.5);
 	noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
 	noise.SetFractalType(FastNoiseLite::FractalType_DomainWarpIndependent);
@@ -15,6 +15,7 @@ Genes::Genes() {
 	noise_2.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
 	noise_2.SetDomainWarpAmp(50);
 	noise_2.SetFractalGain(FastNoiseLite::FractalType_DomainWarpProgressive);
+	noise_2.SetFractalOctaves(4);
 
 	noise_3.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 	noise_3.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
@@ -23,6 +24,12 @@ Genes::Genes() {
 	noise_3.SetFractalOctaves(4);
 	noise_3.SetFractalLacunarity(2);
 	noise_3.SetFractalGain(0.8);
+
+	noise_4.SetNoiseType(FastNoiseLite::NoiseType_ValueCubic);
+	noise_4.SetFractalType(FastNoiseLite::FractalType_FBm);
+	noise_4.SetFractalOctaves(5);
+	noise_4.SetFractalLacunarity(2);
+	noise_4.SetFractalGain(0.7);
 
 	cellular_noise.SetNoiseType(FastNoiseLite::NoiseType_Value);
 	cellular_noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
@@ -47,12 +54,19 @@ Genes::Genes() {
 	cellular_noise_3.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
 	cellular_noise_3.SetDomainWarpType(FastNoiseLite::DomainWarpType_OpenSimplex2);
 	cellular_noise_3.SetDomainWarpAmp(100);
+	cellular_noise_3.SetFractalType(FastNoiseLite::FractalType_PingPong);
+	cellular_noise_3.SetFractalOctaves(5);
+
+	cellular_noise_4.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 
 	noise.SetSeed(std::rand());
 	noise_2.SetSeed(std::rand());
+	noise_3.SetSeed(std::rand());
+	noise_4.SetSeed(std::rand());
 	cellular_noise.SetSeed(std::rand());
 	cellular_noise_2.SetSeed(std::rand());
 	cellular_noise_3.SetSeed(std::rand());
+	cellular_noise_4.SetSeed(std::rand());
 }
 
 std::string Genes::getGene(int i) {
@@ -102,113 +116,141 @@ int Genes::eval(int x, int y, Node* head, int* res) {
 
 int Genes::unaryOp(int x, std::string operation) {
 	if (operation == "sin") {
-		return (int)(sin(x) * 100);
+		return (sin(x/50) * 10);
 	}
 	if (operation == "cos") {
-		return (int)(cos(x) * 100);
+		return (cos(x/50) * 10);
 	}
 	if (operation == "tan") {
-		return (int)(tan(x*3.14/180) * 100);
+		if (x != 90) {
+			return (tan(x * M_PI / 180) * 100);
+		} else {
+			return x;
+		}
 	}
 	else if (operation == "sqrt") {
-		return (int)sqrt(abs(x));
+		return sqrt(abs(x));
 	}
 	else if (operation == "cbrt") {
-		return (int)cbrt(abs(x));
+		return cbrt(abs(x));
 	}
 	else if (operation == "log") {
-		return (int)(log(abs(x)) * 100);
+		return (log(abs(x)) * 100);
 	}
 	else if (operation == "gamma") {
-		return (int)tgamma(((float)x)/50) * 10;
+		return tgamma((x/50)) * 10;
 	}
 	else if (operation == "not") {
-		return (int)~x;
+		return ~(int)x;
 	}
 	else if (operation == "pow2") {
-		return (int)pow(x, 2);
+		return pow(x, 2);
 	}
 	else if (operation == "exp") {
-		return (int)exp(x);
+		return exp(x);
 	} else if (operation == "exp2") {
-		return (int)exp2(x);
+		return exp2(x);
 	}
 	else if (operation == "erf") {
-		return (int)erf(((float)x)/100)*100;
+		return erf((x/100))*10;
 	}
 	else if (operation == "lgamma") {
-		return (int)lgamma(((float)x) / 50)*10;
+		return lgamma((x / 50))*10;
 	}
 	return x;
 }
 
 int Genes::binaryOp(int x, int y, std::string operation) {
 	if (operation == "+") {
-		return (int)x + y;
+		return x + y;
 	}
 	else if (operation == "-") {
-		return (int)abs(x - y);
+		return x - y;
 	}
 	else if (operation == "mod") {
 		if (y != 0) {
-			return (int)x % y;
+			return x % y;
 		}
 		else {
 			return x;
 		}
 	}
 	else if (operation == "xor") {
-		return (int)x ^ y;
+		return x ^ y;
 	}
 	else if (operation == "/") {
 		if (y != 0) {
-			return (int)x / y;
+			return x / y;
 		}
 		else {
 			return x;
 		}
 	}
 	else if (operation == "*") {
-		return (int)x * y;
+		return x * y;
 	}
 	else if (operation == "pow") {
-		return (int)pow(x, y);
+		return pow(x, y);
 	}
 	else if (operation == "hypot") {
-		return (int)hypot(x, y);
+		return hypot(x, y);
 	}
 	else if (operation == "and") {
-		return (int)x & y;
+		return x & y;
 	}
 	else if (operation == "or") {
-		return (int)x | y;
+		return x | y;
 	}
 	else if (operation == "arclength") {
-		return (int)((float)x / 360) * 2 * 3.14159 * y;
+		return ((float)x / 360) * M_PI * y;
 	}
 	else if (operation == "max") {
-		return (int) fmax(x, y);
+		return fmax(x, y);
 	}
 	else if (operation == "min") {
-		return (int)fmin(x, y);
+		return fmin(x, y);
+	}
+	else if (operation == ">") {
+		return (x > y) ? 0 : 254;
+	}
+	else if (operation == "<") {
+		return (x < y) ? 0 : 254;
+	}
+	else if (operation == "==") {
+		return (x == y) ? 0 : 254;
+	}
+	else if (operation == "!=") {
+		return (x != y) ? 0 : 254;
+	}
+	else if (operation == "hyperbolicparaboloid") {
+		return pow(x, 2) + pow(y, 2);
+	}
+	else if (operation == "infiniteparaboloid") {
+		return pow(x, 2) - pow(y, 2);
 	}
 	else if (operation == "noise") {
-		return (int) ((noise.GetNoise((float)x, (float)y) + 1 )* 255/2);
+		return ((noise.GetNoise((float)x, (float)y) + 1 )* 255/2);
 	}
 	else if (operation == "noise2") {
-		return (int) ((noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+		return ((noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
 	}
 	else if (operation == "noise3") {
-		return (int)((noise_3.GetNoise((float)x, (float)y) + 1) * 255 / 2);
+		return ((noise_3.GetNoise((float)x, (float)y) + 1) * 255 / 2);
+	}
+	else if (operation == "noise4") {
+		return ((noise_4.GetNoise((float)x, (float)y) + 1) * 255 / 2);
 	}
 	else if (operation == "noisecellular") {
-		return (int) ((cellular_noise.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+		return ((cellular_noise.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
 	}
 	else if (operation == "noisecellular2") {
-		return (int) ((cellular_noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+		return ((cellular_noise_2.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
 	}
 	else if (operation == "noisecellular3") {
-		return (int) ((cellular_noise_3.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+		return ((cellular_noise_3.GetNoise((float)x, (float)y) + 1 ) * 255 / 2);
+	}
+	else if (operation == "noisecellular4") {
+		return ((cellular_noise_4.GetNoise((float)x, (float)y) + 1) * 255 / 2);
 	}
 	return x;
 }
