@@ -7,11 +7,19 @@ myImageGridCellRenderer::myImageGridCellRenderer(int n_images, std::vector<Image
 	this->col_size = col_size;
 }
 
+void myImageGridCellRenderer::setImages(std::vector<Image> images) {
+	this->images = images;
+}
+
+void myImageGridCellRenderer::setNumImages(int n_images) {
+	this->n_images = n_images;
+}
+
 void myImageGridCellRenderer::Draw(wxGrid& grid, wxGridCellAttr& attr, wxDC& dc, const wxRect& rect, int row, int col, bool isSelected){
 	
 	wxGridCellStringRenderer::Draw(grid, attr, dc, rect, row, col, isSelected);
 
-	int dim = 600;
+	int dim = 400;
 	int p = 0;
 
 	p = col + row * col_size;

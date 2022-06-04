@@ -6,6 +6,7 @@ FrozenIndividuals::FrozenIndividuals(int size) {
 	this->size = size;
 	this->n_inserted_elements = 0;
 	this->genes = new Black_and_white_basic_genes();
+	std::string path = "..\\FrozenImages\\";
 }
 
 void FrozenIndividuals::pushIndividual(Individual* i) {
@@ -34,12 +35,20 @@ int FrozenIndividuals::getNumImages() {
 	return this->individuals.size();
 }
 
-void FrozenIndividuals::changeGenes() {
-	genes = new Color_basic_genes();
+std::vector<Image> FrozenIndividuals::changeGenes() {
+	delete(genes);
+	this->genes = new Color_basic_genes();
+	this->images.clear();
+	Image* image = new Image();
+	for (int i = 0; i < this->individuals.size(); i++) {
+		this->genes->convertGenotypeToPhenotype(&this->individuals[i], image);
+		image->save(path + std::to_string(i));
+		this->images.push_back(*image);
+	}
+	return this->images;
 }
 
 std::vector<Image> FrozenIndividuals::getImages() {
-	std::string path = "..\\FrozenImages\\";
 	for (int i = 0; i < this->individuals.size(); i++) {
 		this->images[i].save(path + std::to_string(i));
 	}

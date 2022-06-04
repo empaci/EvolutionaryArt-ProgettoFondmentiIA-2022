@@ -139,7 +139,7 @@ int Node::getNumberOfParentsAux(Node* head, int* n) {
             *n = *n + 1;
             return getNumberOfParentsAux(head->getLeftChild(), n);
         }
-        if (head->getRightChild()) {
+        else if (head->getRightChild()) {
             *n = *n + 1;
             return getNumberOfParentsAux(head->getLeftChild(), n) + getNumberOfParentsAux(head->getRightChild(), n);
         }

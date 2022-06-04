@@ -9,7 +9,7 @@ class Controller {
 		Controller();
 		Controller(int, int, bool);
 		bool getColor();
-		void changeGenes();
+		std::vector<Image> changeGenes();
 		std::vector<Image> generateImages();
 		void evaluate(std::vector<int>);
 		std::vector<Image> getFrozenImages();

@@ -134,27 +134,30 @@ void GeneticOperation::crossover(Individual* i1, Individual* i2) {
 	Node::getNumberOfParents(n1, &n_node1);
 	int r1 = 1 + (std::rand() % n_node1);
 	Node* subtree1 = new Node();
+	Node* copy_subtree1 = new Node();
 	int r1_copy = r1;
 	Node::getNode(n1, &r1_copy, subtree1);
+	Node::copyTree(subtree1, copy_subtree1);
 
 	Node* n2 = i2->getGenotype();
 	int n_node2 = 0;
-	Node::getNumberOfParents(n1, &n_node2);
+	Node::getNumberOfParents(n2, &n_node2);
 	int r2 = 1 + (std::rand() % n_node2);
-
 	Node* subtree2 = new Node();
+	Node* copy_subtree2 = new Node();
 	int r2_copy = r2;
 	Node::getNode(n2, &r2_copy, subtree2);
+	Node::copyTree(subtree2, copy_subtree2);
 
 	//if both are 1 wouldn't make sense to swap them, so each tree is appended on the left of the other
 	if (r1 == 1 && r2 == 1) {
-		Node::sobstituteBranch(n1, subtree2, &r1);
-		Node::sobstituteBranch(n2, subtree1, &r2);
+		Node::sobstituteBranch(n1, copy_subtree2, &r1);
+		Node::sobstituteBranch(n2, copy_subtree1, &r2);
 	}
 	else {
 
-		Node::crossBranch(n1, subtree2, &r1);
-		Node::crossBranch(n2, subtree1, &r2);
+		Node::crossBranch(n1, copy_subtree2, &r1);
+		Node::crossBranch(n2, copy_subtree1, &r2);
 	}
 
 	return;

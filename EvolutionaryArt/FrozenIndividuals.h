@@ -13,13 +13,14 @@ class FrozenIndividuals {
 		int getNumImages();
 		Individual* getIndividualAt(int);
 		Image getImageAt(int);
-		void changeGenes();
+		std::vector<Image> changeGenes();
 	private:
 		std::vector<Individual> individuals;
 		std::vector<Image> images;
 		Genes* genes;
 		int size;
 		int n_inserted_elements; //use to keep track of the number of inserted element so that we can overwrite the oldest one whene the array is full
+		std::string path;
 };
 
 #endif

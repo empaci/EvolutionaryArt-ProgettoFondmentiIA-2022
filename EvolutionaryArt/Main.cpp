@@ -43,9 +43,16 @@ protected:
     wxTextCtrl*  popIndividual;
     wxStaticText* TextFrozenIndividual;
     wxTextCtrl* frozenIndividual;
+    myColoredImageGridCellRenderer* myColoredImageRenderer;
+    myImageGridCellRenderer* myImageRenderer;
+    myColoredImageGridCellRenderer* myFrozenColoredImageRenderer;
+    myImageGridCellRenderer* myFrozenImageRenderer;
+    
 
     int generation;
     int population_size;
+    bool first_evaluate = true;
+    bool changed_color = false;
 
 private:
     void OnExit(wxCommandEvent& event);
@@ -154,10 +161,12 @@ void InitialFrame::OnStart(wxCommandEvent& event)
 
 
     if (this->CheckBox->IsChecked()) {
-        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images, 5));
+        myColoredImageRenderer = new myColoredImageGridCellRenderer(population_size, images, 5);
+        grid->SetDefaultRenderer(myColoredImageRenderer);
     }
     else {
-        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images, 5));
+        myImageRenderer = new myImageGridCellRenderer(population_size, images, 5);
+        grid->SetDefaultRenderer(myImageRenderer);
     }
     grid->SetRowLabelSize(0);
     grid->SetColLabelSize(0);
@@ -243,16 +252,31 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
         fitness_values.push_back(sliders[i]->GetValue());
         sliders[i]->SetValue(1);
     }
-    if (this->CheckBox->IsChecked() && !controller.getColor()) {
-        controller.changeGenes();
-    }
+
     controller.evaluate(fitness_values);
+
+    if (this->CheckBox->IsChecked() && !controller.getColor()) {
+        std::vector<Image> frozenImages = controller.changeGenes();
+        if (!first_evaluate) {
+            myFrozenColoredImageRenderer = new myColoredImageGridCellRenderer(frozenImages.size(), frozenImages, 2);
+            frozenGrid->SetDefaultRenderer(myFrozenColoredImageRenderer);
+            frozenGrid->ForceRefresh();
+        }
+        changed_color = true;
+    }
+
     std::vector<Image> images = controller.generateImages();
-    if (this->CheckBox->IsChecked()) {
-        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images, 5));
+    if (changed_color) {
+        myColoredImageRenderer = new myColoredImageGridCellRenderer(population_size, images, 5);
+        grid->SetDefaultRenderer(myColoredImageRenderer);
     }
     else {
-        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images, 5));
+        if (this->CheckBox->IsChecked()) {
+            myColoredImageRenderer->setImages(images);
+        }
+        else {
+            myImageRenderer->setImages(images);
+        }
     }
     grid->ForceRefresh();
 
@@ -260,11 +284,26 @@ void InitialFrame::OnEvaluate(wxCommandEvent& event)
     for (int i = 0; i < population_size; i++) {
         if (fitness_values[i] == 10) {
             std::vector<Image> frozen_images = controller.getFrozenImages();
-            if (this->CheckBox->IsChecked()) {
-                frozenGrid->SetDefaultRenderer(new myColoredImageGridCellRenderer(controller.getNFrozenImages(), frozen_images, 2));
+            if (first_evaluate) {
+                if (this->CheckBox->IsChecked()) {
+                    myFrozenColoredImageRenderer = new myColoredImageGridCellRenderer(controller.getNFrozenImages(), frozen_images, 2);
+                    frozenGrid->SetDefaultRenderer(myFrozenColoredImageRenderer);
+                }
+                else {
+                    myFrozenImageRenderer = new myImageGridCellRenderer(controller.getNFrozenImages(), frozen_images, 2);
+                    frozenGrid->SetDefaultRenderer(myFrozenImageRenderer);
+                }
+                first_evaluate = false;
             }
             else {
-                frozenGrid->SetDefaultRenderer(new myImageGridCellRenderer(controller.getNFrozenImages(), frozen_images, 2));
+                if (this->CheckBox->IsChecked()) {
+                    myFrozenColoredImageRenderer->setImages(frozen_images);
+                    myFrozenColoredImageRenderer->setNumImages(controller.getNFrozenImages());
+                }
+                else {
+                    myFrozenImageRenderer->setImages(frozen_images);
+                    myFrozenImageRenderer->setNumImages(controller.getNFrozenImages());
+                }
             }
             frozenGrid->ForceRefresh();
             break;
@@ -283,10 +322,10 @@ void InitialFrame::OnUnfreeze(wxCommandEvent& event) {
     //refresh grid
     std::vector<Image> images = controller.getTempImages();
     if (this->CheckBox->IsChecked()) {
-        grid->SetDefaultRenderer(new myColoredImageGridCellRenderer(population_size, images, 5));
+        myColoredImageRenderer->setImages(images);
     }
     else {
-        grid->SetDefaultRenderer(new myImageGridCellRenderer(population_size, images, 5));
+        myImageRenderer->setImages(images);
     }
     grid->ForceRefresh();
 }

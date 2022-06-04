@@ -26,9 +26,9 @@ bool Controller::getColor() {
 }
 
 //Used to switch from black_and_whites to colored images
-void Controller::changeGenes() {
+std::vector<Image> Controller::changeGenes() {
 	this->population->setGenes(new Color_basic_genes());
-	this->frozenIndividuals->changeGenes();
+	return this->frozenIndividuals->changeGenes();
 }
 
 void Controller::evaluate(std::vector<int> fitness_values) {

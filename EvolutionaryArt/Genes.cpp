@@ -2,6 +2,7 @@
 
 
 Genes::Genes() {
+	/*
 	noise.SetNoiseType(FastNoiseLite::NoiseType_OpenSimplex2S);
 	noise.SetFractalGain(FastNoiseLite::FractalType_Ridged);
 	noise.SetFractalGain(0.9);
@@ -10,13 +11,13 @@ Genes::Genes() {
 	noise.SetFractalWeightedStrength(0.5);
 	noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
 	noise.SetFractalType(FastNoiseLite::FractalType_DomainWarpIndependent);
-
+	*/
 	noise_2.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
 	noise_2.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
 	noise_2.SetDomainWarpAmp(50);
 	noise_2.SetFractalGain(FastNoiseLite::FractalType_DomainWarpProgressive);
 	noise_2.SetFractalOctaves(5);
-
+	/*
 	noise_3.SetNoiseType(FastNoiseLite::NoiseType_Perlin);
 	noise_3.SetDomainWarpType(FastNoiseLite::DomainWarpType_BasicGrid);
 	noise_3.SetDomainWarpAmp(50);
@@ -24,13 +25,13 @@ Genes::Genes() {
 	noise_3.SetFractalOctaves(4);
 	noise_3.SetFractalLacunarity(2);
 	noise_3.SetFractalGain(0.8);
-
+	*/
 	noise_4.SetNoiseType(FastNoiseLite::NoiseType_ValueCubic);
 	noise_4.SetFractalType(FastNoiseLite::FractalType_FBm);
 	noise_4.SetFractalOctaves(5);
 	noise_4.SetFractalLacunarity(2);
 	noise_4.SetFractalGain(0.7);
-
+	/*
 	cellular_noise.SetNoiseType(FastNoiseLite::NoiseType_Value);
 	cellular_noise.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Hybrid);
 	cellular_noise.SetCellularReturnType(FastNoiseLite::CellularReturnType_CellValue);
@@ -41,7 +42,7 @@ Genes::Genes() {
 	cellular_noise.SetFractalOctaves(5);
 	cellular_noise.SetFractalLacunarity(2);
 	cellular_noise.SetFractalGain(0.6);
-
+	*/
 	cellular_noise_2.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 	cellular_noise_2.SetFractalGain(FastNoiseLite::FractalType_PingPong);
 	cellular_noise_2.SetCellularDistanceFunction(FastNoiseLite::CellularDistanceFunction_Euclidean);
@@ -59,11 +60,11 @@ Genes::Genes() {
 
 	cellular_noise_4.SetNoiseType(FastNoiseLite::NoiseType_Cellular);
 
-	noise.SetSeed(std::rand());
+	//noise.SetSeed(std::rand());
 	noise_2.SetSeed(std::rand());
-	noise_3.SetSeed(std::rand());
+	//noise_3.SetSeed(std::rand());
 	noise_4.SetSeed(std::rand());
-	cellular_noise.SetSeed(std::rand());
+	//cellular_noise.SetSeed(std::rand());
 	cellular_noise_2.SetSeed(std::rand());
 	cellular_noise_3.SetSeed(std::rand());
 	cellular_noise_4.SetSeed(std::rand());
@@ -114,7 +115,7 @@ int Genes::eval(int x, int y, Node* head) {
 	}
 }
 
-int Genes::unaryOp(int x, std::string operation) {
+float Genes::unaryOp(float x, std::string operation) {
 	if (operation == "sin") {
 		return (sin(x/50) * 10);
 	}
@@ -160,7 +161,7 @@ int Genes::unaryOp(int x, std::string operation) {
 	return x;
 }
 
-int Genes::binaryOp(int x, int y, std::string operation) {
+float Genes::binaryOp(float x, float y, std::string operation) {
 	if (operation == "+") {
 		return x + y;
 	}
@@ -169,14 +170,14 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 	}
 	else if (operation == "mod") {
 		if (y != 0) {
-			return x % y;
+			return (int)x % (int)y;
 		}
 		else {
 			return x;
 		}
 	}
 	else if (operation == "xor") {
-		return x ^ y;
+		return (int)x ^ (int)y;
 	}
 	else if (operation == "/") {
 		if (y != 0) {
@@ -196,10 +197,10 @@ int Genes::binaryOp(int x, int y, std::string operation) {
 		return hypot(x, y);
 	}
 	else if (operation == "and") {
-		return x & y;
+		return (int)x & (int)y;
 	}
 	else if (operation == "or") {
-		return x | y;
+		return (int)x | (int)y;
 	}
 	else if (operation == "arclength") {
 		return ((float)x / 360) * M_PI * y;

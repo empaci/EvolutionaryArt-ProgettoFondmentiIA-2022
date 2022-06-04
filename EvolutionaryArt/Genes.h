@@ -98,7 +98,7 @@ class Genes {
 			2, //cellular noise type 4
 		};
 	protected:
-		int dim = 600;
+		int dim = 400;
 		FastNoiseLite noise;
 		FastNoiseLite noise_2;
 		FastNoiseLite noise_3;
@@ -120,8 +120,8 @@ class Genes {
 		bool setNFunctionArguments(std::vector<int>);
 
 		int eval(int, int, Node*);
-		int unaryOp(int, std::string);
-		int binaryOp(int, int, std::string);
+		float unaryOp(float, std::string);
+		float binaryOp(float, float, std::string);
 };
 
 #endif
