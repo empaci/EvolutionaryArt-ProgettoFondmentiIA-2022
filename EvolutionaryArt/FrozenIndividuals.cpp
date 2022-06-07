@@ -39,6 +39,7 @@ std::vector<Image> FrozenIndividuals::changeGenes() {
 	delete(genes);
 	this->genes = new Color_basic_genes();
 	this->images.clear();
+	path = "..\\FrozenImages\\";
 	Image* image = new Image();
 	for (int i = 0; i < this->individuals.size(); i++) {
 		this->genes->convertGenotypeToPhenotype(&this->individuals[i], image);
@@ -49,6 +50,7 @@ std::vector<Image> FrozenIndividuals::changeGenes() {
 }
 
 std::vector<Image> FrozenIndividuals::getImages() {
+	path = "..\\FrozenImages\\";
 	for (int i = 0; i < this->individuals.size(); i++) {
 		this->images[i].save(path + std::to_string(i));
 	}

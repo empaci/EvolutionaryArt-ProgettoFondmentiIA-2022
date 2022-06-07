@@ -120,7 +120,7 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 
 		GeneticOperation::crossover(i1, i2);
 
-		if ((std::rand() / (RAND_MAX)) <= 0.8) {
+		if ((std::rand() / ((float)RAND_MAX)) <= 0.4) {
 			apply_random_mutation(i1); 
 		}
 		if (genotypeFilter(i1)) {
@@ -128,7 +128,7 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 		}
 		
 		if (this->population_size > parents.size() + children.size()) {
-			if ((std::rand() / (RAND_MAX)) <= 0.7) {
+			if ((std::rand() / ((float)RAND_MAX)) <= 0.4) {
 				apply_random_mutation(i2);
 			}
 			if (genotypeFilter(i2)) {

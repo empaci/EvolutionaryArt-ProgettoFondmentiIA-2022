@@ -8,8 +8,8 @@ Individual::Individual(int depth, Genes* genes) {
 
 Individual::Individual(Individual* i) {
 	this->fitness_value = i->getFitnessValue();
-	genotype = Node::cloneNode(i->getGenotype());
-	Node::copyTree(i->getGenotype(), this->genotype);
+	//genotype = Node::cloneNode(i->getGenotype());
+	this->genotype = Node::copyTree(i->getGenotype());
 }
 
 

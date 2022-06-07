@@ -117,10 +117,10 @@ int Genes::eval(int x, int y, Node* head) {
 
 float Genes::unaryOp(float x, std::string operation) {
 	if (operation == "sin") {
-		return (sin(x/50) * 10);
+		return (sin(x/20) * 10);
 	}
 	if (operation == "cos") {
-		return (cos(x/50) * 10);
+		return (cos(x/20) * 10);
 	}
 	if (operation == "tan") {
 		if (x != 90) {
@@ -134,6 +134,12 @@ float Genes::unaryOp(float x, std::string operation) {
 	}
 	else if (operation == "cbrt") {
 		return cbrt(abs(x));
+	}
+	else if (operation == "square") {
+		return pow(x,2);
+	}
+	else if (operation == "cube") {
+		return pow(x,3);
 	}
 	else if (operation == "log") {
 		return (log(abs(x)) * 100);
@@ -157,6 +163,11 @@ float Genes::unaryOp(float x, std::string operation) {
 	}
 	else if (operation == "lgamma") {
 		return lgamma((x / 50))*10;
+	}
+	else if (operation == "binet") {
+		//works only for x <= 70
+		double fib = (pow(PHI, x) - pow(1 - PHI, x)) / sqrt(5);
+		return round(fib);
 	}
 	return x;
 }
@@ -228,6 +239,9 @@ float Genes::binaryOp(float x, float y, std::string operation) {
 	}
 	else if (operation == "infiniteparaboloid") {
 		return pow(x, 2) - pow(y, 2);
+	}
+	else if (operation == "stripes") {
+		return sin(sqrt(pow((x/20)-0.5,2) + pow((y/20)-0.5,2)));
 	}
 	else if (operation == "noise") {
 		return ((noise.GetNoise((float)x, (float)y) + 1 )* 255/2);

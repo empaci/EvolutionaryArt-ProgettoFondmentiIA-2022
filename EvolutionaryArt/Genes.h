@@ -19,6 +19,8 @@ class Genes {
 		std::vector<std::string> genes_types = {
 			"sqrt",
 			"cbrt",
+			"square",
+			"cube",
 			"+",
 			"-",
 			"mod",
@@ -29,14 +31,14 @@ class Genes {
 			"/",
 			"*",
 			"pow2",
-		//	"pow",
+			"pow",
 			"log",
 			"hypot",
 		//	"gamma",
 			"and",
 			"or",
 			"not",
-		//	"exp",
+			"exp",
 			"exp2",
 		//	"lgamma",
 		//	"erf",
@@ -55,11 +57,15 @@ class Genes {
 			"noisecellular2",
 			"noisecellular3",
 			"noisecellular4",
+		//	"binet",
+			"stripes",
 		};
 		//tells if the operation, in the same position, is unary or binary
 		std::vector<int> n_function_arguments = {
 			1, //sqrt
 			1, //cbrt
+			1, //square
+			1, //cube
 			2, //+
 			2, //-
 			2, //mod
@@ -70,14 +76,14 @@ class Genes {
 			2, // /
 			2, // *
 			1, // pow2
-		//	2, //pow
+			2, //pow
 			1, //log
 			2, //hypot
 		//	1, //gamma
 			2, //and
 			2, //or
 			1, //not
-		//	1, //exp
+			1, //exp
 			1, //exp2 (2^x)
 		//	1, //lgamma
 		//	1, //erf
@@ -96,6 +102,8 @@ class Genes {
 			2, //cellular noise type 2
 			2, //cellular noise type 3
 			2, //cellular noise type 4
+		//	1, //binet
+			2, //stripes 
 		};
 	protected:
 		int dim = 400;

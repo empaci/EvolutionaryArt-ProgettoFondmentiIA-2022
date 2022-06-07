@@ -418,16 +418,35 @@ bool Node::isSwappable(Node* head, int r1, int r2) {
 }
 
 //copy of a tree given the head
-void Node::copyTree(Node* head, Node* copy) {
+Node* Node::copyTree(Node* head) {
+    /*
     if (head) {
         Node* leftNode = cloneNode(head->getLeftChild());
         copy->setLeftChildren(leftNode);
         copyTree(head->getLeftChild(), copy->getLeftChild());
-        
+
         if (head->getRightChild()) {
             Node* rightNode = cloneNode(head->getRightChild());
             copy->setRightChildren(rightNode);
             copyTree(head->getRightChild(), copy->getRightChild());
+        }
+    }*/
+    Node* copy = cloneNode(head);
+    copyTreeAux(head, copy);
+    return copy;
+   
+}
+
+void Node::copyTreeAux(Node* head, Node* copy) {
+    if (head) {
+        Node* leftNode = cloneNode(head->getLeftChild());
+        copy->setLeftChildren(leftNode);
+        copyTreeAux(head->getLeftChild(), copy->getLeftChild());
+
+        if (head->getRightChild()) {
+            Node* rightNode = cloneNode(head->getRightChild());
+            copy->setRightChildren(rightNode);
+            copyTreeAux(head->getRightChild(), copy->getRightChild());
         }
     }
 }

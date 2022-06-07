@@ -49,7 +49,8 @@ class Node{
         static int swapSubtreeAux(Node*, int*, int*, Node*, char, char*, Node*, char, char*);
         static bool isSwappable(Node*, int, int);
 
-        static void copyTree(Node*, Node*);
+        static Node* copyTree(Node*);
+        static void copyTreeAux(Node*, Node*);
         static Node* cloneNode(Node*);
         static void cleanUp(Node*);
 };
