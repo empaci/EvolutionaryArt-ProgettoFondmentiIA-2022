@@ -241,7 +241,7 @@ float Genes::binaryOp(float x, float y, std::string operation) {
 		return pow(x, 2) - pow(y, 2);
 	}
 	else if (operation == "stripes") {
-		return sin(sqrt(pow((x/20)-0.5,2) + pow((y/20)-0.5,2)));
+		return sin(sqrt(pow((x/20)-0.5,2) + pow((y/20)-0.5,2)))*10;
 	}
 	else if (operation == "noise") {
 		return ((noise.GetNoise((float)x, (float)y) + 1 )* 255/2);

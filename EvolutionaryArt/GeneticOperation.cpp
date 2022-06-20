@@ -43,7 +43,7 @@ void GeneticOperation::subtree_replacement(Individual* individual, Genes* genes)
 	Node::getNumberOfParents(n, &n_node);
 	int r = (std::rand() % n_node);
 	Node* new_tree = new Node();
-	randomlyGenerateGenotype(2 + (std::rand() % 4), genes, new_tree);
+	randomlyGenerateGenotype(std::rand() % 4, genes, new_tree);
 
 	Node::sobstituteBranch(n, new_tree, &r); //given the node in pos r, sobstitute the branch with the new_tree
 	return;

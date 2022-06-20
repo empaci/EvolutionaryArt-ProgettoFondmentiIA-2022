@@ -2,6 +2,7 @@
 #define POPULATION_H
 
 #include <vector>
+#include <algorithm>
 #include "Individual.h"
 #include "image.h"
 

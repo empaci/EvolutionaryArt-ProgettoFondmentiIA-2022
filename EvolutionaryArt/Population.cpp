@@ -41,7 +41,15 @@ std::vector<Individual> Population::proportionalSelection(int min, int max) {
 
 	float r = ((float)std::rand() / (RAND_MAX)); // generate number between 0 and 1
 	
-	while( parents.size() < population_size/3) {
+	int nparents = 0;
+	if (population_size <= 15) {
+		nparents = population_size / 3;
+	}
+	else {
+		nparents = population_size / 4;
+	}
+
+	while( parents.size() < nparents) {
 
 		for (int j = min; j <= max; j++) {
 			if (r < probabilities[j - min]) {
@@ -62,16 +70,31 @@ std::vector<float> Population::generateProbabilities(int min, int max) {
 	std::vector<float> probabilities;
 	float previous_probability = 0.0;
 	float p = 0;
-	float totalFitness = min;
+	float totalFitness = 0;
 
-	for (int i = min+1; i <= max; i++) {
-		totalFitness = totalFitness + i;
+	std::vector<int> fitnesses = std::vector<int>();
+
+	for (int i = 0; i < population_size; i++) {
+		fitnesses.push_back(individuals[i].getFitnessValue());
+	}
+
+	sort(fitnesses.begin(), fitnesses.end());
+	fitnesses.erase(unique(fitnesses.begin(), fitnesses.end()), fitnesses.end());
+
+	for (int i = 0; i < fitnesses.size(); i++) {
+		totalFitness = totalFitness + fitnesses[i];
 	}
 
 	for (int i = min; i <= max; i++) {
-		p = (previous_probability + (i / totalFitness));
-		probabilities.push_back(p);
-		previous_probability = p;
+
+		if (std::find(fitnesses.begin(), fitnesses.end(), i) != fitnesses.end()) {
+			p = (previous_probability + (i / totalFitness));
+			probabilities.push_back(p);
+			previous_probability = p;
+		}
+		else {
+			probabilities.push_back(0);
+		}
 	}
 	return probabilities;
 }
@@ -120,7 +143,7 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 
 		GeneticOperation::crossover(i1, i2);
 
-		if ((std::rand() / ((float)RAND_MAX)) <= 0.4) {
+		if ((std::rand() / ((float)RAND_MAX)) <= 0.6) {
 			apply_random_mutation(i1); 
 		}
 		if (genotypeFilter(i1)) {
@@ -128,7 +151,7 @@ std::vector<Individual> Population::recombination_and_mutation(std::vector<Indiv
 		}
 		
 		if (this->population_size > parents.size() + children.size()) {
-			if ((std::rand() / ((float)RAND_MAX)) <= 0.4) {
+			if ((std::rand() / ((float)RAND_MAX)) <= 0.6) {
 				apply_random_mutation(i2);
 			}
 			if (genotypeFilter(i2)) {
